@@ -1,0 +1,914 @@
+{
+ "slug": {
+  "PPO 是什么": "PPO 是什么",
+  "a/b\\c:d*e?f\"g<h>i|j#k^l[m]n": "a b c d e f g h i j k l m n",
+  "  ..dots..  ": "dots",
+  "": "对话",
+  "   ": "对话",
+  "...": "对话",
+  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中": "中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中",
+  "tab\tnew\nline": "tab new line",
+  "a\u0001b": "a b",
+  "trailing. ": "trailing",
+  "　wide　space　": "wide space",
+  " nbsp": "nbsp"
+ },
+ "render": [
+  {
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "什么是 PPO?"
+    },
+    {
+     "role": "assistant",
+     "content": "## 答\n<!-- x -->\n内容"
+    },
+    {
+     "role": "system",
+     "content": "skipped"
+    },
+    {
+     "role": "user",
+     "content": "  padded  \n\n"
+    },
+    {
+     "role": "assistant",
+     "content": ""
+    },
+    {
+     "role": "user"
+    },
+    {
+     "role": "user",
+     "content": null
+    },
+    {
+     "role": "user",
+     "content": [
+      "part",
+      {
+       "type": "text"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": 5
+    }
+   ],
+   "out": "<!-- chat:user -->\n### 🧑 我\n\n什么是 PPO?\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n## 答\n<!-- x -->\n内容\n\n<!-- chat:user -->\n### 🧑 我\n\npadded\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\nNone\n\n<!-- chat:user -->\n### 🧑 我\n\n['part', {'type': 'text'}]\n\n<!-- chat:user -->\n### 🧑 我\n\n5\n"
+  },
+  {
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "type"
+      },
+      {
+       "t": "str",
+       "v": "chat"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "T"
+      }
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "什么是 PPO?"
+    },
+    {
+     "role": "assistant",
+     "content": "## 答\n<!-- x -->\n内容"
+    },
+    {
+     "role": "system",
+     "content": "skipped"
+    },
+    {
+     "role": "user",
+     "content": "  padded  \n\n"
+    },
+    {
+     "role": "assistant",
+     "content": ""
+    },
+    {
+     "role": "user"
+    },
+    {
+     "role": "user",
+     "content": null
+    },
+    {
+     "role": "user",
+     "content": [
+      "part",
+      {
+       "type": "text"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": 5
+    }
+   ],
+   "out": "---\ntype: chat\ntitle: T\n---\n\n<!-- chat:user -->\n### 🧑 我\n\n什么是 PPO?\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n## 答\n<!-- x -->\n内容\n\n<!-- chat:user -->\n### 🧑 我\n\npadded\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\nNone\n\n<!-- chat:user -->\n### 🧑 我\n\n['part', {'type': 'text'}]\n\n<!-- chat:user -->\n### 🧑 我\n\n5\n"
+  },
+  {
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "Long title Long title Long title Long title Long title Long title Long title Long title Long title Long title "
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "distilled_into"
+      },
+      {
+       "t": "list",
+       "v": [
+        {
+         "t": "str",
+         "v": "[[a]]"
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "什么是 PPO?"
+    },
+    {
+     "role": "assistant",
+     "content": "## 答\n<!-- x -->\n内容"
+    },
+    {
+     "role": "system",
+     "content": "skipped"
+    },
+    {
+     "role": "user",
+     "content": "  padded  \n\n"
+    },
+    {
+     "role": "assistant",
+     "content": ""
+    },
+    {
+     "role": "user"
+    },
+    {
+     "role": "user",
+     "content": null
+    },
+    {
+     "role": "user",
+     "content": [
+      "part",
+      {
+       "type": "text"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": 5
+    }
+   ],
+   "out": "---\ntitle: 'Long title Long title Long title Long title Long title Long title Long title\n  Long title Long title Long title '\ndistilled_into:\n- '[[a]]'\n---\n\n<!-- chat:user -->\n### 🧑 我\n\n什么是 PPO?\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n## 答\n<!-- x -->\n内容\n\n<!-- chat:user -->\n### 🧑 我\n\npadded\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\nNone\n\n<!-- chat:user -->\n### 🧑 我\n\n['part', {'type': 'text'}]\n\n<!-- chat:user -->\n### 🧑 我\n\n5\n"
+  }
+ ],
+ "parse": [
+  {
+   "text": "<!-- chat:user -->\n### 🧑 我\n\n什么是 PPO?\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n## 答\n<!-- x -->\n内容\n\n<!-- chat:user -->\n### 🧑 我\n\npadded\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\nNone\n\n<!-- chat:user -->\n### 🧑 我\n\n['part', {'type': 'text'}]\n\n<!-- chat:user -->\n### 🧑 我\n\n5\n",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "什么是 PPO?"
+    },
+    {
+     "role": "assistant",
+     "content": "## 答\n<!-- x -->\n内容"
+    },
+    {
+     "role": "user",
+     "content": "padded"
+    },
+    {
+     "role": "assistant",
+     "content": ""
+    },
+    {
+     "role": "user",
+     "content": ""
+    },
+    {
+     "role": "user",
+     "content": "None"
+    },
+    {
+     "role": "user",
+     "content": "['part', {'type': 'text'}]"
+    },
+    {
+     "role": "user",
+     "content": "5"
+    }
+   ]
+  },
+  {
+   "text": "---\ntype: chat\ntitle: T\n---\n\n<!-- chat:user -->\n### 🧑 我\n\n什么是 PPO?\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n## 答\n<!-- x -->\n内容\n\n<!-- chat:user -->\n### 🧑 我\n\npadded\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\nNone\n\n<!-- chat:user -->\n### 🧑 我\n\n['part', {'type': 'text'}]\n\n<!-- chat:user -->\n### 🧑 我\n\n5\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "type"
+      },
+      {
+       "t": "str",
+       "v": "chat"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "T"
+      }
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "什么是 PPO?"
+    },
+    {
+     "role": "assistant",
+     "content": "## 答\n<!-- x -->\n内容"
+    },
+    {
+     "role": "user",
+     "content": "padded"
+    },
+    {
+     "role": "assistant",
+     "content": ""
+    },
+    {
+     "role": "user",
+     "content": ""
+    },
+    {
+     "role": "user",
+     "content": "None"
+    },
+    {
+     "role": "user",
+     "content": "['part', {'type': 'text'}]"
+    },
+    {
+     "role": "user",
+     "content": "5"
+    }
+   ]
+  },
+  {
+   "text": "---\ntitle: 'Long title Long title Long title Long title Long title Long title Long title\n  Long title Long title Long title '\ndistilled_into:\n- '[[a]]'\n---\n\n<!-- chat:user -->\n### 🧑 我\n\n什么是 PPO?\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n## 答\n<!-- x -->\n内容\n\n<!-- chat:user -->\n### 🧑 我\n\npadded\n\n<!-- chat:assistant -->\n### 🤖 AI\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\n\n\n<!-- chat:user -->\n### 🧑 我\n\nNone\n\n<!-- chat:user -->\n### 🧑 我\n\n['part', {'type': 'text'}]\n\n<!-- chat:user -->\n### 🧑 我\n\n5\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "Long title Long title Long title Long title Long title Long title Long title Long title Long title Long title "
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "distilled_into"
+      },
+      {
+       "t": "list",
+       "v": [
+        {
+         "t": "str",
+         "v": "[[a]]"
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "什么是 PPO?"
+    },
+    {
+     "role": "assistant",
+     "content": "## 答\n<!-- x -->\n内容"
+    },
+    {
+     "role": "user",
+     "content": "padded"
+    },
+    {
+     "role": "assistant",
+     "content": ""
+    },
+    {
+     "role": "user",
+     "content": ""
+    },
+    {
+     "role": "user",
+     "content": "None"
+    },
+    {
+     "role": "user",
+     "content": "['part', {'type': 'text'}]"
+    },
+    {
+     "role": "user",
+     "content": "5"
+    }
+   ]
+  },
+  {
+   "text": "<!-- chat:user --> \t\n### custom heading\nbody\n<!-- chat:assistant -->\nno heading\n",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "body"
+    },
+    {
+     "role": "assistant",
+     "content": "no heading"
+    }
+   ]
+  },
+  {
+   "text": "intro\n<!-- chat:user -->\nx\n<!--chat:user-->\nnot marker\n",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "x\n<!--chat:user-->\nnot marker"
+    }
+   ]
+  },
+  {
+   "text": " <!-- chat:user -->\nindented marker",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "messages": []
+  },
+  {
+   "text": "<!-- chat:user -->\n### 🧑 我\n\nA\n\n<!-- chat:assistant -->\n### 🤖 AI\n\nB\n",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "A"
+    },
+    {
+     "role": "assistant",
+     "content": "B"
+    }
+   ]
+  },
+  {
+   "text": "---\ntitle: x\n---\n<!-- chat:user -->\r\nCRLF\r\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "x"
+      }
+     ]
+    ]
+   },
+   "messages": []
+  }
+ ],
+ "save": {
+  "first": {
+   "path": "Chats/2025-03-04 0506 PPO 是什么.md",
+   "etag": "f9dd6615ba2e0c9a3a24",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "type"
+      },
+      {
+       "t": "str",
+       "v": "chat"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "PPO 是什么"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "status"
+      },
+      {
+       "t": "str",
+       "v": "inbox"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "created"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "updated"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "model"
+      },
+      {
+       "t": "str",
+       "v": "m"
+      }
+     ]
+    ]
+   },
+   "content": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IFBQTyDmmK/ku4DkuYgKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMy0wNFQwNTowNjowNyswOTowMCcKdXBkYXRlZDogJzIwMjUtMDMtMDRUMDU6MDY6MDcrMDk6MDAnCm1vZGVsOiBtCi0tLQoKPCEtLSBjaGF0OnVzZXIgLS0+CiMjIyDwn6eRIOaIkQoK5LuA5LmI5pivIFBQTz8KCjwhLS0gY2hhdDphc3Npc3RhbnQgLS0+CiMjIyDwn6SWIEFJCgojIyDnrZQKPCEtLSB4IC0tPgrlhoXlrrkK"
+  },
+  "second": {
+   "path": "Chats/2025-03-04 0506 PPO 是什么.md",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "type"
+      },
+      {
+       "t": "str",
+       "v": "chat"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "PPO 是什么"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "status"
+      },
+      {
+       "t": "str",
+       "v": "inbox"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "created"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "updated"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "model"
+      },
+      {
+       "t": "str",
+       "v": "m2"
+      }
+     ]
+    ]
+   },
+   "content": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IFBQTyDmmK/ku4DkuYgKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMy0wNFQwNTowNjowNyswOTowMCcKdXBkYXRlZDogJzIwMjUtMDMtMDRUMDU6MDY6MDcrMDk6MDAnCm1vZGVsOiBtMgotLS0KCjwhLS0gY2hhdDp1c2VyIC0tPgojIyMg8J+nkSDmiJEKCuS7gOS5iOaYryBQUE8/Cgo8IS0tIGNoYXQ6YXNzaXN0YW50IC0tPgojIyMg8J+kliBBSQoKIyMg562UCjwhLS0geCAtLT4K5YaF5a65Cgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpwYWRkZWQK"
+  },
+  "existing": {
+   "path": "Chats/2025-02-01 0900 second.md",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "type"
+      },
+      {
+       "t": "str",
+       "v": "chat"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "Renamed"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "status"
+      },
+      {
+       "t": "str",
+       "v": "distilled"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "created"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "updated"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "model"
+      },
+      {
+       "t": "str",
+       "v": "m3"
+      }
+     ]
+    ]
+   },
+   "content": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IFJlbmFtZWQKc3RhdHVzOiBkaXN0aWxsZWQKY3JlYXRlZDogJzIwMjUtMDMtMDRUMDU6MDY6MDcrMDk6MDAnCnVwZGF0ZWQ6ICcyMDI1LTAzLTA0VDA1OjA2OjA3KzA5OjAwJwptb2RlbDogbTMKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgrku4DkuYjmmK8gUFBPPwo="
+  },
+  "missing": {
+   "path": "Chats/new-file.md",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "type"
+      },
+      {
+       "t": "str",
+       "v": "chat"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "对话"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "status"
+      },
+      {
+       "t": "str",
+       "v": "inbox"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "created"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "updated"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "model"
+      },
+      {
+       "t": "str",
+       "v": "m4"
+      }
+     ]
+    ]
+   }
+  },
+  "bad": {
+   "error": "chats must live in the Chats folder",
+   "status": 400
+  },
+  "stale": {
+   "error": "the note changed on disk since it was opened",
+   "status": 409
+  },
+  "status_1": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IFBQTyDmmK/ku4DkuYgKc3RhdHVzOiBkaXN0aWxsZWQKY3JlYXRlZDogJzIwMjUtMDMtMDRUMDU6MDY6MDcrMDk6MDAnCnVwZGF0ZWQ6ICcyMDI1LTAzLTA0VDA1OjA2OjA3KzA5OjAwJwptb2RlbDogbTIKZGlzdGlsbGVkX2ludG86Ci0gJ1tbUkwvUFBPXV0nCi0gJ1tbQV1dJwotLS0KCjwhLS0gY2hhdDp1c2VyIC0tPgojIyMg8J+nkSDmiJEKCuS7gOS5iOaYryBQUE8/Cgo8IS0tIGNoYXQ6YXNzaXN0YW50IC0tPgojIyMg8J+kliBBSQoKIyMg562UCjwhLS0geCAtLT4K5YaF5a65Cgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpwYWRkZWQK",
+  "status_2": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IFBQTyDmmK/ku4DkuYgKc3RhdHVzOiBkaXN0aWxsZWQKY3JlYXRlZDogJzIwMjUtMDMtMDRUMDU6MDY6MDcrMDk6MDAnCnVwZGF0ZWQ6ICcyMDI1LTAzLTA0VDA1OjA2OjA3KzA5OjAwJwptb2RlbDogbTIKZGlzdGlsbGVkX2ludG86Ci0gJ1tbUkwvUFBPXV0nCi0gJ1tbQV1dJwotICdbW0IubWFya2Rvd25dXScKLSAnW1thYl1dJwotICdbW2FiXV0nCi0tLQoKPCEtLSBjaGF0OnVzZXIgLS0+CiMjIyDwn6eRIOaIkQoK5LuA5LmI5pivIFBQTz8KCjwhLS0gY2hhdDphc3Npc3RhbnQgLS0+CiMjIyDwn6SWIEFJCgojIyDnrZQKPCEtLSB4IC0tPgrlhoXlrrkKCjwhLS0gY2hhdDp1c2VyIC0tPgojIyMg8J+nkSDmiJEKCnBhZGRlZAo=",
+  "status_3": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPXV0/Cgo8IS0tIGNoYXQ6YXNzaXN0YW50IC0tPgojIyMg8J+kliBBSQoKQSBwb2xpY3kgbWV0aG9kLgo=",
+  "list": [
+   {
+    "path": "Chats/2025-02-01 0900 second.md",
+    "title": "Renamed",
+    "status": "distilled",
+    "updated": "2025-03-04T05:06:07+09:00"
+   },
+   {
+    "path": "Chats/2025-03-04 0506 PPO 是什么.md",
+    "title": "PPO 是什么",
+    "status": "distilled",
+    "updated": "2025-03-04T05:06:07+09:00"
+   },
+   {
+    "path": "Chats/new-file.md",
+    "title": "对话",
+    "status": "inbox",
+    "updated": "2025-03-04T05:06:07+09:00"
+   },
+   {
+    "path": "Chats/2025-01-01 1000 hello.md",
+    "title": "Hello chat",
+    "status": "inbox",
+    "updated": "2025-01-01T10:05:00+08:00"
+   },
+   {
+    "path": "Chats/no-meta.md",
+    "title": "no-meta",
+    "status": "inbox",
+    "updated": ""
+   }
+  ],
+  "loaded": {
+   "path": "Chats/2025-03-04 0506 PPO 是什么.md",
+   "etag": "bc130b5542ce507e00bb",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "type"
+      },
+      {
+       "t": "str",
+       "v": "chat"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "PPO 是什么"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "status"
+      },
+      {
+       "t": "str",
+       "v": "distilled"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "created"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "updated"
+      },
+      {
+       "t": "str",
+       "v": "2025-03-04T05:06:07+09:00"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "model"
+      },
+      {
+       "t": "str",
+       "v": "m2"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "distilled_into"
+      },
+      {
+       "t": "list",
+       "v": [
+        {
+         "t": "str",
+         "v": "[[RL/PPO]]"
+        },
+        {
+         "t": "str",
+         "v": "[[A]]"
+        },
+        {
+         "t": "str",
+         "v": "[[B.markdown]]"
+        },
+        {
+         "t": "str",
+         "v": "[[ab]]"
+        },
+        {
+         "t": "str",
+         "v": "[[ab]]"
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "什么是 PPO?"
+    },
+    {
+     "role": "assistant",
+     "content": "## 答\n<!-- x -->\n内容"
+    },
+    {
+     "role": "user",
+     "content": "padded"
+    }
+   ]
+  }
+ },
+ "list": [
+  {
+   "path": "Chats/2025-02-01 0900 second.md",
+   "title": "Second",
+   "status": "distilled",
+   "updated": "2025-02-01 09:00:00"
+  },
+  {
+   "path": "Chats/2025-01-01 1000 hello.md",
+   "title": "Hello chat",
+   "status": "inbox",
+   "updated": "2025-01-01T10:05:00+08:00"
+  },
+  {
+   "path": "Chats/no-meta.md",
+   "title": "no-meta",
+   "status": "inbox",
+   "updated": ""
+  }
+ ]
+}

@@ -1,0 +1,94 @@
+/*
+ * Base — the reset, the page's ink and paper, selection rules (controls are not
+ * selectable, content is, as in a Mac app), thin scrollbars, focus rings, a few
+ * utilities and the shared keyframes.
+ */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+html, body, #root { height: 100%; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font: 400 var(--fs-body)/1.4 var(--font);
+  color: var(--fg);
+  background: var(--bg);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  cursor: default;
+}
+#root { isolation: isolate; }
+
+/* Controls read as an app's, not a document's: no text selection on them. */
+:where(button, label, summary, select, nav, menu, [role="tab"], [role="menu"], [role="menuitem"], [role="option"], [role="switch"], .seg, .pop, .side, .topbar) {
+  user-select: none; -webkit-user-select: none;
+}
+:where(p, pre, code, kbd, dd, td, .selectable, .markdown, .error-box) { user-select: text; -webkit-user-select: text; }
+:where(input, textarea, [contenteditable="true"], [contenteditable=""]) { user-select: text; -webkit-user-select: text; cursor: text; }
+
+button { font: inherit; color: inherit; background: none; border: 0; cursor: default; appearance: none; -webkit-appearance: none; text-align: inherit; }
+button:disabled { cursor: default; }
+input, select, textarea { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img, svg, video, canvas { display: block; }
+svg { flex: none; }
+code, kbd, samp, pre { font-family: var(--code); }
+code { font-size: 11.5px; }
+hr { border: 0; border-top: 1px solid var(--line-2); }
+[hidden] { display: none !important; }
+::selection { background: color-mix(in srgb, var(--accent) 24%, transparent); }
+
+/* focus: a 2px accent ring for the keyboard, nothing for the mouse */
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* thin, rounded scrollbars everywhere (WebKit and Chromium; Firefox gets thin) */
+* { scrollbar-width: thin; scrollbar-color: var(--faint) transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--faint); border: 2px solid transparent; border-radius: 8px; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background-color: var(--muted); }
+::-webkit-scrollbar-corner, ::-webkit-scrollbar-button { display: none; background: transparent; }
+@supports selector(::-webkit-scrollbar) { * { scrollbar-width: auto; scrollbar-color: auto; } }
+
+/* the theme crossfades instead of snapping (set briefly by app/theme.js) */
+html.theming, html.theming *, html.theming *::before, html.theming *::after {
+  transition: background-color .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease) !important;
+}
+
+/* ---------------------------------------------------------------- utilities */
+.muted { color: var(--muted); }
+.faint { color: var(--faint); }
+.small { font-size: var(--fs-sub); }
+.mono { font-family: var(--code); }
+.tabnum { font-variant-numeric: tabular-nums; }
+.grow { flex: 1 1 auto; min-width: 0; }
+.ellipsis { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* the whole-window states before the shell exists */
+.splash { display: grid; place-items: center; height: 100%; color: var(--muted); font-size: var(--fs-label); }
+.splash-inner { display: flex; flex-direction: column; align-items: center; gap: 12px; animation: fade-in .4s var(--ease) .15s both; }
+
+/* ---------------------------------------------------------------- keyframes */
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes view-in { from { opacity: 0; transform: translateY(5px); } }
+@keyframes content-in { from { opacity: 0; transform: translateY(3px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pop-fade { from { opacity: 0; } }
+@keyframes pop-in { from { transform: translateY(var(--pop-dy, -6px)) scale(.94); } }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(8px) scale(.97); } }
+@keyframes scrim-in { from { opacity: 0; } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(8px) scale(.96); } }
+@keyframes skeleton-shift { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@keyframes copy-pop { 0% { transform: scale(.55); } 55% { transform: scale(1.16); } 100% { transform: scale(1); } }
+@keyframes pulse { 50% { opacity: .35; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,2512 @@
+{
+ "version": "0.1.0",
+ "steps": [
+  {
+   "name": "initialize current",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "initialize",
+    "params": {
+     "protocolVersion": "2025-06-18",
+     "capabilities": {},
+     "clientInfo": {
+      "name": "t",
+      "version": "1"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+     "protocolVersion": "2025-06-18",
+     "capabilities": {
+      "tools": {
+       "listChanged": false
+      }
+     },
+     "serverInfo": {
+      "name": "marginalia",
+      "title": "Marginalia 知识库",
+      "version": "0.1.0"
+     },
+     "instructions": "这是用户的个人 Markdown 知识库（与 Obsidian 兼容），主要由 AI 对话沉淀而来。\n修改前先调用 get_conventions 阅读 AGENTS.md，并严格遵守其中的目录结构与 frontmatter 约定。\n查找知识先用 list_notes（看 summary）或 search_notes，再 read_note。\n和用户的有价值对话可以用 save_conversation 存入 Chats/ 收件箱，稍后在网页端由 AI 整理入库。\n所有写入都会自动提交到 git，可随时回滚。"
+    }
+   }
+  },
+  {
+   "name": "initialize old",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 2,
+    "method": "initialize",
+    "params": {
+     "protocolVersion": "2024-11-05"
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 2,
+    "result": {
+     "protocolVersion": "2024-11-05",
+     "capabilities": {
+      "tools": {
+       "listChanged": false
+      }
+     },
+     "serverInfo": {
+      "name": "marginalia",
+      "title": "Marginalia 知识库",
+      "version": "0.1.0"
+     },
+     "instructions": "这是用户的个人 Markdown 知识库（与 Obsidian 兼容），主要由 AI 对话沉淀而来。\n修改前先调用 get_conventions 阅读 AGENTS.md，并严格遵守其中的目录结构与 frontmatter 约定。\n查找知识先用 list_notes（看 summary）或 search_notes，再 read_note。\n和用户的有价值对话可以用 save_conversation 存入 Chats/ 收件箱，稍后在网页端由 AI 整理入库。\n所有写入都会自动提交到 git，可随时回滚。"
+    }
+   }
+  },
+  {
+   "name": "initialize unknown version",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 3,
+    "method": "initialize",
+    "params": {
+     "protocolVersion": "1999-01-01"
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 3,
+    "result": {
+     "protocolVersion": "2025-06-18",
+     "capabilities": {
+      "tools": {
+       "listChanged": false
+      }
+     },
+     "serverInfo": {
+      "name": "marginalia",
+      "title": "Marginalia 知识库",
+      "version": "0.1.0"
+     },
+     "instructions": "这是用户的个人 Markdown 知识库（与 Obsidian 兼容），主要由 AI 对话沉淀而来。\n修改前先调用 get_conventions 阅读 AGENTS.md，并严格遵守其中的目录结构与 frontmatter 约定。\n查找知识先用 list_notes（看 summary）或 search_notes，再 read_note。\n和用户的有价值对话可以用 save_conversation 存入 Chats/ 收件箱，稍后在网页端由 AI 整理入库。\n所有写入都会自动提交到 git，可随时回滚。"
+    }
+   }
+  },
+  {
+   "name": "initialize no params",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 4,
+    "method": "initialize"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 4,
+    "result": {
+     "protocolVersion": "2025-06-18",
+     "capabilities": {
+      "tools": {
+       "listChanged": false
+      }
+     },
+     "serverInfo": {
+      "name": "marginalia",
+      "title": "Marginalia 知识库",
+      "version": "0.1.0"
+     },
+     "instructions": "这是用户的个人 Markdown 知识库（与 Obsidian 兼容），主要由 AI 对话沉淀而来。\n修改前先调用 get_conventions 阅读 AGENTS.md，并严格遵守其中的目录结构与 frontmatter 约定。\n查找知识先用 list_notes（看 summary）或 search_notes，再 read_note。\n和用户的有价值对话可以用 save_conversation 存入 Chats/ 收件箱，稍后在网页端由 AI 整理入库。\n所有写入都会自动提交到 git，可随时回滚。"
+    }
+   }
+  },
+  {
+   "name": "initialize non-string version",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 5,
+    "method": "initialize",
+    "params": {
+     "protocolVersion": [
+      "2025-06-18"
+     ]
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 5,
+    "result": {
+     "protocolVersion": "2025-06-18",
+     "capabilities": {
+      "tools": {
+       "listChanged": false
+      }
+     },
+     "serverInfo": {
+      "name": "marginalia",
+      "title": "Marginalia 知识库",
+      "version": "0.1.0"
+     },
+     "instructions": "这是用户的个人 Markdown 知识库（与 Obsidian 兼容），主要由 AI 对话沉淀而来。\n修改前先调用 get_conventions 阅读 AGENTS.md，并严格遵守其中的目录结构与 frontmatter 约定。\n查找知识先用 list_notes（看 summary）或 search_notes，再 read_note。\n和用户的有价值对话可以用 save_conversation 存入 Chats/ 收件箱，稍后在网页端由 AI 整理入库。\n所有写入都会自动提交到 git，可随时回滚。"
+    }
+   }
+  },
+  {
+   "name": "notification",
+   "request": {
+    "jsonrpc": "2.0",
+    "method": "notifications/initialized"
+   },
+   "reply": null
+  },
+  {
+   "name": "notification null id",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": null,
+    "method": "ping"
+   },
+   "reply": null
+  },
+  {
+   "name": "ping",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 6,
+    "method": "ping"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 6,
+    "result": {}
+   }
+  },
+  {
+   "name": "ping string id",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": "abc",
+    "method": "ping"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": "abc",
+    "result": {}
+   }
+  },
+  {
+   "name": "ping zero id",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 0,
+    "method": "ping"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 0,
+    "result": {}
+   }
+  },
+  {
+   "name": "ping float id",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 1.5,
+    "method": "ping"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 1.5,
+    "result": {}
+   }
+  },
+  {
+   "name": "ping falsy params",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 7,
+    "method": "ping",
+    "params": []
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 7,
+    "result": {}
+   }
+  },
+  {
+   "name": "ping list params",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 8,
+    "method": "ping",
+    "params": [
+     1
+    ]
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 8,
+    "result": {}
+   }
+  },
+  {
+   "name": "tools/list",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 9,
+    "method": "tools/list"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 9,
+    "result": {
+     "tools": [
+      {
+       "name": "get_conventions",
+       "description": "读取知识库约定 AGENTS.md（目录结构、frontmatter、写作规范）。写入前必须先读。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "list_notes",
+       "description": "列出所有知识笔记的路径、标题、summary、标签和出链。用于了解知识库全貌。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "include_chats": {
+          "type": "boolean",
+          "description": "是否包含 Chats/ 对话记录，默认 false"
+         }
+        },
+        "required": [],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "search_notes",
+       "description": "全文搜索笔记（空格分隔多个关键词，需全部匹配），返回路径和匹配行。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "query": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "query"
+        ],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "read_note",
+       "description": "读取一篇笔记的完整内容。返回内容与 etag（更新时可传回 etag 以防覆盖他人修改）。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "path": {
+          "type": "string",
+          "description": "相对路径，如 Knowledge/机器学习/PPO.md"
+         }
+        },
+        "required": [
+         "path"
+        ],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "get_backlinks",
+       "description": "列出链接到某篇笔记的其他笔记。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "path": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "path"
+        ],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "write_note",
+       "description": "创建或整体覆盖一篇笔记（.md）。覆盖已有笔记时建议传入 read_note 得到的 etag。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "path": {
+          "type": "string"
+         },
+         "content": {
+          "type": "string"
+         },
+         "etag": {
+          "type": "string",
+          "description": "可选：基于的版本"
+         }
+        },
+        "required": [
+         "path",
+         "content"
+        ],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "append_to_note",
+       "description": "在笔记末尾追加内容；笔记不存在时创建。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "path": {
+          "type": "string"
+         },
+         "text": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "path",
+         "text"
+        ],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "move_note",
+       "description": "移动或重命名笔记/附件，并自动更新其他笔记中指向它的 [[双链]]。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "path": {
+          "type": "string"
+         },
+         "to": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "path",
+         "to"
+        ],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "delete_note",
+       "description": "删除一篇笔记或空文件夹（可从 git 历史恢复）。仅在内容已合并到别处时使用。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "path": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "path"
+        ],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+       }
+      },
+      {
+       "name": "save_conversation",
+       "description": "把一段与用户的对话存入 Chats/ 收件箱（status: inbox），之后可在网页端「AI 整理」中沉淀为知识笔记。messages 为 [{role: user|assistant, content}]。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "title": {
+          "type": "string"
+         },
+         "messages": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "role": {
+             "type": "string",
+             "enum": [
+              "user",
+              "assistant"
+             ]
+            },
+            "content": {
+             "type": "string"
+            }
+           },
+           "required": [
+            "role",
+            "content"
+           ],
+           "additionalProperties": false
+          }
+         },
+         "source": {
+          "type": "string",
+          "description": "可选：来自哪个客户端/模型"
+         }
+        },
+        "required": [
+         "title",
+         "messages"
+        ],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "list_inbox",
+       "description": "列出 Chats/ 中尚未整理（status: inbox）的对话。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+       }
+      },
+      {
+       "name": "mark_chat_distilled",
+       "description": "把一个对话标记为已整理，并记录它被沉淀到了哪些笔记。",
+       "inputSchema": {
+        "type": "object",
+        "properties": {
+         "path": {
+          "type": "string"
+         },
+         "notes": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "path"
+        ],
+        "additionalProperties": false
+       },
+       "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "method not found",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 10,
+    "method": "resources/list"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 10,
+    "error": {
+     "code": -32601,
+     "message": "method not found: resources/list"
+    }
+   }
+  },
+  {
+   "name": "method missing",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 11
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 11,
+    "error": {
+     "code": -32601,
+     "message": "method not found: None"
+    }
+   }
+  },
+  {
+   "name": "method null",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 12,
+    "method": null
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 12,
+    "error": {
+     "code": -32601,
+     "message": "method not found: None"
+    }
+   }
+  },
+  {
+   "name": "method number",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 13,
+    "method": 5
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 13,
+    "error": {
+     "code": -32601,
+     "message": "method not found: 5"
+    }
+   }
+  },
+  {
+   "name": "wrong jsonrpc",
+   "request": {
+    "jsonrpc": "1.0",
+    "id": 14,
+    "method": "ping"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": null,
+    "error": {
+     "code": -32600,
+     "message": "invalid request"
+    }
+   }
+  },
+  {
+   "name": "missing jsonrpc",
+   "request": {
+    "id": 15,
+    "method": "ping"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": null,
+    "error": {
+     "code": -32600,
+     "message": "invalid request"
+    }
+   }
+  },
+  {
+   "name": "missing jsonrpc notification",
+   "request": {
+    "method": "ping"
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": null,
+    "error": {
+     "code": -32600,
+     "message": "invalid request"
+    }
+   }
+  },
+  {
+   "name": "not an object",
+   "request": "ping",
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": null,
+    "error": {
+     "code": -32600,
+     "message": "invalid request"
+    }
+   }
+  },
+  {
+   "name": "null message",
+   "request": null,
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": null,
+    "error": {
+     "code": -32600,
+     "message": "invalid request"
+    }
+   }
+  },
+  {
+   "name": "unknown tool",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 16,
+    "method": "tools/call",
+    "params": {
+     "name": "nope"
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 16,
+    "error": {
+     "code": -32602,
+     "message": "unknown tool: nope"
+    }
+   }
+  },
+  {
+   "name": "unknown tool null",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 17,
+    "method": "tools/call",
+    "params": {
+     "arguments": {}
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 17,
+    "error": {
+     "code": -32602,
+     "message": "unknown tool: None"
+    }
+   }
+  },
+  {
+   "name": "unknown tool bool",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 18,
+    "method": "tools/call",
+    "params": {
+     "name": true
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 18,
+    "error": {
+     "code": -32602,
+     "message": "unknown tool: True"
+    }
+   }
+  },
+  {
+   "name": "get_conventions missing",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 19,
+    "method": "tools/call",
+    "params": {
+     "name": "get_conventions"
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 19,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：file not found"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "list_notes",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 20,
+    "method": "tools/call",
+    "params": {
+     "name": "list_notes"
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 20,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "- A.md | A | about A | #ml\n- Knowledge/RL/PPO.md [draft] | Proximal Policy Optimization | Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x) | #ppo #rl #tag/sub #中文标签 #强化学习\n- Knowledge/RL/Value.md | Value function | See [[PPO]].\n- Knowledge/Value.md | Value | Another value note linking [[Knowledge/RL/PPO|PPO]]\n- Note 02b.md | Note 02b | zero two b\n- Note 10.md | Note 10 | ten\n- Note 2.md | Note 2 | two [[note 1]]\n- Old.markdown | Old | Old style [[A]] and [[Same]]\n- Same.md | Same | same root\n- bad-utf8.md | bad-utf8 | caf� [[A]] �� end �a\n- badyaml.md | Real Title | body\n- crlf.md | crlf | line one\n- dates.md [True] | 2024 | desc | #1 #2.5 #None #True #x\n- emptyfm.md | Empty FM | \n- listtitle.md | ['a', 'b'] | {'k': 'v'} | #tag-string\n- needle-title.md | needle-title | no body match\n- nested/Same.md | Same | same nested\n- nested/deep/far.md | far | far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]\n- nofm.md | nofm | Just text without heading that is quite long xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n- note 1.md | note 1 | one\n- search.md | search | Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem \n- sub/B.md | B | back to [[A|alias]]\n- unicode-search.md | unicode-search | İstanbul ΟΔΟΣ ΣΟΦΙΑ needle\n- Ünïcode été.md | Été Ünicode | Café crème [[A]] ΟΔΟΣ İstanbul"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "list_notes with chats",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 21,
+    "method": "tools/call",
+    "params": {
+     "name": "list_notes",
+     "arguments": {
+      "include_chats": true
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 21,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "- A.md | A | about A | #ml\n- Chats/2025-01-01 1000 hello.md [inbox] | Hello chat | <!-- chat:user -->\n- Chats/2025-02-01 0900 second.md [distilled] | Second | <!-- chat:user -->\n- Chats/no-meta.md | 🤖 AI | <!-- chat:assistant -->\n- Knowledge/RL/PPO.md [draft] | Proximal Policy Optimization | Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x) | #ppo #rl #tag/sub #中文标签 #强化学习\n- Knowledge/RL/Value.md | Value function | See [[PPO]].\n- Knowledge/Value.md | Value | Another value note linking [[Knowledge/RL/PPO|PPO]]\n- Note 02b.md | Note 02b | zero two b\n- Note 10.md | Note 10 | ten\n- Note 2.md | Note 2 | two [[note 1]]\n- Old.markdown | Old | Old style [[A]] and [[Same]]\n- Same.md | Same | same root\n- bad-utf8.md | bad-utf8 | caf� [[A]] �� end �a\n- badyaml.md | Real Title | body\n- crlf.md | crlf | line one\n- dates.md [True] | 2024 | desc | #1 #2.5 #None #True #x\n- emptyfm.md | Empty FM | \n- listtitle.md | ['a', 'b'] | {'k': 'v'} | #tag-string\n- needle-title.md | needle-title | no body match\n- nested/Same.md | Same | same nested\n- nested/deep/far.md | far | far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]\n- nofm.md | nofm | Just text without heading that is quite long xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n- note 1.md | note 1 | one\n- search.md | search | Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem \n- sub/B.md | B | back to [[A|alias]]\n- unicode-search.md | unicode-search | İstanbul ΟΔΟΣ ΣΟΦΙΑ needle\n- Ünïcode été.md | Été Ünicode | Café crème [[A]] ΟΔΟΣ İstanbul"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "list_notes falsy chats",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 22,
+    "method": "tools/call",
+    "params": {
+     "name": "list_notes",
+     "arguments": {
+      "include_chats": false
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 22,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "- A.md | A | about A | #ml\n- Knowledge/RL/PPO.md [draft] | Proximal Policy Optimization | Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x) | #ppo #rl #tag/sub #中文标签 #强化学习\n- Knowledge/RL/Value.md | Value function | See [[PPO]].\n- Knowledge/Value.md | Value | Another value note linking [[Knowledge/RL/PPO|PPO]]\n- Note 02b.md | Note 02b | zero two b\n- Note 10.md | Note 10 | ten\n- Note 2.md | Note 2 | two [[note 1]]\n- Old.markdown | Old | Old style [[A]] and [[Same]]\n- Same.md | Same | same root\n- bad-utf8.md | bad-utf8 | caf� [[A]] �� end �a\n- badyaml.md | Real Title | body\n- crlf.md | crlf | line one\n- dates.md [True] | 2024 | desc | #1 #2.5 #None #True #x\n- emptyfm.md | Empty FM | \n- listtitle.md | ['a', 'b'] | {'k': 'v'} | #tag-string\n- needle-title.md | needle-title | no body match\n- nested/Same.md | Same | same nested\n- nested/deep/far.md | far | far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]\n- nofm.md | nofm | Just text without heading that is quite long xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n- note 1.md | note 1 | one\n- search.md | search | Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem \n- sub/B.md | B | back to [[A|alias]]\n- unicode-search.md | unicode-search | İstanbul ΟΔΟΣ ΣΟΦΙΑ needle\n- Ünïcode été.md | Été Ünicode | Café crème [[A]] ΟΔΟΣ İstanbul"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "list_notes null arguments",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 23,
+    "method": "tools/call",
+    "params": {
+     "name": "list_notes",
+     "arguments": null
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 23,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "- A.md | A | about A | #ml\n- Knowledge/RL/PPO.md [draft] | Proximal Policy Optimization | Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x) | #ppo #rl #tag/sub #中文标签 #强化学习\n- Knowledge/RL/Value.md | Value function | See [[PPO]].\n- Knowledge/Value.md | Value | Another value note linking [[Knowledge/RL/PPO|PPO]]\n- Note 02b.md | Note 02b | zero two b\n- Note 10.md | Note 10 | ten\n- Note 2.md | Note 2 | two [[note 1]]\n- Old.markdown | Old | Old style [[A]] and [[Same]]\n- Same.md | Same | same root\n- bad-utf8.md | bad-utf8 | caf� [[A]] �� end �a\n- badyaml.md | Real Title | body\n- crlf.md | crlf | line one\n- dates.md [True] | 2024 | desc | #1 #2.5 #None #True #x\n- emptyfm.md | Empty FM | \n- listtitle.md | ['a', 'b'] | {'k': 'v'} | #tag-string\n- needle-title.md | needle-title | no body match\n- nested/Same.md | Same | same nested\n- nested/deep/far.md | far | far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]\n- nofm.md | nofm | Just text without heading that is quite long xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n- note 1.md | note 1 | one\n- search.md | search | Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem \n- sub/B.md | B | back to [[A|alias]]\n- unicode-search.md | unicode-search | İstanbul ΟΔΟΣ ΣΟΦΙΑ needle\n- Ünïcode été.md | Été Ünicode | Café crème [[A]] ΟΔΟΣ İstanbul"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "search_notes",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 24,
+    "method": "tools/call",
+    "params": {
+     "name": "search_notes",
+     "arguments": {
+      "query": "alias"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 24,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "## Knowledge/RL/PPO.md\n  L12: Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x)\n## sub/B.md\n  L2: back to [[A|alias]]"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "search_notes many",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 25,
+    "method": "tools/call",
+    "params": {
+     "name": "search_notes",
+     "arguments": {
+      "query": "ppo"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 25,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "## Knowledge/RL/PPO.md\n  L3: tags: rl, 强化学习，ppo\n  L9: # PPO ##\n  L12: Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x)\n## Knowledge/Value.md\n  L1: Another value note linking [[Knowledge/RL/PPO|PPO]]\n## Chats/2025-01-01 1000 hello.md\n  L13: What is [[PPO]]?\n## Knowledge/RL/Value.md\n  L2: See [[PPO]]."
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "search_notes two terms",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 26,
+    "method": "tools/call",
+    "params": {
+     "name": "search_notes",
+     "arguments": {
+      "query": "value  NOTE"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 26,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "## Knowledge/Value.md\n  L1: Another value note linking [[Knowledge/RL/PPO|PPO]]\n## Knowledge/RL/PPO.md\n  L13: ![img](img%20one.png \"title\") [[Knowledge/RL/Value]] [[value]] [link](Value.md#part)\n  L14: [mail](mailto:a@b.c) [weird](http:/x) [[Missing Note]] ![[x.png]] [[sub/B.md#^block]]\n## crlf.md\n  L3: second [[Value]] and [[Note 2]]"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "search_notes none",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 27,
+    "method": "tools/call",
+    "params": {
+     "name": "search_notes",
+     "arguments": {
+      "query": "zzz-no-such-term"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 27,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "没有匹配的笔记"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "search_notes empty",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 28,
+    "method": "tools/call",
+    "params": {
+     "name": "search_notes",
+     "arguments": {
+      "query": "   "
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 28,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "没有匹配的笔记"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "search_notes unicode",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 29,
+    "method": "tools/call",
+    "params": {
+     "name": "search_notes",
+     "arguments": {
+      "query": "été"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 29,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "## Ünïcode été.md\n  L1: # Été Ünicode"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "read_note",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 30,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": "A.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 30,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "path: A.md\netag: 418e171fee74942ac0aa\n\n---\ntags: [ml]\nsummary: about A\n---\n# A\nsee [[B]] and ![[_assets/x.png]]\n"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "read_note crlf",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 31,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": "crlf.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 31,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "path: crlf.md\netag: 3e414dd2e2b40cbf198a\n\nline one\r\nsee [[B]]\r\nsecond [[Value]] and [[Note 2]]\r\n"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "read_note leading slash",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 32,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": "/Knowledge/RL/Value.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 32,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "path: Knowledge/RL/Value.md\netag: aef5f9dbc60dc66b51af\n\n# Value function\nSee [[PPO]].\n"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "read_note hidden",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 33,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": ".git/config"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 33,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：invalid path"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "read_note escape",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 34,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": "../x.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 34,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：invalid path"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "read_note binary",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 35,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": "_assets/x.png"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 35,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：not a text file"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "read_note missing",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 36,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": "nope.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 36,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：file not found"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "read_note folder",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 37,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": "Knowledge"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 37,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：file not found"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "read_note text file",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 38,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": "a.txt"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 38,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "path: a.txt\netag: 883f1705dc2211dac099\n\nplain text with PPO\n"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "get_backlinks",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 39,
+    "method": "tools/call",
+    "params": {
+     "name": "get_backlinks",
+     "arguments": {
+      "path": "A.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 39,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "- Knowledge/RL/PPO.md: Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x)\n- Old.markdown: Old style [[A]] and [[Same]]\n- bad-utf8.md: caf� [[A]] �� end �a\n- sub/B.md: back to [[A|alias]]\n- Ünïcode été.md: Café crème [[A]] ΟΔΟΣ İstanbul"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "get_backlinks ppo",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 40,
+    "method": "tools/call",
+    "params": {
+     "name": "get_backlinks",
+     "arguments": {
+      "path": "Knowledge/RL/PPO.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 40,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "- Chats/2025-01-01 1000 hello.md: What is [[PPO]]?\n- Knowledge/RL/Value.md: See [[PPO]].\n- Knowledge/Value.md: Another value note linking [[Knowledge/RL/PPO|PPO]]"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "get_backlinks none",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 41,
+    "method": "tools/call",
+    "params": {
+     "name": "get_backlinks",
+     "arguments": {
+      "path": "nofm.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 41,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "没有反向链接"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "get_backlinks hidden",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 42,
+    "method": "tools/call",
+    "params": {
+     "name": "get_backlinks",
+     "arguments": {
+      "path": "sub/.hidden/C.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 42,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：invalid path"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "write AGENTS.md",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 43,
+    "method": "tools/call",
+    "params": {
+     "name": "write_note",
+     "arguments": {
+      "path": "AGENTS.md",
+      "content": "# 约定\n\n- Inbox/\n"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 43,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已保存 AGENTS.md（etag f9830afd50617550fe7e）"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "get_conventions",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 44,
+    "method": "tools/call",
+    "params": {
+     "name": "get_conventions"
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 44,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "# 约定\n\n- Inbox/\n"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "write stale etag",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 45,
+    "method": "tools/call",
+    "params": {
+     "name": "write_note",
+     "arguments": {
+      "path": "A.md",
+      "content": "x",
+      "etag": "00000000000000000000"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 45,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：the note changed on disk since it was opened"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "write with etag",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 46,
+    "method": "tools/call",
+    "params": {
+     "name": "write_note",
+     "arguments": {
+      "path": "A.md",
+      "content": "# A\nsee [[B]]\n",
+      "etag": "418e171fee74942ac0aa"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 46,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已保存 A.md（etag cb901c40357502cf8c5b）"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "write new with empty etag",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 47,
+    "method": "tools/call",
+    "params": {
+     "name": "write_note",
+     "arguments": {
+      "path": "Knowledge/New.md",
+      "content": "new",
+      "etag": ""
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 47,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已保存 Knowledge/New.md（etag 11507a0e2f5e69d5dfa4）"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "write existing with empty etag",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 48,
+    "method": "tools/call",
+    "params": {
+     "name": "write_note",
+     "arguments": {
+      "path": "Knowledge/New.md",
+      "content": "n",
+      "etag": ""
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 48,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：the note changed on disk since it was opened"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "write null etag",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 49,
+    "method": "tools/call",
+    "params": {
+     "name": "write_note",
+     "arguments": {
+      "path": "Knowledge/New.md",
+      "content": "newer\n",
+      "etag": null
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 49,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已保存 Knowledge/New.md（etag 77e30f34ca80fc7e2683）"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "write non-text",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 50,
+    "method": "tools/call",
+    "params": {
+     "name": "write_note",
+     "arguments": {
+      "path": "x.png",
+      "content": "x"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 50,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：only text files can be edited"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "write hidden",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 51,
+    "method": "tools/call",
+    "params": {
+     "name": "write_note",
+     "arguments": {
+      "path": ".obsidian/x.md",
+      "content": "x"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 51,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：invalid path"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "append existing",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 52,
+    "method": "tools/call",
+    "params": {
+     "name": "append_to_note",
+     "arguments": {
+      "path": "Knowledge/New.md",
+      "text": "  more  \n\n"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 52,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已追加到 Knowledge/New.md"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "append new",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 53,
+    "method": "tools/call",
+    "params": {
+     "name": "append_to_note",
+     "arguments": {
+      "path": "Inbox/Idea.md",
+      "text": "\n idea \n"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 53,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已追加到 Inbox/Idea.md"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "append crlf",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 54,
+    "method": "tools/call",
+    "params": {
+     "name": "append_to_note",
+     "arguments": {
+      "path": "crlf.md",
+      "text": "tail"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 54,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已追加到 crlf.md"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "append binary",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 55,
+    "method": "tools/call",
+    "params": {
+     "name": "append_to_note",
+     "arguments": {
+      "path": "_assets/x.png",
+      "text": "x"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 55,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：not a text file"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "move",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 56,
+    "method": "tools/call",
+    "params": {
+     "name": "move_note",
+     "arguments": {
+      "path": "sub/B.md",
+      "to": "topics/Bee.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 56,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已移动到 topics/Bee.md，更新了 3 篇笔记的链接"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "move folder",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 57,
+    "method": "tools/call",
+    "params": {
+     "name": "move_note",
+     "arguments": {
+      "path": "nested",
+      "to": "Archive/nested"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 57,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已移动到 Archive/nested，更新了 0 篇笔记的链接"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "move missing",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 58,
+    "method": "tools/call",
+    "params": {
+     "name": "move_note",
+     "arguments": {
+      "path": "nope.md",
+      "to": "x.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 58,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：file not found"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "move onto existing",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 59,
+    "method": "tools/call",
+    "params": {
+     "name": "move_note",
+     "arguments": {
+      "path": "Note 2.md",
+      "to": "note 1.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 59,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：destination already exists"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "move escape",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 60,
+    "method": "tools/call",
+    "params": {
+     "name": "move_note",
+     "arguments": {
+      "path": "Note 2.md",
+      "to": "../x.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 60,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：invalid path"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "delete",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 61,
+    "method": "tools/call",
+    "params": {
+     "name": "delete_note",
+     "arguments": {
+      "path": "Inbox/Idea.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 61,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已删除 Inbox/Idea.md"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "delete folder not empty",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 62,
+    "method": "tools/call",
+    "params": {
+     "name": "delete_note",
+     "arguments": {
+      "path": "Knowledge"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 62,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：only empty folders can be deleted"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "delete empty folder",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 63,
+    "method": "tools/call",
+    "params": {
+     "name": "delete_note",
+     "arguments": {
+      "path": "Inbox"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 63,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已删除 Inbox"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "delete missing",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 64,
+    "method": "tools/call",
+    "params": {
+     "name": "delete_note",
+     "arguments": {
+      "path": "Inbox/Idea.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 64,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：file not found"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "delete root",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 65,
+    "method": "tools/call",
+    "params": {
+     "name": "delete_note",
+     "arguments": {
+      "path": "/"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 65,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：invalid path"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "list_inbox",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 66,
+    "method": "tools/call",
+    "params": {
+     "name": "list_inbox"
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 66,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "- Chats/2025-01-01 1000 hello.md | Hello chat | 2025-01-01T10:05\n- Chats/no-meta.md | no-meta | "
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "mark distilled",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 67,
+    "method": "tools/call",
+    "params": {
+     "name": "mark_chat_distilled",
+     "arguments": {
+      "path": "/Chats/2025-01-01 1000 hello.md",
+      "notes": [
+       "Knowledge/RL/PPO.md",
+       "A"
+      ]
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 67,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已标记 Chats/2025-01-01 1000 hello.md 为已整理"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "mark distilled again",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 68,
+    "method": "tools/call",
+    "params": {
+     "name": "mark_chat_distilled",
+     "arguments": {
+      "path": "Chats/2025-01-01 1000 hello.md",
+      "notes": [
+       "Knowledge/RL/PPO.md"
+      ]
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 68,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已标记 Chats/2025-01-01 1000 hello.md 为已整理"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "mark distilled no notes",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 69,
+    "method": "tools/call",
+    "params": {
+     "name": "mark_chat_distilled",
+     "arguments": {
+      "path": "Chats/no-meta.md"
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 69,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "已标记 Chats/no-meta.md 为已整理"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "mark distilled missing",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 70,
+    "method": "tools/call",
+    "params": {
+     "name": "mark_chat_distilled",
+     "arguments": {
+      "path": "Chats/nope.md",
+      "notes": []
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 70,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：file not found"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "list_inbox empty",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 71,
+    "method": "tools/call",
+    "params": {
+     "name": "list_inbox"
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 71,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "收件箱为空"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "list_notes after",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 72,
+    "method": "tools/call",
+    "params": {
+     "name": "list_notes",
+     "arguments": {
+      "include_chats": 1
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 72,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "- A.md | A | see [[Bee]]\n- AGENTS.md | 约定 | - Inbox/\n- Archive/nested/Same.md | Same | same nested\n- Archive/nested/deep/far.md | far | far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]\n- Chats/2025-01-01 1000 hello.md [distilled] | Hello chat | <!-- chat:user -->\n- Chats/2025-02-01 0900 second.md [distilled] | Second | <!-- chat:user -->\n- Chats/no-meta.md [distilled] | 🤖 AI | <!-- chat:assistant -->\n- Knowledge/New.md | New | newer\n- Knowledge/RL/PPO.md [draft] | Proximal Policy Optimization | Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x) | #ppo #rl #tag/sub #中文标签 #强化学习\n- Knowledge/RL/Value.md | Value function | See [[PPO]].\n- Knowledge/Value.md | Value | Another value note linking [[Knowledge/RL/PPO|PPO]]\n- Note 02b.md | Note 02b | zero two b\n- Note 10.md | Note 10 | ten\n- Note 2.md | Note 2 | two [[note 1]]\n- Old.markdown | Old | Old style [[A]] and [[Same]]\n- Same.md | Same | same root\n- bad-utf8.md | bad-utf8 | caf� [[A]] �� end �a\n- badyaml.md | Real Title | body\n- crlf.md | crlf | line one\n- dates.md [True] | 2024 | desc | #1 #2.5 #None #True #x\n- emptyfm.md | Empty FM | \n- listtitle.md | ['a', 'b'] | {'k': 'v'} | #tag-string\n- needle-title.md | needle-title | no body match\n- nofm.md | nofm | Just text without heading that is quite long xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n- note 1.md | note 1 | one\n- search.md | search | Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem \n- topics/Bee.md | B | back to [[A|alias]]\n- unicode-search.md | unicode-search | İstanbul ΟΔΟΣ ΣΟΦΙΑ needle\n- Ünïcode été.md | Été Ünicode | Café crème [[A]] ΟΔΟΣ İstanbul"
+      }
+     ],
+     "isError": false
+    }
+   }
+  },
+  {
+   "name": "missing argument",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 73,
+    "method": "tools/call",
+    "params": {
+     "name": "search_notes",
+     "arguments": {}
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 73,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：MCPServer._register.<locals>.search_notes() missing 1 required positional argument: 'query'"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "missing two arguments",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 74,
+    "method": "tools/call",
+    "params": {
+     "name": "write_note",
+     "arguments": {}
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 74,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：MCPServer._register.<locals>.write_note() missing 2 required positional arguments: 'path' and 'content'"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "unexpected argument",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 75,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": {
+      "path": "A.md",
+      "bogus": 1,
+      "other": 2
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 75,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：MCPServer._register.<locals>.read_note() got an unexpected keyword argument 'bogus'"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "unexpected argument first",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 76,
+    "method": "tools/call",
+    "params": {
+     "name": "list_inbox",
+     "arguments": {
+      "x": 1
+     }
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 76,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：MCPServer._register.<locals>.list_inbox() got an unexpected keyword argument 'x'"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "arguments list",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 77,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": [
+      "A.md"
+     ]
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 77,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：app.mcp.MCPServer._register.<locals>.read_note() argument after ** must be a mapping, not list"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "arguments string",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 78,
+    "method": "tools/call",
+    "params": {
+     "name": "read_note",
+     "arguments": "A.md"
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 78,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：app.mcp.MCPServer._register.<locals>.read_note() argument after ** must be a mapping, not str"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "arguments number",
+   "request": {
+    "jsonrpc": "2.0",
+    "id": 79,
+    "method": "tools/call",
+    "params": {
+     "name": "list_inbox",
+     "arguments": 3
+    }
+   },
+   "reply": {
+    "jsonrpc": "2.0",
+    "id": 79,
+    "result": {
+     "content": [
+      {
+       "type": "text",
+       "text": "错误：app.mcp.MCPServer._register.<locals>.list_inbox() argument after ** must be a mapping, not int"
+      }
+     ],
+     "isError": true
+    }
+   }
+  },
+  {
+   "name": "batch",
+   "request": [
+    {
+     "jsonrpc": "2.0",
+     "id": 80,
+     "method": "ping"
+    },
+    {
+     "jsonrpc": "2.0",
+     "method": "notifications/initialized"
+    },
+    {
+     "jsonrpc": "2.0",
+     "id": 81,
+     "method": "tools/call",
+     "params": {
+      "name": "read_note",
+      "arguments": {
+       "path": "Knowledge/RL/Value.md"
+      }
+     }
+    },
+    5,
+    [],
+    {
+     "jsonrpc": "2.0"
+    }
+   ],
+   "reply": [
+    {
+     "jsonrpc": "2.0",
+     "id": 80,
+     "result": {}
+    },
+    {
+     "jsonrpc": "2.0",
+     "id": 81,
+     "result": {
+      "content": [
+       {
+        "type": "text",
+        "text": "path: Knowledge/RL/Value.md\netag: aef5f9dbc60dc66b51af\n\n# Value function\nSee [[PPO]].\n"
+       }
+      ],
+      "isError": false
+     }
+    },
+    {
+     "jsonrpc": "2.0",
+     "id": null,
+     "error": {
+      "code": -32600,
+      "message": "invalid request"
+     }
+    },
+    {
+     "jsonrpc": "2.0",
+     "id": null,
+     "error": {
+      "code": -32600,
+      "message": "invalid request"
+     }
+    }
+   ]
+  },
+  {
+   "name": "batch of notifications",
+   "request": [
+    {
+     "jsonrpc": "2.0",
+     "method": "notifications/initialized"
+    },
+    {
+     "jsonrpc": "2.0",
+     "method": "notifications/cancelled",
+     "params": {}
+    }
+   ],
+   "reply": null
+  },
+  {
+   "name": "empty batch",
+   "request": [],
+   "reply": null
+  }
+ ],
+ "files": {
+  "A.md": "IyBBCnNlZSBbW0JlZV1dCg==",
+  "AGENTS.md": "IyDnuqblrpoKCi0gSW5ib3gvCg==",
+  "Archive/nested/Same.md": "c2FtZSBuZXN0ZWQK",
+  "Archive/nested/deep/far.md": "ZmFyIGF3YXkgW1tTYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbLi9TYW1lXV0gW1suLi9TYW1lXV0gW1svU2FtZV1dCg==",
+  "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBkaXN0aWxsZWQKY3JlYXRlZDogJzIwMjUtMDEtMDFUMTA6MDA6MDArMDg6MDAnCnVwZGF0ZWQ6ICcyMDI1LTAxLTAxVDEwOjA1OjAwKzA4OjAwJwptb2RlbDogZ3B0CmRpc3RpbGxlZF9pbnRvOgotICdbW0tub3dsZWRnZS9STC9QUE9dXScKLSAnW1tBXV0nCi0tLQoKPCEtLSBjaGF0OnVzZXIgLS0+CiMjIyDwn6eRIOaIkQoKV2hhdCBpcyBbW1BQT11dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+  "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+  "Chats/no-meta.md": "LS0tCnN0YXR1czogZGlzdGlsbGVkCi0tLQoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+  "Knowledge/New.md": "bmV3ZXIKCm1vcmUK",
+  "Knowledge/RL/PPO.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tLbm93bGVkZ2UvUkwvVmFsdWVdXSBbW3ZhbHVlXV0gW2xpbmtdKFZhbHVlLm1kI3BhcnQpClttYWlsXShtYWlsdG86YUBiLmMpIFt3ZWlyZF0oaHR0cDoveCkgW1tNaXNzaW5nIE5vdGVdXSAhW1t4LnBuZ11dIFtbQmVlI15ibG9ja11dClBQTyBjbGlwcyB0aGUgcmF0aW8uIHBwbyBwcG8gUFBPLgo=",
+  "Knowledge/RL/Value.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE9dXS4K",
+  "Knowledge/RL/img one.png": "aW1n",
+  "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tLbm93bGVkZ2UvUkwvUFBPfFBQT11dCg==",
+  "Note 02b.md": "emVybyB0d28gYg==",
+  "Note 10.md": "dGVu",
+  "Note 2.md": "dHdvIFtbbm90ZSAxXV0=",
+  "Old.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW1NhbWVdXQo=",
+  "Same.md": "c2FtZSByb290Cg==",
+  "_assets/x.png": "iVBORw==",
+  "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+  "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+  "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+  "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+  "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+  "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dCgp0YWlsCg==",
+  "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+  "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+  "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+  "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+  "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+  "note 1.md": "b25l",
+  "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+  "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+  "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+  "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+ }
+}

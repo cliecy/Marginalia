@@ -1,0 +1,134 @@
+/*
+ * API 与 MCP — after Magpie's gateway page: a status card with the address
+ * pill, a muted intro, folding sections, the 接入 card with a right-aligned
+ * label column, and lists of endpoints and tools that open in place.
+ * Class prefix: .api-
+ */
+
+/* ------------------------------------------------------------ status card */
+.api-gw { margin: 4px 0 0; }
+.api-gw .row { min-height: 54px; gap: 10px; padding: 9px 10px 9px 12px; }
+.api-gw-dot.sdot { width: 8px; height: 8px; margin: 0 5px 0 4px; }
+.api-gw .name { gap: 0; }
+.api-gw .sub { white-space: normal; line-height: 1.45; }
+.api-gw-state { margin-left: 8px; font-size: 11px; font-weight: 500; color: var(--green); }
+.api-gw-down { color: var(--amber); }
+.api-gw-off, .api-gw-unknown { color: var(--muted); }
+
+.api-url {
+  flex: none; display: inline-flex; align-items: center; max-width: 46%; height: 24px; padding: 0 8px; border-radius: 6px;
+  background: var(--pill); box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast) var(--ease);
+}
+.api-url:hover { background: var(--pill-hover); box-shadow: inset 0 0 0 1px var(--line); }
+.api-url:active { transform: scale(.97); }
+.api-url code { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; color: var(--fg-2); user-select: none; -webkit-user-select: none; }
+.api-url:hover code { color: var(--fg); }
+
+.api-intro { margin-top: 10px; margin-bottom: 0; max-width: none; }
+.api-intro-link {
+  margin-left: 6px; padding: 0 1px; border-radius: 4px; color: var(--fg-2); font-weight: 500;
+  text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px;
+  transition: color var(--t-fast), text-decoration-color var(--t-fast);
+}
+.api-intro-link:hover { color: var(--fg); text-decoration-color: currentColor; }
+
+/* ------------------------------------------------------------ section heads */
+.api-head { display: flex; align-items: center; gap: 8px; min-height: 26px; margin: 16px 2px 6px; min-width: 0; }
+.api-fold {
+  display: inline-flex; align-items: center; gap: 5px; margin-left: -4px; padding: 3px 6px 3px 4px; border-radius: 6px;
+  color: var(--faint); transition: background var(--t-fast), color var(--t-fast);
+}
+.api-fold:hover { background: var(--pill); color: var(--muted); }
+.api-fold svg { transform: rotate(90deg); transition: transform .15s ease-out; }
+.api-fold[aria-expanded="false"] svg { transform: none; }
+.api-fold-title { font-size: var(--fs-section); font-weight: 600; letter-spacing: .05em; color: var(--muted); }
+.api-fold em { font-style: normal; font-size: var(--fs-section); color: var(--fg-3); }
+.api-head-note { margin-left: auto; min-width: 0; font-size: var(--fs-section); color: var(--fg-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.api-head-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; flex: none; }
+.api-head-note + .api-head-actions { margin-left: 4px; }
+.api-find.search { flex: none; width: 180px; }
+
+/* ------------------------------------------------------------ 接入 card */
+.api-connect {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px 14px; align-items: start;
+  padding: 12px 14px 14px; animation: api-reveal .22s var(--ease);
+}
+.api-connect > label { padding-top: 4px; font-size: 12px; color: var(--fg-2); text-align: right; white-space: nowrap; }
+.api-connect > div { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+.api-connect .seg { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.api-connect .seg::-webkit-scrollbar { display: none; }
+.api-connect .seg > button { flex: none; }
+.api-hint { margin-top: 5px; max-width: 640px; font-size: 11px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
+.api-snippets { max-width: 760px; }
+.api-snippets .snip { background: var(--card); }
+.api-snippets .snip-copy { background: var(--card); }
+.api-masked-note { color: var(--fg-3); }
+.api-token-err { display: flex; align-items: center; gap: 6px; min-height: 26px; font-size: 12px; color: var(--red); }
+
+/* ------------------------------------------------------------ lists */
+.api-list .row.compact { min-height: 42px; }
+.api-list .row-ic { min-width: 26px; }
+.api-m {
+  display: inline-grid; place-items: center; width: 38px; height: 18px; border-radius: 5px;
+  font: 600 9.5px/1 var(--code); letter-spacing: .04em;
+}
+.api-m-get { background: var(--green-soft); color: var(--green); }
+.api-m-post { background: var(--accent-soft); color: var(--accent); }
+.api-m-put, .api-m-patch { background: var(--amber-soft); color: var(--amber); }
+.api-m-delete { background: var(--red-soft); color: var(--red); }
+.api-path { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; font-weight: 500; color: var(--fg); }
+.api-path i { font-style: normal; color: var(--muted); }
+
+.api-tag {
+  flex: none; display: inline-flex; align-items: center; height: 20px; padding: 0 7px; border-radius: 6px;
+  font-size: 11px; color: var(--fg-2); background: var(--pill); white-space: nowrap;
+}
+.api-tag-amber { color: var(--amber); background: var(--amber-soft); }
+.api-tag-red { color: var(--red); background: var(--red-soft); }
+.api-tag-req { color: var(--accent); background: var(--accent-soft); }
+
+.api-group {
+  padding: 10px 14px 4px; font-size: 10.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--faint); background: var(--card);
+}
+
+.row.api-open { background: var(--card-2); }
+.row.api-open .row-chev, .row.api-open:hover .row-chev { transform: rotate(90deg); color: var(--muted); }
+.list > .row.api-open + .api-detail { border-top: 0; }
+.api-detail {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+  padding: 2px 16px 14px 60px; background: var(--card-2); animation: api-reveal .2s var(--ease);
+}
+.api-tool + .api-detail { padding-left: 48px; }
+.api-detail .snip, .api-detail .snip-copy { background: var(--card); }
+.api-desc { max-width: 680px; font-size: 12px; line-height: 1.6; color: var(--fg-2); white-space: pre-line; user-select: text; -webkit-user-select: text; }
+.api-desc-note { font-size: var(--fs-sub); color: var(--muted); }
+
+.api-fields { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+.api-fields-title { margin-bottom: 1px; font-size: 10.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.api-field { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 8px; font-size: 12px; line-height: 1.5; }
+.api-field-name { font-size: 12px; font-weight: 500; color: var(--fg); }
+.api-field-type { font: 11px var(--code); color: var(--muted); }
+.api-field .api-tag { height: 17px; padding: 0 5px; font-size: 10.5px; align-self: center; }
+.api-field-desc { flex: 1 1 240px; min-width: 0; color: var(--fg-2); }
+
+.api-sk { pointer-events: none; }
+.api-sk .who { display: flex; flex-direction: column; }
+
+/* the refresh button turns while things load */
+.api-busy svg { animation: spin .9s linear infinite; }
+
+@keyframes api-reveal { from { opacity: 0; transform: translateY(-3px); } }
+
+@media (max-width: 640px) {
+  .api-connect { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 12px; }
+  .api-connect > label { padding-top: 8px; text-align: left; }
+  .api-gw .row { flex-wrap: wrap; row-gap: 6px; }
+  .api-gw .row::after { content: ""; order: 1; flex-basis: 100%; }
+  .api-gw .who { flex: 1 1 0; }
+  .api-gw .row > .api-url, .api-gw .row > .btn { order: 2; max-width: calc(100% - 27px); margin-left: 27px; }
+  .api-head-note { display: none; }
+  .api-find.search { width: 130px; }
+  .api-detail, .api-tool + .api-detail { padding-left: 14px; }
+}

@@ -1,0 +1,99 @@
+/*
+ * Magpie — the integration page: a hero card with Magpie's bird on an ink
+ * tile, two integration rows in Magpie's Agent-row manner (icon, name, a green
+ * "已接入" line, controls at the right), the output of the last CLI run, and
+ * the gateway's models.
+ * Class prefix: .mp-
+ */
+
+/* hero */
+.mp-hero { display: flex; align-items: center; gap: 14px; margin-top: 4px; padding: 16px 16px 16px 18px; }
+/* an ink tile in both themes (Magpie's app mark); the hairline only shows on a dark card */
+.mp-mark {
+  flex: none; display: grid; place-items: center; border-radius: 12px;
+  background: #1c1c21; color: #f4f4f6;
+  box-shadow: inset 0 0 0 .5px color-mix(in srgb, var(--fg) 16%, transparent), 0 1px 2px rgba(0, 0, 0, .14), 0 6px 16px -6px rgba(0, 0, 0, .3);
+}
+.mp-hero-text { flex: 1 1 auto; min-width: 0; }
+.mp-title { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.mp-title h2 { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+.mp-state { display: inline-flex; align-items: center; gap: 7px; font-size: var(--fs-sub); font-weight: 500; white-space: nowrap; }
+.mp-state .sdot { width: 6px; height: 6px; }
+.mp-state-green { color: var(--green); }
+.mp-state-amber { color: var(--amber); }
+.mp-state-grey { color: var(--muted); }
+.mp-hero-text p { margin-top: 3px; max-width: 640px; font-size: 12px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
+.mp-hero-side { flex: none; display: flex; align-items: center; gap: 8px; }
+
+.mp-url {
+  display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 6px;
+  background: var(--pill); box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast) var(--ease);
+}
+.mp-url:hover { background: var(--pill-hover); box-shadow: inset 0 0 0 1px var(--line); }
+.mp-url:active { transform: scale(.97); }
+.mp-url code { font-size: 11px; color: var(--fg-2); user-select: none; -webkit-user-select: none; }
+.mp-url:hover code { color: var(--fg); }
+
+.mp-intro { margin-top: 10px; margin-bottom: 0; max-width: none; }
+
+/* integration rows */
+.mp-list .row { min-height: 60px; }
+.mp-list .sub { white-space: normal; line-height: 1.45; }
+.mp-ic { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--pill); color: var(--fg-2); }
+.mp-on { display: inline-flex; align-items: center; gap: 6px; }
+.mp-on .sdot { width: 6px; height: 6px; }
+
+/* the last magpie CLI run */
+.mp-run { margin-top: 10px; padding: 10px 12px 12px 14px; animation: content-in .22s var(--ease); }
+.mp-run-head { display: flex; align-items: center; gap: 7px; min-height: 22px; font-size: var(--fs-label); }
+.mp-run-head b { font-weight: 600; }
+.mp-run.ok .mp-run-head > .ic-svg { color: var(--green); }
+.mp-run.err .mp-run-head > .ic-svg { color: var(--red); }
+.mp-run-time { font-size: var(--fs-sub); color: var(--fg-3); }
+.mp-run-head .icon-btn { margin-left: auto; }
+.mp-run-cmd {
+  display: flex; align-items: center; gap: 8px; margin-top: 8px; padding: 4px 4px 4px 10px;
+  border-radius: 8px; background: var(--card-2); border: 1px solid var(--line);
+}
+.mp-run-cmd > span { flex: none; font: 12px var(--code); color: var(--faint); }
+.mp-run-cmd code { flex: 1 1 auto; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; font-size: 11.5px; color: var(--fg); }
+.mp-run-cmd code::-webkit-scrollbar { display: none; }
+.mp-run-out {
+  margin-top: 6px; max-height: 240px; overflow: auto; padding: 8px 10px; border-radius: 8px;
+  background: var(--card-2); border: 1px solid var(--line-2);
+  font-size: 11.5px; line-height: 1.55; color: var(--fg-2); white-space: pre-wrap; word-break: break-word;
+}
+.mp-run.err .mp-run-out { color: var(--red); background: var(--red-soft); border-color: transparent; }
+
+/* register dialog */
+.mp-dlg { display: flex; flex-direction: column; gap: 10px; }
+.mp-dlg .dlg-message b { font-weight: 600; color: var(--fg); }
+.mp-dlg-row { display: flex; align-items: center; gap: 12px; margin-top: 2px; }
+.mp-dlg-label { font-size: var(--fs-section); font-weight: 600; letter-spacing: .05em; color: var(--muted); }
+.mp-dlg-hint { margin-top: -3px; font-size: var(--fs-sub); line-height: 1.5; color: var(--muted); }
+.mp-dlg-cmd.snip { margin-top: -4px; padding-right: 12px; }
+.mp-dlg-cmd code { white-space: pre-wrap; word-break: break-all; }
+
+/* the gateway's models */
+.mp-find.search { flex: none; width: 160px; }
+.mp-id { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 12.5px; font-weight: 500; color: var(--fg); }
+.mp-pick { font-size: var(--fs-sub); color: var(--accent); opacity: 0; transition: opacity var(--t-fast); }
+.mp-models .row:hover .mp-pick, .mp-models .row:focus-visible .mp-pick { opacity: 1; }
+
+.mp-busy svg { animation: spin .9s linear infinite; }
+
+@media (max-width: 640px) {
+  .mp-hero { flex-wrap: wrap; }
+  .mp-hero-side { width: 100%; padding-left: 58px; }
+  .mp-list .row { flex-wrap: wrap; }
+  .mp-list .row-right { margin-left: auto; }
+  .mp-find.search { width: 120px; }
+}
+
+/* an inline way out in a row's sub-line */
+.mp-link {
+  margin-left: 6px; padding: 0 2px; border-radius: 4px; font-size: inherit; color: var(--accent);
+  transition: background var(--t-fast);
+}
+.mp-link:hover { background: var(--accent-soft); }

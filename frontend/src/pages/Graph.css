@@ -1,0 +1,123 @@
+/*
+ * 知识图谱 — the graph page (prefix .gp-) and GraphView's canvas (.graph-*).
+ * Full-bleed canvas on the grey ground with a dot grid that pans and zooms
+ * with the graph; tools float over it as Magpie-style pills on --pop-bg.
+ */
+.gp-canvas { position: relative; height: 100%; min-height: 0; }
+
+.graph { position: absolute; inset: 0; overflow: hidden; background: var(--bg); outline: none; }
+
+/* ------------------------------------------------------------- canvas */
+.graph-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--fg) 9%, transparent) 1px, transparent 1.3px);
+}
+.graph-canvas.dragging { cursor: grabbing; }
+.graph-world.gliding { transition: transform .4s var(--ease); }
+
+.graph-link {
+  stroke: color-mix(in srgb, var(--fg) 16%, transparent); stroke-width: 1; vector-effect: non-scaling-stroke;
+  transition: stroke var(--t) var(--ease), opacity var(--t) var(--ease);
+}
+.graph-link.hot { stroke: var(--accent); stroke-width: 1.6; }
+.graph-link.dim { opacity: .25; }
+
+.graph-node { cursor: pointer; transition: opacity var(--t) var(--ease); }
+.graph-node.dim { opacity: .16; }
+.graph-dot {
+  fill: var(--node, var(--c7)); stroke: var(--bg); stroke-width: 1.5; vector-effect: non-scaling-stroke;
+  transition: transform var(--t) var(--ease);
+}
+.graph-node.hover .graph-dot { transform: scale(1.18); }
+.graph-node.chat .graph-dot { fill: var(--card); stroke: var(--node, var(--c7)); stroke-width: 1.8; stroke-dasharray: 2.5 2; }
+.graph-halo { fill: none; stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; opacity: .55; }
+.graph-node.current .graph-halo { stroke: var(--fg); opacity: .7; }
+.graph-node.current .graph-dot { stroke: var(--card); stroke-width: 2; }
+.graph-node.match .graph-halo { stroke: var(--accent); opacity: .85; animation: graph-ping 1.6s var(--ease) infinite; }
+@keyframes graph-ping { 50% { opacity: .35; } }
+
+.graph-labels { pointer-events: none; }
+.graph-label {
+  fill: var(--fg-2); text-anchor: middle; font-weight: 500;
+  paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round;
+  transition: opacity var(--t) var(--ease);
+}
+.graph-label.strong { fill: var(--fg); font-weight: 600; }
+.graph-label.dim { opacity: .16; }
+
+/* ------------------------------------------------------------- floating tools */
+.graph-bar, .graph-count, .graph-legend .graph-chip, .graph-tip {
+  background: var(--pop-bg); -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6);
+}
+.graph-bar {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  display: flex; align-items: center; gap: 4px; max-width: calc(100% - 24px); flex-wrap: wrap;
+  padding: 4px 6px 4px 4px; border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(20, 22, 30, .08), 0 0 0 .5px color-mix(in srgb, var(--fg) 14%, transparent);
+}
+.graph-search { flex: 0 1 196px; width: 196px; min-width: 120px; }
+.graph-search input { background: transparent; border-color: transparent; }
+.graph-search input:hover { background: var(--pill); }
+.graph-search input:focus { background: var(--card); }
+.graph-hits { padding: 0 6px; font-size: var(--fs-sub); font-weight: 500; color: var(--accent); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.graph-hits.none { color: var(--muted); font-weight: 400; }
+.graph-sep { width: 1px; height: 16px; margin: 0 4px; background: var(--line); flex: none; }
+.graph-switch { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 6px; border-radius: 7px; font-size: 12px; color: var(--ctl-fg); cursor: default; transition: background var(--t-fast); }
+.graph-switch:hover { background: var(--pill); color: var(--fg); }
+.graph-zoom { min-width: 44px; height: 22px; padding: 0 4px; border-radius: 6px; font-size: 11.5px; color: var(--fg-2); font-variant-numeric: tabular-nums; transition: background var(--t-fast), color var(--t-fast); }
+.graph-zoom:hover { background: var(--pill); color: var(--fg); }
+
+.graph-count {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px;
+  font-size: var(--fs-sub); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap;
+  box-shadow: 0 0 0 .5px color-mix(in srgb, var(--fg) 12%, transparent);
+}
+
+.graph-legend { position: absolute; left: 12px; bottom: 12px; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px; max-width: min(760px, calc(100% - 24px)); pointer-events: none; }
+.graph-chip {
+  display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px 0 8px; border-radius: 999px;
+  font-size: var(--fs-sub); color: var(--fg-2); white-space: nowrap; pointer-events: auto;
+  box-shadow: 0 0 0 .5px color-mix(in srgb, var(--fg) 12%, transparent);
+  transition: opacity var(--t) var(--ease), color var(--t-fast), box-shadow var(--t-fast), transform .12s var(--ease);
+}
+.graph-chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--node); flex: none; }
+.graph-chip em { font-style: normal; font-size: 10.5px; color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.graph-chip:hover { color: var(--fg); box-shadow: 0 0 0 .5px color-mix(in srgb, var(--fg) 24%, transparent); }
+.graph-chip:active { transform: scale(.96); }
+.graph-chip.on { color: var(--fg); box-shadow: 0 0 0 1.5px var(--node); }
+.graph-chip.off { opacity: .55; }
+.graph-chip.more { color: var(--muted); }
+
+.graph-hint { position: absolute; right: 14px; bottom: 16px; z-index: 1; font-size: 11px; color: var(--fg-3); pointer-events: none; white-space: nowrap; }
+
+.graph-tip {
+  position: absolute; z-index: 3; transform: translate(-50%, -100%); pointer-events: none;
+  display: flex; flex-direction: column; gap: 2px; max-width: 280px; padding: 7px 10px; border-radius: 10px;
+  box-shadow: var(--shadow); animation: graph-tip-in .14s var(--ease);
+}
+@keyframes graph-tip-in { from { opacity: 0; transform: translate(-50%, calc(-100% + 3px)); } }
+.graph-tip b { font-size: 12.5px; font-weight: 600; color: var(--fg); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.graph-tip-path { font-family: var(--code); font-size: 10.5px; color: var(--fg-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.graph-tip-meta { display: flex; flex-wrap: wrap; gap: 2px 8px; margin-top: 2px; font-size: 11px; color: var(--muted); }
+.graph-tip-meta em { font-style: normal; color: var(--accent); }
+
+/* ------------------------------------------------------------- states */
+.graph-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: var(--fs-label); color: var(--muted); }
+.graph > .empty { position: absolute; inset: 0; justify-content: center; }
+.graph-empty { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.graph-empty .empty { pointer-events: auto; }
+
+@media (max-width: 720px) {
+  .graph-hint { display: none; }
+  .graph-count { top: auto; bottom: 12px; right: 12px; }
+  .graph-legend { bottom: 46px; }
+  .graph-search { width: 140px; flex-basis: 140px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .graph-world.gliding { transition: none; }
+  .graph-node.match .graph-halo { animation: none; }
+  .graph-tip { animation: none; }
+}

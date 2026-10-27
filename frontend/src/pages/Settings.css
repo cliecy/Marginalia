@@ -1,0 +1,109 @@
+/*
+ * 设置 — Magpie's settings pages: white lists of rows (label 500, a muted line
+ * under it, the control at the right), small section labels, a 查找设置 field
+ * in the top bar that shows matching rows from every section.
+ * Class prefix: .set-
+ */
+
+.set-section { display: flex; flex-direction: column; animation: content-in .22s var(--ease); }
+/* Magpie's intro lines run the width of the content; 72ch is ~36 CJK characters */
+.set-section > .page-intro { margin-bottom: 10px; max-width: none; }
+.set-section > * + .list, .set-section > * + .set-block, .set-part > * + .list, .set-part > * + .set-block { margin-top: 10px; }
+.set-section > .set-head + .list, .set-part > .set-head + .list,
+.set-section > .page-intro + .list, .set-section > .page-intro + .set-block { margin-top: 0; }
+.set-page .set-head > .section-head { margin-top: 20px; }
+
+/* rows */
+.set-row .row-right .seg { margin: -2px 0; }
+.set-row .sub { white-space: normal; line-height: 1.45; }
+.set-row .who { min-width: 40%; }
+.set-note { margin: 8px 2px 0; max-width: 680px; font-size: var(--fs-sub); line-height: 1.55; color: var(--muted); text-wrap: pretty; }
+.set-gap { margin-top: 10px; }
+.set-ext { color: var(--faint); transition: color var(--t-fast), transform var(--t) var(--ease); }
+.row.clickable:hover .set-ext { color: var(--muted); transform: translate(1px, -1px); }
+.set-ok { color: var(--green); }
+.set-code {
+  display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 6px;
+  background: var(--pill); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 11.5px; color: var(--fg-2);
+}
+.set-path { font-family: var(--code); font-size: 11.5px; user-select: text; -webkit-user-select: text; overflow-wrap: anywhere; }
+.set-path em { font-family: var(--font); font-style: normal; }
+.set-token { width: 260px; }
+
+/* a setting an environment variable decides at start-up */
+.set-env { display: inline-flex; align-items: center; gap: 3px; color: var(--amber); white-space: nowrap; }
+.set-env .ic-svg { flex: none; }
+.set-env code { font-size: 10.5px; color: inherit; }
+.set-env-sep { color: var(--faint); }
+
+/* the current vault: a tinted folder tile */
+.set-vault { min-height: 58px; }
+.set-vault-ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); }
+.set-vault .name { font-size: 13.5px; font-weight: 600; }
+
+/* a field that saves on Enter / blur */
+.set-input { position: relative; display: inline-flex; align-items: center; gap: 6px; }
+.set-input .input { flex: 1 1 auto; min-width: 0; }
+.set-input.is-disabled .set-suffix { opacity: .5; }
+.set-suffix { flex: none; font-size: 12px; color: var(--muted); }
+.set-state { position: absolute; right: calc(100% + 7px); top: 50%; transform: translateY(-50%); display: grid; place-items: center; color: var(--green); pointer-events: none; }
+.set-state:empty { display: none; }
+.set-state .ic-svg { animation: copy-pop .36s var(--ease); }
+.set-state .spinner { color: var(--muted); }
+
+/* the custom-provider form */
+.set-form-wrap { margin-top: 10px; }
+.set-form { display: flex; flex-direction: column; gap: 12px; padding: 14px 16px 12px; animation: content-in .2s var(--ease); }
+.set-form-foot { display: flex; align-items: center; gap: 10px; min-height: 36px; margin: 0 -16px; padding: 10px 16px 0; border-top: 1px solid var(--line-2); }
+.set-form-foot > .btn { margin-left: auto; }
+.set-form-note { font-size: var(--fs-sub); color: var(--fg-3); }
+.set-link {
+  margin-left: 6px; padding: 0 2px; border-radius: 4px; color: var(--accent); font-size: inherit;
+  transition: background var(--t-fast);
+}
+.set-link:hover { background: var(--accent-soft); }
+
+.set-test { display: inline-flex; align-items: center; gap: 5px; min-width: 0; max-width: 100%; font-size: var(--fs-sub); color: var(--muted); vertical-align: middle; }
+.set-test > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.set-test .ic-svg { flex: none; }
+.set-test.ok { color: var(--green); }
+.set-test.err { color: var(--red); }
+.set-test.err > span { white-space: normal; }
+
+/* 关于 */
+.set-about { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+.set-about-text { flex: 1 1 auto; min-width: 0; }
+.set-about-text h2 { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+.set-about-text p { margin-top: 2px; font-size: 12px; color: var(--muted); }
+.set-about-meta { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+
+/* dialogs */
+.set-dialog { display: flex; flex-direction: column; gap: 8px; }
+.set-dialog .field-error, .set-dialog .field-hint { margin-top: 0; }
+
+/* loading rows */
+.set-sk { pointer-events: none; }
+.set-sk .who { display: flex; flex-direction: column; }
+
+/* the top-bar search and the results across sections */
+.set-q.search { flex: none; width: 180px; }
+.set-results { display: flex; flex-direction: column; animation: content-in .18s var(--ease); }
+.set-part::before {
+  content: attr(data-part); display: block; margin: 16px 2px 6px;
+  font-size: var(--fs-section); font-weight: 600; letter-spacing: .05em; color: var(--muted);
+}
+.set-part:first-child::before { margin-top: 4px; }
+.set-results .set-part:not(:has(.row, .set-block)) { display: none; }
+.set-results .list:not(:has(> .row)) { display: none; }
+.set-results .set-head, .set-results .set-note { display: none; }
+.set-none { display: none; margin: 32px 2px; text-align: center; font-size: 13px; color: var(--muted); }
+.set-results:not(:has(.row, .set-block)) .set-none { display: block; }
+
+@media (max-width: 640px) {
+  .set-row { flex-wrap: wrap; row-gap: 6px; }
+  .set-row .who { flex: 1 1 120px; min-width: 0; }
+  .set-row .row-right { margin-left: auto; }
+  .set-token { width: 200px; }
+  .set-q.search { width: 128px; }
+  .set-about { flex-wrap: wrap; }
+}

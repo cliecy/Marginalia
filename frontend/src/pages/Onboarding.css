@@ -1,0 +1,66 @@
+/*
+ * First run — the shared gate card (components.css) holding two large
+ * choices, then a small form with a preview of the folders a new vault gets.
+ * Class prefix: .onb-
+ */
+
+.onb-card { width: min(460px, 100%); padding: 32px 30px 24px; }
+.onb-card > .logo { filter: drop-shadow(0 6px 14px color-mix(in srgb, #c8442b 28%, transparent)); }
+
+.onb-missing {
+  display: flex; align-items: center; gap: 6px; width: 100%; margin-top: 14px; padding: 7px 10px; border-radius: 8px;
+  background: var(--amber-soft); color: var(--amber); font-size: var(--fs-sub); line-height: 1.45; text-align: left;
+}
+.onb-missing .ic-svg { flex: none; }
+
+/* the two choices */
+.onb-choices { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-top: 22px; animation: content-in .24s var(--ease); }
+.onb-choice {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px; border-radius: var(--r-lg);
+  border: 1px solid var(--line); background: var(--card); text-align: left;
+  transition: background var(--t) var(--ease), border-color var(--t) var(--ease), box-shadow var(--t) var(--ease), transform var(--t-fast) var(--ease);
+}
+.onb-choice:hover:not(:disabled) { background: var(--card-2); border-color: color-mix(in srgb, var(--fg) 16%, var(--line)); box-shadow: 0 1px 2px rgba(0, 0, 0, .04); }
+.onb-choice:active:not(:disabled) { transform: scale(.99); }
+.onb-choice:disabled { opacity: .6; }
+.onb-choice:focus-visible { outline-offset: 2px; }
+.onb-choice-ic { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); }
+.onb-choice + .onb-choice .onb-choice-ic { background: var(--pill); color: var(--fg-2); }
+.onb-choice-text { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.onb-choice-text b { font-size: 13px; font-weight: 600; color: var(--fg); }
+.onb-choice-text small { font-size: var(--fs-sub); line-height: 1.45; color: var(--muted); }
+.onb-choice-end { flex: none; display: grid; place-items: center; width: 16px; color: var(--faint); transition: transform var(--t) var(--ease), color var(--t); }
+.onb-choice:hover:not(:disabled) .onb-choice-end { color: var(--muted); transform: translateX(2px); }
+
+/* the small forms */
+.onb-form { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 18px; text-align: left; animation: content-in .24s var(--ease); }
+.onb-form-head { display: flex; align-items: center; gap: 6px; margin-left: -4px; font-size: 12px; color: var(--muted); }
+.onb-fields { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: center; gap: 10px 12px; }
+.onb-label { font-size: 12px; color: var(--fg-2); text-align: right; }
+.onb-where { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.onb-where code {
+  flex: 1 1 auto; min-width: 0; height: 32px; display: flex; align-items: center; padding: 0 10px; border-radius: var(--r-md);
+  background: var(--pill); box-shadow: inset 0 0 0 1px var(--line-2);
+  font-size: 12px; color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* what a new vault gets, as a little tree */
+.onb-tree { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px 11px; border-radius: 10px; background: var(--card-2); border: 1px solid var(--line-2); }
+.onb-tree-root { display: flex; align-items: center; gap: 6px; min-width: 0; margin-bottom: 1px; color: var(--muted); }
+.onb-tree-root code { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 500; color: var(--fg); }
+.onb-tree-item { position: relative; display: flex; align-items: center; gap: 6px; min-height: 19px; padding-left: 20px; font-size: var(--fs-sub); color: var(--muted); }
+.onb-tree-item::before { content: ""; position: absolute; left: 6px; top: -3px; bottom: -3px; width: 1px; background: var(--line); }
+.onb-tree-item:last-child::before { bottom: 50%; }
+.onb-tree-item::after { content: ""; position: absolute; left: 6px; top: 50%; width: 8px; height: 1px; background: var(--line); }
+.onb-tree-item .ic-svg { color: var(--faint); }
+.onb-tree-item code { min-width: 84px; font-size: 11.5px; color: var(--fg-2); }
+
+.onb-error {
+  width: 100%; margin-top: 12px; padding: 7px 10px; border-radius: 8px;
+  background: var(--red-soft); color: var(--red); font-size: 12px; line-height: 1.5; text-align: left;
+  animation: content-in .2s var(--ease);
+}
+
+@media (max-width: 480px) {
+  .onb-card { padding: 26px 18px 20px; }
+}

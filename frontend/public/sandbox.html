@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>visual</title>
+</head>
+<body>
+<script>
+// Runs inside <iframe sandbox="allow-scripts"> with an opaque origin: it cannot read
+// the app's cookies or call its API. The parent posts the block source; we render
+// it and report our height back so the frame can size itself.
+// The app's design tokens (src/styles/tokens.css), so visuals match the page around them.
+const THEMES = {
+  light: { bg: "#ffffff", surface: "#f4f4f6", text: "#1c1c21", muted: "#85858d", border: "#e3e3e8", accent: "#c8442b",
+    ok: "#189a58", warn: "#b45309", danger: "#d64545",
+    palette: ["#c8442b", "#0ea5e9", "#10b981", "#f59e0b", "#ec4899", "#8b5cf6", "#64748b", "#b7791f"] },
+  dark: { bg: "#232327", surface: "#2d2d33", text: "#ededf1", muted: "#8b8b94", border: "#333339", accent: "#f0957d",
+    ok: "#6fd99b", warn: "#f2b544", danger: "#f28b82",
+    palette: ["#f0957d", "#7dd3fc", "#6ee7b7", "#fcd34d", "#f9a8d4", "#c4b5fd", "#94a3b8", "#d4a24c"] },
+};
+
+function baseCss(name) {
+  const t = THEMES[name] || THEMES.light;
+  const palette = t.palette.map((c, i) => `--c${i + 1}: ${c};`).join(" ");
+  return `:root { color-scheme: ${name}; --bg: ${t.bg}; --surface: ${t.surface}; --text: ${t.text}; --muted: ${t.muted};
+    --border: ${t.border}; --accent: ${t.accent}; --ok: ${t.ok}; --warn: ${t.warn}; --danger: ${t.danger}; ${palette}
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  html, body { margin: 0; background: transparent; color: var(--text); font-family: var(--font); font-size: 15px; line-height: 1.6; }
+  body { padding: 4px; overflow: hidden; }
+  svg { max-width: 100%; height: auto; font-family: var(--font); }
+  .svg-wrap { display: flex; justify-content: center; }
+  .error { color: var(--danger); font-family: var(--mono); font-size: 13px; white-space: pre-wrap; }`;
+}
+
+const REPORTER = `<script>(function(){var last=0;function post(){var h=Math.ceil(document.documentElement.getBoundingClientRect().height);if(h!==last){last=h;parent.postMessage({type:"mn-height",h:h},"*");}}
+new ResizeObserver(post).observe(document.documentElement);addEventListener("load",post);setTimeout(post,50);setTimeout(post,600);
+addEventListener("error",function(e){var d=document.createElement("div");d.className="error";d.textContent="脚本错误："+e.message;document.body.appendChild(d);post();});})();<\/script>`;
+
+function escapeHtml(s) {
+  return s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+}
+
+function chartDoc(source) {
+  let config;
+  try {
+    config = JSON.parse(source);
+  } catch (e) {
+    return `<div class="error">chart 代码块需要是 Chart.js 的 JSON 配置：${escapeHtml(e.message)}</div>`;
+  }
+  return `<div style="position:relative;width:100%;max-height:520px"><canvas id="c"></canvas></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"><\/script>
+<script>
+const css = getComputedStyle(document.documentElement);
+const v = (n) => css.getPropertyValue(n).trim();
+Chart.defaults.color = v("--muted"); Chart.defaults.borderColor = v("--border"); Chart.defaults.font.family = v("--font");
+const palette = [1,2,3,4,5,6,7,8].map((i) => v("--c" + i));
+const config = ${JSON.stringify(config).replace(/</g, "\\u003c")};
+config.options = Object.assign({ responsive: true, maintainAspectRatio: true }, config.options || {});
+(config.data && config.data.datasets || []).forEach((d, i) => {
+  const multi = ["pie", "doughnut", "polarArea"].includes(config.type);
+  if (!d.backgroundColor) d.backgroundColor = multi ? palette : palette[i % 8] + (["line", "radar"].includes(config.type) ? "33" : "");
+  if (!d.borderColor) d.borderColor = multi ? v("--bg") : palette[i % 8];
+});
+new Chart(document.getElementById("c"), config);
+<\/script>`;
+}
+
+addEventListener("message", (event) => {
+  const data = event.data;
+  if (!data || data.type !== "mn-render") return;
+  const css = `<style>${baseCss(data.theme)}</style>`;
+  let body;
+  if (data.kind === "svg") body = `<div class="svg-wrap">${data.code}</div>`;
+  else if (data.kind === "chart") body = chartDoc(data.code);
+  else body = data.code;
+  const full = /^\s*(<!doctype|<html)/i.test(body);
+  const doc = full
+    ? body.replace(/<head[^>]*>/i, (m) => m + css).replace(/<\/body>/i, REPORTER + "</body>") + (/<\/body>/i.test(body) ? "" : REPORTER)
+    : `<!doctype html><html><head><meta charset="utf-8">${css}</head><body>${body}${REPORTER}</body></html>`;
+  document.open();
+  document.write(doc);
+  document.close();
+});
+parent.postMessage({ type: "mn-ready" }, "*");
+</script>
+</body>
+</html>

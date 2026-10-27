@@ -1,0 +1,187 @@
+/*
+ * Design tokens — Marginalia speaks Magpie's design language: one quiet
+ * surface (--bg), white cards on it, graphite selection, the indigo accent kept
+ * for what acts. Light values here; dark under the system preference (unless the
+ * reader picked light) and under an explicit data-theme="dark".
+ *
+ * Everything else in the app reads these names. The block at the end keeps the
+ * old names (--text, --surface, --border, …) alive as aliases, because the
+ * Markdown renderer, CodeMirror theme and the AI's ```visual blocks use them.
+ */
+:root {
+  color-scheme: light;
+
+  /* surfaces */
+  --bg: #f4f4f6;
+  --card: #ffffff;
+  --card-2: #f9f9fb;
+  --pill: #f1f1f4;
+  --pill-hover: #e9e9ee;
+  --seg-track: #e6e6eb;
+  --seg-thumb: var(--card);
+  --seg-edge: 0 1px 2px rgba(0, 0, 0, .14), 0 0 0 .5px rgba(0, 0, 0, .08);
+
+  /* ink */
+  --ctl-fg: #63636b;
+  --line: #e3e3e8;
+  --line-2: #ececf0;
+  --fg: #1c1c21;
+  --fg-2: #4b4b53;
+  --muted: #85858d;
+  /* tertiary text that still has to be read (notes, counts, paths); --faint is for chevrons, separators, placeholders */
+  --fg-3: #8f8f98;
+  --faint: #b9b9c2;
+
+  /* accent and states */
+  --accent: #c8442b;
+  --accent-soft: #fbece8;
+  --accent-fg: #ffffff;
+  --sel: #f8e4de;
+  /* green as text (toasts, pills, badges) reads on its soft fill; dots keep the brighter green */
+  --green: #137a46;
+  --green-dot: #189a58;
+  --green-soft: #e4f6ec;
+  --red: #c23838;
+  --red-soft: #fbe9e9;
+  --amber: #b45309;
+  --amber-soft: #fbf0df;
+
+  /* floating things */
+  --pop-bg: rgba(255, 255, 255, .94);
+  --shadow: 0 16px 44px rgba(20, 22, 30, .16), 0 2px 8px rgba(20, 22, 30, .06), 0 0 0 .5px rgba(20, 22, 30, .1);
+  --dialog-shadow: 0 0 0 1px var(--line), 0 24px 60px rgba(0, 0, 0, .22), 0 2px 8px rgba(0, 0, 0, .08);
+  --scrim: rgba(0, 0, 0, .28);
+  --skel: var(--pill);
+  --skel-hi: var(--pill-hover);
+
+  /* type */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", system-ui, sans-serif;
+  --code: ui-monospace, "SF Mono", Menlo, Consolas, "Noto Sans Mono CJK SC", monospace;
+  --fs-body: 13px;
+  --fs-label: 12.5px;
+  --fs-sub: 11.5px;
+  --fs-section: 11px;
+
+  /* charts and categorical colours */
+  --c1: #c8442b; --c2: #0ea5e9; --c3: #10b981; --c4: #f59e0b; --c5: #ec4899; --c6: #8b5cf6; --c7: #64748b; --c8: #b7791f;
+
+  /* syntax tokens (code blocks, snippets) */
+  --tk-s: #1a7f45; --tk-k: #7c3aed; --tk-f: #1d4ed8; --tk-n: #b45309; --tk-v: #0e7490; --tk-o: #a21caf; --tk-c: #85858d;
+
+  /* geometry and motion */
+  --r-xs: 5px;
+  --r-sm: 7px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 14px;
+  --side-w: 208px;
+  --top-h: 46px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --t-fast: .12s;
+  --t: .16s;
+  --t-slow: .24s;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #1a1a1e;
+    --card: #232327;
+    --card-2: #1f1f23;
+    --pill: #2d2d33;
+    --pill-hover: #36363d;
+    --seg-track: rgba(255, 255, 255, .035);
+    --seg-thumb: rgba(255, 255, 255, .15);
+    --seg-edge: inset 0 .5px 0 rgba(255, 255, 255, .08), 0 1px 2px rgba(0, 0, 0, .3);
+    --ctl-fg: #a1a1aa;
+    --line: #333339;
+    --line-2: #2c2c32;
+    --fg: #ededf1;
+    --fg-2: #b9b9c1;
+    --muted: #8b8b94;
+    --fg-3: #76767f;
+    --faint: #56565f;
+    --accent: #f0957d;
+    --accent-soft: #3d2621;
+    --accent-fg: #2a120c;
+    --sel: #4a2c25;
+    --green: #6fd99b;
+    --green-dot: var(--green);
+    --green-soft: #1e3a2b;
+    --red: #f28b82;
+    --red-soft: #45272a;
+    --amber: #f2b544;
+    --amber-soft: #3f3220;
+    --pop-bg: rgba(38, 38, 43, .96);
+    --shadow: 0 16px 44px rgba(0, 0, 0, .55), 0 2px 8px rgba(0, 0, 0, .3), 0 0 0 .5px rgba(255, 255, 255, .1);
+    --dialog-shadow: 0 0 0 1px var(--line), 0 24px 60px rgba(0, 0, 0, .5), 0 2px 8px rgba(0, 0, 0, .3);
+    --scrim: rgba(0, 0, 0, .45);
+    --c1: #f0957d; --c2: #7dd3fc; --c3: #6ee7b7; --c4: #fcd34d; --c5: #f9a8d4; --c6: #c4b5fd; --c7: #94a3b8; --c8: #d4a24c;
+    --tk-s: #98d8a4; --tk-k: #c4b5fd; --tk-f: #93c5fd; --tk-n: #f2b544; --tk-v: #67e8f9; --tk-o: #f0abfc; --tk-c: #8b8b94;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1a1a1e;
+  --card: #232327;
+  --card-2: #1f1f23;
+  --pill: #2d2d33;
+  --pill-hover: #36363d;
+  --seg-track: rgba(255, 255, 255, .035);
+  --seg-thumb: rgba(255, 255, 255, .15);
+  --seg-edge: inset 0 .5px 0 rgba(255, 255, 255, .08), 0 1px 2px rgba(0, 0, 0, .3);
+  --ctl-fg: #a1a1aa;
+  --line: #333339;
+  --line-2: #2c2c32;
+  --fg: #ededf1;
+  --fg-2: #b9b9c1;
+  --muted: #8b8b94;
+  --fg-3: #76767f;
+  --faint: #56565f;
+  --accent: #f0957d;
+  --accent-soft: #3d2621;
+  --accent-fg: #2a120c;
+  --sel: #4a2c25;
+  --green: #6fd99b;
+  --green-dot: var(--green);
+  --green-soft: #1e3a2b;
+  --red: #f28b82;
+  --red-soft: #45272a;
+  --amber: #f2b544;
+  --amber-soft: #3f3220;
+  --pop-bg: rgba(38, 38, 43, .96);
+  --shadow: 0 16px 44px rgba(0, 0, 0, .55), 0 2px 8px rgba(0, 0, 0, .3), 0 0 0 .5px rgba(255, 255, 255, .1);
+  --dialog-shadow: 0 0 0 1px var(--line), 0 24px 60px rgba(0, 0, 0, .5), 0 2px 8px rgba(0, 0, 0, .3);
+  --scrim: rgba(0, 0, 0, .45);
+  --c1: #f0957d; --c2: #7dd3fc; --c3: #6ee7b7; --c4: #fcd34d; --c5: #f9a8d4; --c6: #c4b5fd; --c7: #94a3b8; --c8: #d4a24c;
+  --tk-s: #98d8a4; --tk-k: #c4b5fd; --tk-f: #93c5fd; --tk-n: #f2b544; --tk-v: #67e8f9; --tk-o: #f0abfc; --tk-c: #8b8b94;
+}
+
+/*
+ * Legacy aliases. The Markdown preview, the CodeMirror theme in Editor.jsx and the
+ * AI's ```visual blocks were written against these names; they now follow the
+ * tokens above in both themes. New code should use the tokens, not these.
+ */
+:root {
+  --text: var(--fg);
+  --surface: var(--card);
+  --surface-2: var(--card-2);
+  --border: var(--line);
+  --danger: var(--red);
+  --ok: var(--green);
+  --warn: var(--amber);
+  --font-sans: var(--font);
+  --font-mono: var(--code);
+  --active-line: color-mix(in srgb, var(--fg) 3%, transparent);
+  --selection: color-mix(in srgb, var(--accent) 24%, transparent);
+  --search-hit: color-mix(in srgb, var(--c4) 38%, transparent);
+  --code-bg: var(--pill);
+  --add-bg: color-mix(in srgb, var(--green) 14%, transparent);
+  --del-bg: color-mix(in srgb, var(--red) 13%, transparent);
+  --hl-keyword: var(--tk-k);
+  --hl-string: var(--tk-s);
+  --hl-number: var(--tk-n);
+  --hl-comment: var(--tk-c);
+  --hl-title: var(--tk-f);
+}

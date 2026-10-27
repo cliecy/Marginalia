@@ -1,0 +1,35 @@
+/*
+ * Sign-in — the shared gate card (components.css) with one password field: a
+ * lock glyph inside it, a show/hide eye, a caps-lock hint, and a short shake
+ * on a wrong password.
+ * Class prefix: .login-
+ */
+
+.login-card { width: min(360px, 100%); padding: 32px 28px 22px; }
+.login-card > .logo { filter: drop-shadow(0 6px 14px color-mix(in srgb, #c8442b 28%, transparent)); }
+
+.login-field { position: relative; width: 100%; }
+.login-input.input { width: 100%; padding-left: 32px; padding-right: 36px; letter-spacing: .02em; }
+.login-input.input[type="password"]:not(:placeholder-shown) { letter-spacing: .12em; }
+.login-lock { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--faint); pointer-events: none; transition: color var(--t-fast); }
+.login-field:focus-within .login-lock { color: var(--accent); }
+.login-field.has-error .login-lock { color: var(--red); }
+.login-eye {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 26px; height: 24px; border-radius: 6px; display: grid; place-items: center; color: var(--muted);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.login-eye:hover { background: var(--pill); color: var(--fg); }
+
+.login-msg { display: flex; align-items: center; gap: 6px; margin-top: -2px; font-size: 12px; line-height: 1.45; text-align: left; animation: content-in .18s var(--ease); }
+.login-msg .ic-svg { flex: none; }
+.login-err { color: var(--red); }
+.login-caps { color: var(--amber); }
+
+.login-shake { animation: login-shake .4s cubic-bezier(.36, .07, .19, .97); }
+@keyframes login-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}

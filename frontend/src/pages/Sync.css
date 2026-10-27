@@ -1,0 +1,97 @@
+/*
+ * 版本与同步 — the git repository page. Class prefix .sync-
+ * A status card in the manner of Magpie's gateway card (dot · name · state ·
+ * address pill · action), the figures, then sections of cards and rows.
+ */
+
+.sync-loading { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+
+/* ------------------------------------------------------------- status card */
+.sync-status {
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap; row-gap: 8px;
+  margin: 0 0 10px; padding: 12px 14px 12px 16px;
+}
+.sync-status > .sdot { width: 8px; height: 8px; margin: 0 4px 0 2px; }
+.sync-status-who { flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.sync-status-name { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.sync-status-name b { font-size: 13.5px; font-weight: 600; letter-spacing: -.005em; }
+.sync-state { font-size: 11.5px; font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sync-state-green { color: var(--green); }
+.sync-state-amber { color: var(--amber); }
+.sync-state-red { color: var(--red); }
+.sync-state-accent { color: var(--accent); }
+.sync-state-grey { color: var(--muted); }
+.sync-status-sub { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: var(--fs-sub); color: var(--muted); }
+.sync-status-sub i { font-style: normal; color: var(--faint); }
+.sync-branch { display: inline-flex; align-items: center; gap: 4px; flex: none; font-family: var(--code); font-size: 11px; color: var(--fg-2); }
+.sync-branch svg { color: var(--muted); }
+
+.sync-remote {
+  display: inline-flex; align-items: center; gap: 5px; flex: 0 1 auto; min-width: 0; max-width: 300px;
+  height: 24px; padding: 0 8px; border-radius: 6px;
+  background: var(--pill); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--muted);
+  transition: background var(--t-fast), box-shadow var(--t-fast), color var(--t-fast);
+}
+.sync-remote code { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; color: var(--fg-2); }
+.sync-remote:hover:not(:disabled) { background: var(--pill-hover); box-shadow: inset 0 0 0 1px var(--line); color: var(--fg); }
+.sync-remote:hover:not(:disabled) code { color: var(--fg); }
+.sync-remote:disabled { cursor: default; }
+.sync-now { min-width: 96px; }
+
+/* an indeterminate bar along the card's foot while a sync runs */
+.sync-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; overflow: hidden; background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.sync-progress::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 34%; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: sync-slide 1.25s var(--ease) infinite;
+}
+@keyframes sync-slide { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+.sync-status.is-syncing { border-color: color-mix(in srgb, var(--accent) 30%, var(--line)); }
+
+.sync-stats { margin-bottom: 4px; }
+.sync-stats .kpi b { font-size: 19px; }
+
+/* ------------------------------------------------------------ last sync */
+.sync-last-none { display: flex; align-items: center; gap: 10px; font-size: var(--fs-label); color: var(--muted); }
+.sync-last-none svg { flex: none; color: var(--faint); }
+.sync-ok-ic { width: 26px; height: 26px; border-radius: var(--r-sm); display: grid; place-items: center; background: var(--green-soft); color: var(--green); }
+.sync-changed .row-ic { color: var(--muted); }
+.sync-changed .sub { font-family: var(--code); font-size: 11px; color: var(--fg-3); }
+
+.sync-error { padding: 12px 14px; border-radius: var(--r-lg); background: var(--red-soft); border: 1px solid color-mix(in srgb, var(--red) 22%, transparent); color: var(--fg); }
+.sync-error-head { display: flex; align-items: center; gap: 7px; color: var(--red); }
+.sync-error-head b { font-size: 13px; font-weight: 600; }
+.sync-error-when { margin-left: auto; font-size: var(--fs-sub); color: color-mix(in srgb, var(--red) 70%, var(--muted)); font-variant-numeric: tabular-nums; }
+.sync-error-hint { margin: 6px 0 0; font-size: var(--fs-label); line-height: 1.55; color: var(--fg-2); }
+.sync-error-text {
+  margin: 8px 0 0; max-height: 180px; overflow: auto; padding: 8px 10px; border-radius: 8px;
+  background: color-mix(in srgb, var(--card) 70%, transparent); font: 11px/1.5 var(--code); color: var(--fg-2);
+  white-space: pre-wrap; word-break: break-word; user-select: text; -webkit-user-select: text;
+}
+
+/* ------------------------------------------------------- connect a remote */
+.sync-connect { display: flex; flex-direction: column; gap: 12px; }
+.sync-steps { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-label); line-height: 1.55; color: var(--fg-2); }
+.sync-steps li::marker { color: var(--muted); font-variant-numeric: tabular-nums; }
+.sync-init { width: min(520px, 100%); margin: -18px auto 0; }
+
+/* ------------------------------------------------------------- deploy key */
+.sync-key { display: flex; flex-direction: column; gap: 9px; }
+.sync-key-field > code { font-size: 11px; }
+.sync-key-note { margin: 0; font-size: var(--fs-sub); line-height: 1.55; color: var(--muted); }
+.sync-key-note b { font-weight: 550; color: var(--fg-2); }
+
+/* ---------------------------------------------------------------- history */
+.sync-rev { margin-right: 6px; padding: 0 4px; border-radius: 4px; background: var(--pill); font-size: 10.5px; color: var(--fg-2); }
+.sync-skel { gap: 10px; }
+.sync-skel-who { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+
+@media (max-width: 640px) {
+  .sync-remote { order: 5; max-width: 100%; }
+  .sync-stats { --stats-cols: 2 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sync-progress::after { animation-duration: 2.4s; }
+}

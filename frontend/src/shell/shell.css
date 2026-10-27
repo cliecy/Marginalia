@@ -1,0 +1,141 @@
+/*
+ * The shell: a fixed sidebar on the grey ground (brand, pages in groups,
+ * Settings and the status line at its foot), and beside it the 46px top bar
+ * over the page. In the desktop app the top rows drag the window and keep
+ * clear of the traffic lights (MyGo's --mygo-titlebar-* variables).
+ */
+:root.desktop {
+  /* the traffic lights centre in MyGo's title bar; the top rows match its height */
+  --top-h: max(46px, var(--mygo-titlebar-height, 46px));
+  /* wide enough for the whole "Marginalia" beside the traffic lights */
+  --side-w: max(216px, calc(var(--mygo-titlebar-inset-left, 0px) + 164px));
+}
+@media (max-width: 859px) { :root { --side-w: 188px; } }
+
+.shell { position: relative; height: 100%; display: flex; overflow: hidden; }
+.main {
+  flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column;
+  margin-left: var(--side-w);
+  transition: margin-left .32s cubic-bezier(.42, 0, .58, 1);
+}
+.shell.side-collapsed .main, .shell.compact .main { margin-left: 0; }
+
+/* ------------------------------------------------------------- sidebar */
+.side {
+  position: absolute; z-index: 20; top: 0; bottom: 0; left: 0;
+  width: var(--side-w); display: flex; flex-direction: column;
+  background: var(--bg); border-right: .5px solid var(--line);
+  transition: transform .32s cubic-bezier(.42, 0, .58, 1), box-shadow .32s;
+}
+.shell.side-collapsed .side { transform: translateX(calc(-100% - 1px)); box-shadow: none; }
+.shell.compact .side { z-index: 30; box-shadow: var(--shadow); border-right: 0; }
+.shell.compact.side-collapsed .side { box-shadow: none; }
+.side-scrim { position: absolute; inset: 0; z-index: 25; background: var(--scrim); animation: fade-in .2s ease-out; }
+
+.side-top {
+  flex: none; display: flex; align-items: center; height: var(--top-h);
+  padding: 0 12px 0 max(14px, calc(var(--mygo-titlebar-inset-left, 0px) + 10px));
+  --app-region: drag;
+}
+.brand {
+  display: flex; align-items: center; gap: 7px; min-width: 0; padding: 4px 6px; margin-left: -4px; border-radius: var(--r-sm);
+  font-size: 13.5px; font-weight: 600; letter-spacing: .01em; color: var(--fg);
+  transition: background var(--t-fast);
+}
+.brand > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.brand .logo { flex: none; border-radius: 4px; }
+button.brand:hover { background: color-mix(in srgb, var(--fg) 5%, transparent); }
+/* in the desktop window the brand is a plain label: the whole row drags the window, a double-click zooms it */
+div.brand { cursor: default; user-select: none; -webkit-user-select: none; }
+
+.side-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0 10px 10px; scrollbar-width: none; }
+.side-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+/* more pages below the fold (the scrollbar is hidden): the list fades out at the bottom */
+.side-scroll[data-more="end"] {
+  -webkit-mask-image: linear-gradient(#000 calc(100% - 22px), transparent);
+  mask-image: linear-gradient(#000 calc(100% - 22px), transparent);
+}
+.side-nav { position: relative; display: flex; flex-direction: column; }
+.nav-group { display: flex; flex-direction: column; gap: 1px; }
+.nav-gl { padding: 14px 8px 4px; font-size: var(--fs-section); font-weight: 500; letter-spacing: .04em; color: var(--muted); }
+.nav-group:first-child .nav-gl { padding-top: 2px; }
+
+.nav-item {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; gap: 9px; width: 100%; height: 30px; padding: 0 8px;
+  border-radius: var(--r-sm); font-size: 13px; color: var(--fg-2); text-align: left; white-space: nowrap;
+  transition: color .22s var(--ease), background var(--t-fast);
+}
+.nav-item:hover:not(.on) { background: var(--pill); color: var(--fg); }
+.nav-item:active:not(.on) { background: color-mix(in srgb, var(--fg) 10%, transparent); }
+.nav-item.on { color: var(--fg); font-weight: 500; }
+.nav-item:focus-visible { outline-offset: -2px; }
+.nav-ic { flex: none; color: var(--muted); transition: color .22s var(--ease); }
+.nav-item.on .nav-ic { color: var(--fg); }
+.nav-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.nav-count { flex: none; margin-left: auto; font-style: normal; font-size: 11px; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+.nav-dot { flex: none; width: 6px; height: 6px; margin: 0 3px 0 auto; border-radius: 50%; background: var(--accent); }
+.nav-dot-green { background: var(--green-dot); box-shadow: 0 0 0 2.5px var(--green-soft); }
+.nav-dot-red { background: var(--red); }
+.nav-dot-accent { background: var(--accent); }
+
+/* the open page's row: one card-white shape that glides between rows */
+.nav-hl { position: absolute; z-index: 0; top: 0; left: 0; right: 0; border-radius: var(--r-sm); background: var(--card); box-shadow: var(--seg-edge); pointer-events: none; }
+.side-nav.glide .nav-hl { transition: transform .3s cubic-bezier(.25, .9, .3, 1), height .3s cubic-bezier(.25, .9, .3, 1); }
+.side-nav:not(.glide) .nav-item.on { background: var(--card); box-shadow: var(--seg-edge); }
+
+.side-foot { flex: none; max-height: 55%; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 1px; padding: 8px 10px 10px; border-top: .5px solid var(--line-2); }
+.side-foot::-webkit-scrollbar { display: none; }
+.side-foot .nav-item.on { background: var(--card); box-shadow: var(--seg-edge); }
+
+/* the open page's own sections, under it on a thin guide line */
+.nav-sub { position: relative; display: flex; flex-direction: column; gap: 1px; margin: 2px 0 6px 16px; padding-left: 8px; animation: content-in .24s var(--ease); }
+.nav-sub::before { content: ""; position: absolute; left: 0; top: 3px; bottom: 3px; width: 1px; background: var(--line); }
+.nav-s { display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 6px; font-size: var(--fs-label); color: var(--ctl-fg); text-align: left; white-space: nowrap; transition: color .2s var(--ease), background .2s var(--ease); }
+.nav-s > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.nav-s:hover:not(.cur) { color: var(--fg); }
+/* short windows: a little more of the page list stays in view */
+@media (max-height: 680px) {
+  .nav-sub { margin-bottom: 2px; }
+  .nav-s { height: 24px; }
+}
+.nav-s.cur { color: var(--fg); font-weight: 500; background: color-mix(in srgb, var(--fg) 6.5%, transparent); }
+
+/* where the API listens, under Settings (Magpie's "网关 127.0.0.1:3425") */
+.side-status { display: flex; align-items: center; gap: 8px; height: 26px; margin-top: 4px; padding: 0 9px; border-radius: 6px; font-size: var(--fs-sub); color: var(--muted); text-align: left; white-space: nowrap; transition: background var(--t-fast), color var(--t-fast); }
+.side-status:hover { background: var(--pill); color: var(--fg-2); }
+.side-status > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------------------- top bar */
+.topbar {
+  position: relative; z-index: 5; flex: none;
+  display: flex; align-items: center; gap: 8px;
+  height: var(--top-h); padding: 0 10px 0 14px;
+  /* Windows / Linux caption buttons sit at the right of MyGo's hidden title bar */
+  padding-right: max(10px, calc(var(--mygo-titlebar-inset-right, 0px) + 8px));
+  --app-region: drag;
+  transition: padding-left .32s cubic-bezier(.42, 0, .58, 1);
+}
+/* no sidebar: the bar starts after the traffic lights */
+.shell.side-collapsed .topbar, .shell.compact .topbar { padding-left: max(14px, calc(var(--mygo-titlebar-inset-left, 0px) + 10px)); }
+.side-toggle .st-pane { opacity: 0; transition: opacity .3s var(--ease); }
+.side-toggle.shown .st-pane { opacity: .32; }
+
+.crumbs { display: flex; align-items: center; min-width: 0; flex: 0 1 auto; overflow: hidden; white-space: nowrap; font-size: 13.5px; margin-left: 2px; }
+.crumb-part { display: inline-flex; align-items: center; min-width: 0; flex: 0 4 auto; }
+.crumb-part:last-child { flex: 0 1 auto; }
+.crumb-part > i { flex: none; margin: 0 7px; font-style: normal; color: var(--faint); }
+.crumb-part > span, .crumb-part > button { min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+.crumb-part > button { padding: 2px 5px; margin: -2px -5px; border-radius: 6px; transition: background var(--t-fast), color var(--t-fast); }
+.crumb-part > button:hover { background: var(--pill); color: var(--fg); }
+.crumb-part > b { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-weight: 600; color: var(--fg); }
+
+.topbar-actions { flex: none; margin-left: auto; display: flex; align-items: center; gap: 4px; min-width: 0; }
+.topbar-actions:empty { display: none; }
+.topbar-actions > .seg { margin: 0 4px; }
+
+/* ------------------------------------------------------------- content */
+.content { position: relative; flex: 1 1 auto; min-height: 0; }
+.view { position: absolute; inset: 0; display: flex; flex-direction: column; animation: view-in .24s var(--ease); }
+.view > * { flex: 1 1 auto; min-height: 0; }
+.view[hidden] { display: none; }

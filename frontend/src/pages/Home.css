@@ -1,0 +1,79 @@
+/*
+ * 首页 — the dashboard. Class prefix .home-
+ * A greeting card with a soft accent wash (Magpie's plugin intro), the four
+ * figures, quick-action cards (Magpie's plugin card grid), then lists.
+ */
+
+/* ---------------------------------------------------------------- greeting */
+.home-hero {
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  margin: 6px 0 12px; padding: 16px 18px;
+  border-radius: var(--r-xl); border: 1px solid var(--line);
+  background:
+    radial-gradient(120% 160% at 100% 0%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 62%),
+    radial-gradient(80% 120% at 0% 100%, color-mix(in srgb, var(--c2) 6%, transparent), transparent 60%),
+    var(--card);
+}
+.home-hero-text { flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.home-hero h1 { margin: 0; font-size: 17px; font-weight: 650; letter-spacing: -.012em; line-height: 1.25; color: var(--fg); text-wrap: balance; }
+.home-hero p { margin: 0; font-size: var(--fs-label); line-height: 1.5; color: var(--muted); }
+.home-hero p i { margin: 0 6px; font-style: normal; color: var(--faint); }
+.home-hero p b { font-weight: 550; color: var(--fg-2); }
+.home-hero-search { flex: 0 1 300px; min-width: 200px; display: flex; align-items: center; gap: 8px; }
+.home-hero-search .search input { background: color-mix(in srgb, var(--card) 86%, transparent); }
+.home-hero-search .kbd { flex: none; }
+
+/* ---------------------------------------------------------------- figures */
+.home-stats { margin-bottom: 4px; }
+.home-stats .kpi b { font-size: 19px; }
+
+/* -------------------------------------------------------- quick actions */
+/* even rows: 2 × 2 in a small window, four in a row once they fit */
+.home-page .page-inner { container-type: inline-size; }
+.home-acts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@container (min-width: 760px) { .home-acts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.home-act {
+  --tile-bg: var(--pill); --tile-fg: var(--fg-2);
+  display: flex; flex-direction: column; align-items: stretch; gap: 6px; min-width: 0;
+  padding: 12px 12px 11px 13px; border-radius: var(--r-lg); border: 1px solid var(--line);
+  background: var(--card); color: var(--fg); text-align: left;
+  transition: border-color var(--t) var(--ease), box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+  animation: home-arrive .42s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i, 0) * 40ms);
+}
+.home-act:hover { border-color: color-mix(in srgb, var(--fg) 16%, var(--line)); box-shadow: 0 4px 14px rgba(20, 22, 30, .07); }
+.home-act:active { transform: scale(.985); }
+.home-act:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent); }
+.home-act-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
+.home-act-ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--tile-bg); color: var(--tile-fg); }
+.home-act-go { color: var(--faint); opacity: 0; transform: translate(-3px, 3px); transition: opacity var(--t) var(--ease), transform var(--t) var(--ease), color var(--t); }
+.home-act:hover .home-act-go, .home-act:focus-visible .home-act-go { opacity: 1; transform: none; color: var(--muted); }
+.home-act-title { font-size: 13px; font-weight: 600; letter-spacing: -.005em; }
+.home-act-text {
+  min-height: 2.9em; font-size: 12px; line-height: 1.45; color: var(--fg-2);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.home-act-foot { display: flex; align-items: center; gap: 6px; min-height: 18px; margin-top: 2px; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.home-act-accent { --tile-bg: var(--accent-soft); --tile-fg: var(--accent); }
+.home-act-green { --tile-bg: var(--green-soft); --tile-fg: var(--green); }
+.home-act-sky { --tile-bg: color-mix(in srgb, var(--c2) 14%, var(--card)); --tile-fg: color-mix(in srgb, var(--c2) 80%, var(--fg)); }
+.home-act-amber { --tile-bg: var(--amber-soft); --tile-fg: var(--amber); }
+
+@keyframes home-arrive { from { opacity: 0; transform: translateY(4px); } }
+
+/* ---------------------------------------------------------------- lists */
+.home-recent .row .sub { font-size: var(--fs-sub); }
+.home-skel-row { gap: 12px; }
+.home-skel-who { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+
+@media (max-width: 640px) {
+  .home-hero { padding: 14px; }
+  .home-hero-search { flex-basis: 100%; }
+  .home-hero-search .kbd { display: none; }
+  .home-stats { --stats-cols: 2 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-act { animation: none; }
+  .home-act-go { transition: none; }
+}

@@ -1,0 +1,2659 @@
+{
+ "clean": {
+  "A.md": {
+   "ok": "A.md"
+  },
+  "/A.md": {
+   "ok": "A.md"
+  },
+  " sub/B.md ": {
+   "ok": "sub/B.md"
+  },
+  "sub\\B.md": {
+   "ok": "sub/B.md"
+  },
+  "a//b": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "../x": {
+   "error": "invalid path",
+   "status": 400
+  },
+  ".git/config": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "sub/.x": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "   ": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "a/./b": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "a/../b": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "x\u0000y": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa": {
+   "ok": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé": {
+   "ok": "éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé"
+  },
+  "ééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "///A.md///": {
+   "ok": "A.md"
+  },
+  "\u001c A.md \u001f": {
+   "ok": "A.md"
+  },
+  "　A.md": {
+   "ok": "A.md"
+  },
+  "...": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "a/..b/c": {
+   "error": "invalid path",
+   "status": 400
+  },
+  "a/b./c": {
+   "ok": "a/b./c"
+  },
+  "\t": {
+   "error": "invalid path",
+   "status": 400
+  }
+ },
+ "tree": [
+  {
+   "type": "folder",
+   "name": "_assets",
+   "path": "_assets",
+   "children": [
+    {
+     "type": "file",
+     "name": "x.png",
+     "path": "_assets/x.png",
+     "size": 4
+    }
+   ]
+  },
+  {
+   "type": "folder",
+   "name": "_templates",
+   "path": "_templates",
+   "children": [
+    {
+     "type": "note",
+     "name": "T.md",
+     "path": "_templates/T.md",
+     "size": 11
+    }
+   ]
+  },
+  {
+   "type": "folder",
+   "name": "Chats",
+   "path": "Chats",
+   "children": [
+    {
+     "type": "note",
+     "name": "2025-01-01 1000 hello.md",
+     "path": "Chats/2025-01-01 1000 hello.md",
+     "size": 242
+    },
+    {
+     "type": "note",
+     "name": "2025-02-01 0900 second.md",
+     "path": "Chats/2025-02-01 0900 second.md",
+     "size": 91
+    },
+    {
+     "type": "note",
+     "name": "no-meta.md",
+     "path": "Chats/no-meta.md",
+     "size": 43
+    }
+   ]
+  },
+  {
+   "type": "folder",
+   "name": "copilot",
+   "path": "copilot",
+   "children": [
+    {
+     "type": "folder",
+     "name": "copilot-custom-prompts",
+     "path": "copilot/copilot-custom-prompts",
+     "children": [
+      {
+       "type": "note",
+       "name": "P.md",
+       "path": "copilot/copilot-custom-prompts/P.md",
+       "size": 64
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "folder",
+   "name": "Knowledge",
+   "path": "Knowledge",
+   "children": [
+    {
+     "type": "folder",
+     "name": "RL",
+     "path": "Knowledge/RL",
+     "children": [
+      {
+       "type": "file",
+       "name": "img one.png",
+       "path": "Knowledge/RL/img one.png",
+       "size": 3
+      },
+      {
+       "type": "note",
+       "name": "PPO.md",
+       "path": "Knowledge/RL/PPO.md",
+       "size": 469
+      },
+      {
+       "type": "note",
+       "name": "Value.md",
+       "path": "Knowledge/RL/Value.md",
+       "size": 30
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "name": "Value.md",
+     "path": "Knowledge/Value.md",
+     "size": 52
+    }
+   ]
+  },
+  {
+   "type": "folder",
+   "name": "nested",
+   "path": "nested",
+   "children": [
+    {
+     "type": "folder",
+     "name": "deep",
+     "path": "nested/deep",
+     "children": [
+      {
+       "type": "note",
+       "name": "far.md",
+       "path": "nested/deep/far.md",
+       "size": 67
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "name": "Same.md",
+     "path": "nested/Same.md",
+     "size": 12
+    }
+   ]
+  },
+  {
+   "type": "folder",
+   "name": "sub",
+   "path": "sub",
+   "children": [
+    {
+     "type": "note",
+     "name": "B.md",
+     "path": "sub/B.md",
+     "size": 24
+    }
+   ]
+  },
+  {
+   "type": "note",
+   "name": "A.md",
+   "path": "A.md",
+   "size": 73
+  },
+  {
+   "type": "file",
+   "name": "a.txt",
+   "path": "a.txt",
+   "size": 20
+  },
+  {
+   "type": "note",
+   "name": "bad-utf8.md",
+   "path": "bad-utf8.md",
+   "size": 22
+  },
+  {
+   "type": "note",
+   "name": "badyaml.md",
+   "path": "badyaml.md",
+   "size": 43
+  },
+  {
+   "type": "note",
+   "name": "crlf.md",
+   "path": "crlf.md",
+   "size": 54
+  },
+  {
+   "type": "note",
+   "name": "dates.md",
+   "path": "dates.md",
+   "size": 114
+  },
+  {
+   "type": "note",
+   "name": "emptyfm.md",
+   "path": "emptyfm.md",
+   "size": 20
+  },
+  {
+   "type": "note",
+   "name": "listtitle.md",
+   "path": "listtitle.md",
+   "size": 69
+  },
+  {
+   "type": "note",
+   "name": "needle-title.md",
+   "path": "needle-title.md",
+   "size": 14
+  },
+  {
+   "type": "note",
+   "name": "nofm.md",
+   "path": "nofm.md",
+   "size": 245
+  },
+  {
+   "type": "note",
+   "name": "note 1.md",
+   "path": "note 1.md",
+   "size": 3
+  },
+  {
+   "type": "note",
+   "name": "Note 2.md",
+   "path": "Note 2.md",
+   "size": 14
+  },
+  {
+   "type": "note",
+   "name": "Note 02b.md",
+   "path": "Note 02b.md",
+   "size": 10
+  },
+  {
+   "type": "note",
+   "name": "Note 10.md",
+   "path": "Note 10.md",
+   "size": 3
+  },
+  {
+   "type": "note",
+   "name": "Old.markdown",
+   "path": "Old.markdown",
+   "size": 29
+  },
+  {
+   "type": "note",
+   "name": "Same.md",
+   "path": "Same.md",
+   "size": 10
+  },
+  {
+   "type": "note",
+   "name": "search.md",
+   "path": "search.md",
+   "size": 412
+  },
+  {
+   "type": "note",
+   "name": "unicode-search.md",
+   "path": "unicode-search.md",
+   "size": 74
+  },
+  {
+   "type": "note",
+   "name": "Ünïcode été.md",
+   "path": "Ünïcode été.md",
+   "size": 55
+  }
+ ],
+ "files": [
+  "A.md",
+  "Note 02b.md",
+  "Note 10.md",
+  "Note 2.md",
+  "Old.markdown",
+  "Same.md",
+  "a.txt",
+  "bad-utf8.md",
+  "badyaml.md",
+  "crlf.md",
+  "dates.md",
+  "emptyfm.md",
+  "listtitle.md",
+  "needle-title.md",
+  "nofm.md",
+  "note 1.md",
+  "search.md",
+  "unicode-search.md",
+  "Ünïcode été.md",
+  "Chats/2025-01-01 1000 hello.md",
+  "Chats/2025-02-01 0900 second.md",
+  "Chats/no-meta.md",
+  "Knowledge/Value.md",
+  "Knowledge/RL/PPO.md",
+  "Knowledge/RL/Value.md",
+  "Knowledge/RL/img one.png",
+  "_assets/x.png",
+  "_templates/T.md",
+  "copilot/copilot-custom-prompts/P.md",
+  "nested/Same.md",
+  "nested/deep/far.md",
+  "sub/B.md"
+ ],
+ "notes": [
+  "A.md",
+  "Note 02b.md",
+  "Note 10.md",
+  "Note 2.md",
+  "Old.markdown",
+  "Same.md",
+  "bad-utf8.md",
+  "badyaml.md",
+  "crlf.md",
+  "dates.md",
+  "emptyfm.md",
+  "listtitle.md",
+  "needle-title.md",
+  "nofm.md",
+  "note 1.md",
+  "search.md",
+  "unicode-search.md",
+  "Ünïcode été.md",
+  "Chats/2025-01-01 1000 hello.md",
+  "Chats/2025-02-01 0900 second.md",
+  "Chats/no-meta.md",
+  "Knowledge/Value.md",
+  "Knowledge/RL/PPO.md",
+  "Knowledge/RL/Value.md",
+  "_templates/T.md",
+  "copilot/copilot-custom-prompts/P.md",
+  "nested/Same.md",
+  "nested/deep/far.md",
+  "sub/B.md"
+ ],
+ "resolve": {
+  "A␟A.md": "A.md",
+  "A␟sub/B.md": "A.md",
+  "A␟Knowledge/RL/PPO.md": "A.md",
+  "A␟nested/deep/far.md": "A.md",
+  "A␟Chats/no-meta.md": "A.md",
+  "a␟A.md": "A.md",
+  "a␟sub/B.md": "A.md",
+  "a␟Knowledge/RL/PPO.md": "A.md",
+  "a␟nested/deep/far.md": "A.md",
+  "a␟Chats/no-meta.md": "A.md",
+  "A.md␟A.md": "A.md",
+  "A.md␟sub/B.md": "A.md",
+  "A.md␟Knowledge/RL/PPO.md": "A.md",
+  "A.md␟nested/deep/far.md": "A.md",
+  "A.md␟Chats/no-meta.md": "A.md",
+  "B␟A.md": "sub/B.md",
+  "B␟sub/B.md": "sub/B.md",
+  "B␟Knowledge/RL/PPO.md": "sub/B.md",
+  "B␟nested/deep/far.md": "sub/B.md",
+  "B␟Chats/no-meta.md": "sub/B.md",
+  "sub/B␟A.md": "sub/B.md",
+  "sub/B␟sub/B.md": "sub/B.md",
+  "sub/B␟Knowledge/RL/PPO.md": "sub/B.md",
+  "sub/B␟nested/deep/far.md": "sub/B.md",
+  "sub/B␟Chats/no-meta.md": "sub/B.md",
+  "sub/B.md␟A.md": "sub/B.md",
+  "sub/B.md␟sub/B.md": "sub/B.md",
+  "sub/B.md␟Knowledge/RL/PPO.md": "sub/B.md",
+  "sub/B.md␟nested/deep/far.md": "sub/B.md",
+  "sub/B.md␟Chats/no-meta.md": "sub/B.md",
+  "../A␟A.md": "A.md",
+  "../A␟sub/B.md": "A.md",
+  "../A␟Knowledge/RL/PPO.md": "A.md",
+  "../A␟nested/deep/far.md": "A.md",
+  "../A␟Chats/no-meta.md": "A.md",
+  "./B␟A.md": "sub/B.md",
+  "./B␟sub/B.md": "sub/B.md",
+  "./B␟Knowledge/RL/PPO.md": "sub/B.md",
+  "./B␟nested/deep/far.md": "sub/B.md",
+  "./B␟Chats/no-meta.md": "sub/B.md",
+  "Value␟A.md": "Knowledge/Value.md",
+  "Value␟sub/B.md": "Knowledge/Value.md",
+  "Value␟Knowledge/RL/PPO.md": "Knowledge/RL/Value.md",
+  "Value␟nested/deep/far.md": "Knowledge/Value.md",
+  "Value␟Chats/no-meta.md": "Knowledge/Value.md",
+  "value␟A.md": "Knowledge/Value.md",
+  "value␟sub/B.md": "Knowledge/Value.md",
+  "value␟Knowledge/RL/PPO.md": "Knowledge/Value.md",
+  "value␟nested/deep/far.md": "Knowledge/Value.md",
+  "value␟Chats/no-meta.md": "Knowledge/Value.md",
+  "Value.md␟A.md": "Knowledge/Value.md",
+  "Value.md␟sub/B.md": "Knowledge/Value.md",
+  "Value.md␟Knowledge/RL/PPO.md": "Knowledge/RL/Value.md",
+  "Value.md␟nested/deep/far.md": "Knowledge/Value.md",
+  "Value.md␟Chats/no-meta.md": "Knowledge/Value.md",
+  "Knowledge/RL/Value␟A.md": "Knowledge/RL/Value.md",
+  "Knowledge/RL/Value␟sub/B.md": "Knowledge/RL/Value.md",
+  "Knowledge/RL/Value␟Knowledge/RL/PPO.md": "Knowledge/RL/Value.md",
+  "Knowledge/RL/Value␟nested/deep/far.md": "Knowledge/RL/Value.md",
+  "Knowledge/RL/Value␟Chats/no-meta.md": "Knowledge/RL/Value.md",
+  "Knowledge/Value␟A.md": "Knowledge/Value.md",
+  "Knowledge/Value␟sub/B.md": "Knowledge/Value.md",
+  "Knowledge/Value␟Knowledge/RL/PPO.md": "Knowledge/Value.md",
+  "Knowledge/Value␟nested/deep/far.md": "Knowledge/Value.md",
+  "Knowledge/Value␟Chats/no-meta.md": "Knowledge/Value.md",
+  "PPO␟A.md": "Knowledge/RL/PPO.md",
+  "PPO␟sub/B.md": "Knowledge/RL/PPO.md",
+  "PPO␟Knowledge/RL/PPO.md": "Knowledge/RL/PPO.md",
+  "PPO␟nested/deep/far.md": "Knowledge/RL/PPO.md",
+  "PPO␟Chats/no-meta.md": "Knowledge/RL/PPO.md",
+  "ppo.md␟A.md": "Knowledge/RL/PPO.md",
+  "ppo.md␟sub/B.md": "Knowledge/RL/PPO.md",
+  "ppo.md␟Knowledge/RL/PPO.md": "Knowledge/RL/PPO.md",
+  "ppo.md␟nested/deep/far.md": "Knowledge/RL/PPO.md",
+  "ppo.md␟Chats/no-meta.md": "Knowledge/RL/PPO.md",
+  "img%20one.png␟A.md": "Knowledge/RL/img one.png",
+  "img%20one.png␟sub/B.md": "Knowledge/RL/img one.png",
+  "img%20one.png␟Knowledge/RL/PPO.md": "Knowledge/RL/img one.png",
+  "img%20one.png␟nested/deep/far.md": "Knowledge/RL/img one.png",
+  "img%20one.png␟Chats/no-meta.md": "Knowledge/RL/img one.png",
+  "img one.png␟A.md": "Knowledge/RL/img one.png",
+  "img one.png␟sub/B.md": "Knowledge/RL/img one.png",
+  "img one.png␟Knowledge/RL/PPO.md": "Knowledge/RL/img one.png",
+  "img one.png␟nested/deep/far.md": "Knowledge/RL/img one.png",
+  "img one.png␟Chats/no-meta.md": "Knowledge/RL/img one.png",
+  "x.png␟A.md": "_assets/x.png",
+  "x.png␟sub/B.md": "_assets/x.png",
+  "x.png␟Knowledge/RL/PPO.md": "_assets/x.png",
+  "x.png␟nested/deep/far.md": "_assets/x.png",
+  "x.png␟Chats/no-meta.md": "_assets/x.png",
+  "_assets/x.png␟A.md": "_assets/x.png",
+  "_assets/x.png␟sub/B.md": "_assets/x.png",
+  "_assets/x.png␟Knowledge/RL/PPO.md": "_assets/x.png",
+  "_assets/x.png␟nested/deep/far.md": "_assets/x.png",
+  "_assets/x.png␟Chats/no-meta.md": "_assets/x.png",
+  "Same␟A.md": "Same.md",
+  "Same␟sub/B.md": "Same.md",
+  "Same␟Knowledge/RL/PPO.md": "Same.md",
+  "Same␟nested/deep/far.md": "Same.md",
+  "Same␟Chats/no-meta.md": "Same.md",
+  "nested/Same␟A.md": "nested/Same.md",
+  "nested/Same␟sub/B.md": "nested/Same.md",
+  "nested/Same␟Knowledge/RL/PPO.md": "nested/Same.md",
+  "nested/Same␟nested/deep/far.md": "nested/Same.md",
+  "nested/Same␟Chats/no-meta.md": "nested/Same.md",
+  "./Same␟A.md": "Same.md",
+  "./Same␟sub/B.md": "Same.md",
+  "./Same␟Knowledge/RL/PPO.md": "Same.md",
+  "./Same␟nested/deep/far.md": "Same.md",
+  "./Same␟Chats/no-meta.md": "Same.md",
+  "../Same␟A.md": "Same.md",
+  "../Same␟sub/B.md": "Same.md",
+  "../Same␟Knowledge/RL/PPO.md": "Same.md",
+  "../Same␟nested/deep/far.md": "nested/Same.md",
+  "../Same␟Chats/no-meta.md": "Same.md",
+  "/Same␟A.md": "Same.md",
+  "/Same␟sub/B.md": "Same.md",
+  "/Same␟Knowledge/RL/PPO.md": "Same.md",
+  "/Same␟nested/deep/far.md": "Same.md",
+  "/Same␟Chats/no-meta.md": "Same.md",
+  "/A.md␟A.md": "A.md",
+  "/A.md␟sub/B.md": "A.md",
+  "/A.md␟Knowledge/RL/PPO.md": "A.md",
+  "/A.md␟nested/deep/far.md": "A.md",
+  "/A.md␟Chats/no-meta.md": "A.md",
+  "Missing␟A.md": null,
+  "Missing␟sub/B.md": null,
+  "Missing␟Knowledge/RL/PPO.md": null,
+  "Missing␟nested/deep/far.md": null,
+  "Missing␟Chats/no-meta.md": null,
+  "␟A.md": null,
+  "␟sub/B.md": null,
+  "␟Knowledge/RL/PPO.md": null,
+  "␟nested/deep/far.md": null,
+  "␟Chats/no-meta.md": null,
+  "  A  ␟A.md": "A.md",
+  "  A  ␟sub/B.md": "A.md",
+  "  A  ␟Knowledge/RL/PPO.md": "A.md",
+  "  A  ␟nested/deep/far.md": "A.md",
+  "  A  ␟Chats/no-meta.md": "A.md",
+  "%41␟A.md": "A.md",
+  "%41␟sub/B.md": "A.md",
+  "%41␟Knowledge/RL/PPO.md": "A.md",
+  "%41␟nested/deep/far.md": "A.md",
+  "%41␟Chats/no-meta.md": "A.md",
+  "%E4%B8%AD␟A.md": null,
+  "%E4%B8%AD␟sub/B.md": null,
+  "%E4%B8%AD␟Knowledge/RL/PPO.md": null,
+  "%E4%B8%AD␟nested/deep/far.md": null,
+  "%E4%B8%AD␟Chats/no-meta.md": null,
+  "%zz␟A.md": null,
+  "%zz␟sub/B.md": null,
+  "%zz␟Knowledge/RL/PPO.md": null,
+  "%zz␟nested/deep/far.md": null,
+  "%zz␟Chats/no-meta.md": null,
+  "100%␟A.md": null,
+  "100%␟sub/B.md": null,
+  "100%␟Knowledge/RL/PPO.md": null,
+  "100%␟nested/deep/far.md": null,
+  "100%␟Chats/no-meta.md": null,
+  "Note 2␟A.md": "Note 2.md",
+  "Note 2␟sub/B.md": "Note 2.md",
+  "Note 2␟Knowledge/RL/PPO.md": "Note 2.md",
+  "Note 2␟nested/deep/far.md": "Note 2.md",
+  "Note 2␟Chats/no-meta.md": "Note 2.md",
+  "note 1␟A.md": "note 1.md",
+  "note 1␟sub/B.md": "note 1.md",
+  "note 1␟Knowledge/RL/PPO.md": "note 1.md",
+  "note 1␟nested/deep/far.md": "note 1.md",
+  "note 1␟Chats/no-meta.md": "note 1.md",
+  "Ünïcode été␟A.md": "Ünïcode été.md",
+  "Ünïcode été␟sub/B.md": "Ünïcode été.md",
+  "Ünïcode été␟Knowledge/RL/PPO.md": "Ünïcode été.md",
+  "Ünïcode été␟nested/deep/far.md": "Ünïcode été.md",
+  "Ünïcode été␟Chats/no-meta.md": "Ünïcode été.md",
+  "crlf␟A.md": "crlf.md",
+  "crlf␟sub/B.md": "crlf.md",
+  "crlf␟Knowledge/RL/PPO.md": "crlf.md",
+  "crlf␟nested/deep/far.md": "crlf.md",
+  "crlf␟Chats/no-meta.md": "crlf.md",
+  "Old␟A.md": "Old.markdown",
+  "Old␟sub/B.md": "Old.markdown",
+  "Old␟Knowledge/RL/PPO.md": "Old.markdown",
+  "Old␟nested/deep/far.md": "Old.markdown",
+  "Old␟Chats/no-meta.md": "Old.markdown",
+  "Old.markdown␟A.md": "Old.markdown",
+  "Old.markdown␟sub/B.md": "Old.markdown",
+  "Old.markdown␟Knowledge/RL/PPO.md": "Old.markdown",
+  "Old.markdown␟nested/deep/far.md": "Old.markdown",
+  "Old.markdown␟Chats/no-meta.md": "Old.markdown",
+  "old.MARKDOWN␟A.md": "Old.markdown",
+  "old.MARKDOWN␟sub/B.md": "Old.markdown",
+  "old.MARKDOWN␟Knowledge/RL/PPO.md": "Old.markdown",
+  "old.MARKDOWN␟nested/deep/far.md": "Old.markdown",
+  "old.MARKDOWN␟Chats/no-meta.md": "Old.markdown",
+  "sub/␟A.md": null,
+  "sub/␟sub/B.md": null,
+  "sub/␟Knowledge/RL/PPO.md": null,
+  "sub/␟nested/deep/far.md": null,
+  "sub/␟Chats/no-meta.md": null,
+  "sub␟A.md": null,
+  "sub␟sub/B.md": null,
+  "sub␟Knowledge/RL/PPO.md": null,
+  "sub␟nested/deep/far.md": null,
+  "sub␟Chats/no-meta.md": null,
+  "a/..␟A.md": null,
+  "a/..␟sub/B.md": null,
+  "a/..␟Knowledge/RL/PPO.md": null,
+  "a/..␟nested/deep/far.md": null,
+  "a/..␟Chats/no-meta.md": null,
+  ".␟A.md": null,
+  ".␟sub/B.md": null,
+  ".␟Knowledge/RL/PPO.md": null,
+  ".␟nested/deep/far.md": null,
+  ".␟Chats/no-meta.md": null,
+  "..␟A.md": null,
+  "..␟sub/B.md": null,
+  "..␟Knowledge/RL/PPO.md": null,
+  "..␟nested/deep/far.md": null,
+  "..␟Chats/no-meta.md": null,
+  "nested/deep/far␟A.md": "nested/deep/far.md",
+  "nested/deep/far␟sub/B.md": "nested/deep/far.md",
+  "nested/deep/far␟Knowledge/RL/PPO.md": "nested/deep/far.md",
+  "nested/deep/far␟nested/deep/far.md": "nested/deep/far.md",
+  "nested/deep/far␟Chats/no-meta.md": "nested/deep/far.md",
+  "far␟A.md": "nested/deep/far.md",
+  "far␟sub/B.md": "nested/deep/far.md",
+  "far␟Knowledge/RL/PPO.md": "nested/deep/far.md",
+  "far␟nested/deep/far.md": "nested/deep/far.md",
+  "far␟Chats/no-meta.md": "nested/deep/far.md",
+  "../../A␟A.md": "A.md",
+  "../../A␟sub/B.md": "A.md",
+  "../../A␟Knowledge/RL/PPO.md": "A.md",
+  "../../A␟nested/deep/far.md": "A.md",
+  "../../A␟Chats/no-meta.md": "A.md",
+  "Knowledge/RL/../Value␟A.md": "Knowledge/Value.md",
+  "Knowledge/RL/../Value␟sub/B.md": "Knowledge/Value.md",
+  "Knowledge/RL/../Value␟Knowledge/RL/PPO.md": "Knowledge/Value.md",
+  "Knowledge/RL/../Value␟nested/deep/far.md": "Knowledge/Value.md",
+  "Knowledge/RL/../Value␟Chats/no-meta.md": "Knowledge/Value.md",
+  "Knowledge//Value␟A.md": "Knowledge/Value.md",
+  "Knowledge//Value␟sub/B.md": "Knowledge/Value.md",
+  "Knowledge//Value␟Knowledge/RL/PPO.md": "Knowledge/Value.md",
+  "Knowledge//Value␟nested/deep/far.md": "Knowledge/Value.md",
+  "Knowledge//Value␟Chats/no-meta.md": "Knowledge/Value.md"
+ },
+ "links": {
+  "A.md": [
+   "sub/B.md",
+   "_assets/x.png"
+  ],
+  "Chats/2025-01-01 1000 hello.md": [
+   "Knowledge/RL/PPO.md"
+  ],
+  "Chats/2025-02-01 0900 second.md": [],
+  "Chats/no-meta.md": [],
+  "Knowledge/RL/PPO.md": [
+   "Knowledge/RL/PPO.md",
+   "A.md",
+   "Knowledge/RL/Value.md",
+   "Knowledge/Value.md",
+   "_assets/x.png",
+   "sub/B.md",
+   "A.md",
+   "Knowledge/RL/img one.png",
+   "Knowledge/RL/Value.md"
+  ],
+  "Knowledge/RL/Value.md": [
+   "Knowledge/RL/PPO.md"
+  ],
+  "Knowledge/Value.md": [
+   "Knowledge/RL/PPO.md"
+  ],
+  "Note 02b.md": [],
+  "Note 10.md": [],
+  "Note 2.md": [
+   "note 1.md"
+  ],
+  "Old.markdown": [
+   "A.md",
+   "Same.md"
+  ],
+  "Same.md": [],
+  "_templates/T.md": [],
+  "bad-utf8.md": [
+   "A.md"
+  ],
+  "badyaml.md": [],
+  "copilot/copilot-custom-prompts/P.md": [],
+  "crlf.md": [
+   "sub/B.md",
+   "Knowledge/Value.md",
+   "Note 2.md"
+  ],
+  "dates.md": [],
+  "emptyfm.md": [],
+  "listtitle.md": [],
+  "needle-title.md": [],
+  "nested/Same.md": [],
+  "nested/deep/far.md": [
+   "Same.md",
+   "nested/Same.md",
+   "Same.md",
+   "nested/Same.md",
+   "Same.md"
+  ],
+  "nofm.md": [],
+  "note 1.md": [],
+  "search.md": [],
+  "sub/B.md": [
+   "A.md"
+  ],
+  "unicode-search.md": [],
+  "Ünïcode été.md": [
+   "A.md"
+  ]
+ },
+ "md_links": {
+  "[a](b.md)": [
+   "b.md"
+  ],
+  "![a](b.md)": [
+   "b.md"
+  ],
+  "[a](http://x)": [],
+  "[a](https://x)[b](c.md)": [
+   "c.md"
+  ],
+  "[a](https://x [b](c.md)": [
+   "c.md"
+  ],
+  "[a](#x [b](c.md))": [
+   "c.md"
+  ],
+  "[a](mailto:x)": [],
+  "[a](b.md \"title\")": [
+   "b.md"
+  ],
+  "[a](b.md  \"t\" )": [],
+  "[a](b c.md)": [],
+  "[a](b.md　\"t\")": [
+   "b.md"
+  ],
+  "[a](b.md\u000b\"t\")": [
+   "b.md"
+  ],
+  "![x](http:x)![y](y.md)": [
+   "y.md"
+  ],
+  "[[a]] [b](c.md#d)": [
+   "c.md#d"
+  ],
+  "[a]\n(b.md)": [],
+  "[a](b.md\n)": [],
+  "[](empty.md)": [
+   "empty.md"
+  ],
+  "[a](<b.md>)": [
+   "<b.md>"
+  ],
+  "[a [nested](n.md)](o.md)": [
+   "n.md"
+  ]
+ },
+ "search": {
+  "alias": [
+   {
+    "path": "Knowledge/RL/PPO.md",
+    "snippets": [
+     {
+      "line": 12,
+      "text": "Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x)"
+     }
+    ]
+   },
+   {
+    "path": "sub/B.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "back to [[A|alias]]"
+     }
+    ]
+   }
+  ],
+  "PPO": [
+   {
+    "path": "Knowledge/RL/PPO.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "tags: rl, 强化学习，ppo"
+     },
+     {
+      "line": 9,
+      "text": "# PPO ##"
+     },
+     {
+      "line": 12,
+      "text": "Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x)"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/Value.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Another value note linking [[Knowledge/RL/PPO|PPO]]"
+     }
+    ]
+   },
+   {
+    "path": "Chats/2025-01-01 1000 hello.md",
+    "snippets": [
+     {
+      "line": 13,
+      "text": "What is [[PPO]]?"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/Value.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "See [[PPO]]."
+     }
+    ]
+   }
+  ],
+  "ppo value": [
+   {
+    "path": "Knowledge/RL/PPO.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "tags: rl, 强化学习，ppo"
+     },
+     {
+      "line": 9,
+      "text": "# PPO ##"
+     },
+     {
+      "line": 12,
+      "text": "Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x)"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/Value.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Another value note linking [[Knowledge/RL/PPO|PPO]]"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/Value.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "# Value function"
+     },
+     {
+      "line": 2,
+      "text": "See [[PPO]]."
+     }
+    ]
+   }
+  ],
+  "needle": [
+   {
+    "path": "needle-title.md",
+    "snippets": []
+   },
+   {
+    "path": "search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "…lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum NEEDLE in a haystack dolor sit amet dolor sit amet dolor sit amet dolor sit amet dolor sit amet dolor sit amet dolor sit"
+     },
+     {
+      "line": 2,
+      "text": "second NEEDLE line"
+     },
+     {
+      "line": 3,
+      "text": "third needle"
+     }
+    ]
+   },
+   {
+    "path": "unicode-search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "İstanbul ΟΔΟΣ ΣΟΦΙΑ needle"
+     }
+    ]
+   }
+  ],
+  "NEEDLE haystack": [
+   {
+    "path": "search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "…lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum NEEDLE in a haystack dolor sit amet dolor sit amet dolor sit amet dolor sit amet dolor sit amet dolor sit amet dolor sit"
+     },
+     {
+      "line": 2,
+      "text": "second NEEDLE line"
+     },
+     {
+      "line": 3,
+      "text": "third needle"
+     }
+    ]
+   }
+  ],
+  "中文": [
+   {
+    "path": "search.md",
+    "snippets": [
+     {
+      "line": 5,
+      "text": "中文搜索测试 NEEDLE 中文"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/PPO.md",
+    "snippets": [
+     {
+      "line": 11,
+      "text": "#tag/sub #中文标签 and text#notatag"
+     }
+    ]
+   }
+  ],
+  "café": [
+   {
+    "path": "Ünïcode été.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "Café crème [[A]] ΟΔΟΣ İstanbul"
+     }
+    ]
+   }
+  ],
+  "οδος": [
+   {
+    "path": "unicode-search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "İstanbul ΟΔΟΣ ΣΟΦΙΑ needle"
+     }
+    ]
+   },
+   {
+    "path": "Ünïcode été.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "Café crème [[A]] ΟΔΟΣ İstanbul"
+     }
+    ]
+   }
+  ],
+  "οδοσ": [],
+  "i̇stanbul": [
+   {
+    "path": "unicode-search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "İstanbul ΟΔΟΣ ΣΟΦΙΑ needle"
+     }
+    ]
+   },
+   {
+    "path": "Ünïcode été.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "Café crème [[A]] ΟΔΟΣ İstanbul"
+     }
+    ]
+   }
+  ],
+  "istanbul": [],
+  "missing-term": [],
+  "": [],
+  "   ": [],
+  "a": [
+   {
+    "path": "search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum NEEDLE in a haystack dolor sit amet dolor sit amet dol"
+     }
+    ]
+   },
+   {
+    "path": "nested/deep/far.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]"
+     }
+    ]
+   },
+   {
+    "path": "A.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "tags: [ml]"
+     },
+     {
+      "line": 3,
+      "text": "summary: about A"
+     },
+     {
+      "line": 5,
+      "text": "# A"
+     }
+    ]
+   },
+   {
+    "path": "Chats/no-meta.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "<!-- chat:assistant -->"
+     },
+     {
+      "line": 2,
+      "text": "### 🤖 AI"
+     },
+     {
+      "line": 4,
+      "text": "plain"
+     }
+    ]
+   },
+   {
+    "path": "bad-utf8.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "caf� [[A]] �� end �a"
+     }
+    ]
+   },
+   {
+    "path": "dates.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "updated: 2024-01-02"
+     },
+     {
+      "line": 4,
+      "text": "tags: [1, 2.5, null, yes, '', ' x ']"
+     },
+     {
+      "line": 5,
+      "text": "status: yes"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/Value.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Another value note linking [[Knowledge/RL/PPO|PPO]]"
+     }
+    ]
+   },
+   {
+    "path": "Same.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "same root"
+     }
+    ]
+   },
+   {
+    "path": "badyaml.md",
+    "snippets": [
+     {
+      "line": 4,
+      "text": "# Real Title"
+     }
+    ]
+   },
+   {
+    "path": "unicode-search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "İstanbul ΟΔΟΣ ΣΟΦΙΑ needle"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/Value.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "# Value function"
+     }
+    ]
+   },
+   {
+    "path": "nested/Same.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "same nested"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/PPO.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "title: Proximal Policy Optimization"
+     },
+     {
+      "line": 3,
+      "text": "tags: rl, 强化学习，ppo"
+     },
+     {
+      "line": 5,
+      "text": "status: draft"
+     }
+    ]
+   },
+   {
+    "path": "Chats/2025-01-01 1000 hello.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "type: chat"
+     },
+     {
+      "line": 3,
+      "text": "title: Hello chat"
+     },
+     {
+      "line": 4,
+      "text": "status: inbox"
+     }
+    ]
+   },
+   {
+    "path": "listtitle.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "title: [a, b]"
+     },
+     {
+      "line": 3,
+      "text": "summary: {k: v}"
+     },
+     {
+      "line": 4,
+      "text": "tags: tag-string"
+     }
+    ]
+   },
+   {
+    "path": "nofm.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "| table |"
+     },
+     {
+      "line": 6,
+      "text": "$$math"
+     },
+     {
+      "line": 9,
+      "text": "Just text without heading that is quite long xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+     }
+    ]
+   },
+   {
+    "path": "sub/B.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "back to [[A|alias]]"
+     }
+    ]
+   },
+   {
+    "path": "Old.markdown",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Old style [[A]] and [[Same]]"
+     }
+    ]
+   },
+   {
+    "path": "Ünïcode été.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "Café crème [[A]] ΟΔΟΣ İstanbul"
+     }
+    ]
+   },
+   {
+    "path": "Chats/2025-02-01 0900 second.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "status: distilled"
+     },
+     {
+      "line": 4,
+      "text": "updated: 2025-02-01 09:00:00"
+     },
+     {
+      "line": 6,
+      "text": "<!-- chat:user -->"
+     }
+    ]
+   },
+   {
+    "path": "copilot/copilot-custom-prompts/P.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "copilot-command-context-menu-enabled: true"
+     },
+     {
+      "line": 4,
+      "text": "Summarize {}"
+     }
+    ]
+   },
+   {
+    "path": "crlf.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "second [[Value]] and [[Note 2]]"
+     }
+    ]
+   },
+   {
+    "path": "needle-title.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "no body match"
+     }
+    ]
+   },
+   {
+    "path": "_templates/T.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "# Template"
+     }
+    ]
+   }
+  ],
+  "note": [
+   {
+    "path": "Note 2.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "two [[note 1]]"
+     }
+    ]
+   },
+   {
+    "path": "Note 02b.md",
+    "snippets": []
+   },
+   {
+    "path": "Note 10.md",
+    "snippets": []
+   },
+   {
+    "path": "note 1.md",
+    "snippets": []
+   },
+   {
+    "path": "crlf.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "second [[Value]] and [[Note 2]]"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/Value.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Another value note linking [[Knowledge/RL/PPO|PPO]]"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/PPO.md",
+    "snippets": [
+     {
+      "line": 14,
+      "text": "[mail](mailto:a@b.c) [weird](http:/x) [[Missing Note]] ![[x.png]] [[sub/B.md#^block]]"
+     }
+    ]
+   }
+  ],
+  "second": [
+   {
+    "path": "Chats/2025-02-01 0900 second.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "title: Second"
+     }
+    ]
+   },
+   {
+    "path": "crlf.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "second [[Value]] and [[Note 2]]"
+     }
+    ]
+   },
+   {
+    "path": "search.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "second NEEDLE line"
+     }
+    ]
+   },
+   {
+    "path": "unicode-search.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "second"
+     }
+    ]
+   }
+  ],
+  "fifth": [
+   {
+    "path": "unicode-search.md",
+    "snippets": [
+     {
+      "line": 5,
+      "text": "fifth"
+     }
+    ]
+   }
+  ],
+  "sixth": [
+   {
+    "path": "unicode-search.md",
+    "snippets": [
+     {
+      "line": 6,
+      "text": "sixth"
+     }
+    ]
+   }
+  ],
+  "�": [
+   {
+    "path": "bad-utf8.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "caf� [[A]] �� end �a"
+     }
+    ]
+   }
+  ],
+  "[[a]]": [
+   {
+    "path": "Old.markdown",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Old style [[A]] and [[Same]]"
+     }
+    ]
+   },
+   {
+    "path": "bad-utf8.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "caf� [[A]] �� end �a"
+     }
+    ]
+   },
+   {
+    "path": "Ünïcode été.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "Café crème [[A]] ΟΔΟΣ İstanbul"
+     }
+    ]
+   }
+  ],
+  "knowledge/rl": [
+   {
+    "path": "Knowledge/Value.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Another value note linking [[Knowledge/RL/PPO|PPO]]"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/PPO.md",
+    "snippets": [
+     {
+      "line": 13,
+      "text": "![img](img%20one.png \"title\") [[Knowledge/RL/Value]] [[value]] [link](Value.md#part)"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/Value.md",
+    "snippets": []
+   }
+  ]
+ },
+ "search_limits": {
+  "0": [],
+  "1": [
+   {
+    "path": "search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum NEEDLE in a haystack dolor sit amet dolor sit amet dol"
+     }
+    ]
+   }
+  ],
+  "3": [
+   {
+    "path": "search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum NEEDLE in a haystack dolor sit amet dolor sit amet dol"
+     }
+    ]
+   },
+   {
+    "path": "nested/deep/far.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]"
+     }
+    ]
+   },
+   {
+    "path": "A.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "tags: [ml]"
+     },
+     {
+      "line": 3,
+      "text": "summary: about A"
+     },
+     {
+      "line": 5,
+      "text": "# A"
+     }
+    ]
+   }
+  ],
+  "-1": [
+   {
+    "path": "search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum NEEDLE in a haystack dolor sit amet dolor sit amet dol"
+     }
+    ]
+   },
+   {
+    "path": "nested/deep/far.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]"
+     }
+    ]
+   },
+   {
+    "path": "A.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "tags: [ml]"
+     },
+     {
+      "line": 3,
+      "text": "summary: about A"
+     },
+     {
+      "line": 5,
+      "text": "# A"
+     }
+    ]
+   },
+   {
+    "path": "Chats/no-meta.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "<!-- chat:assistant -->"
+     },
+     {
+      "line": 2,
+      "text": "### 🤖 AI"
+     },
+     {
+      "line": 4,
+      "text": "plain"
+     }
+    ]
+   },
+   {
+    "path": "bad-utf8.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "caf� [[A]] �� end �a"
+     }
+    ]
+   },
+   {
+    "path": "dates.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "updated: 2024-01-02"
+     },
+     {
+      "line": 4,
+      "text": "tags: [1, 2.5, null, yes, '', ' x ']"
+     },
+     {
+      "line": 5,
+      "text": "status: yes"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/Value.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Another value note linking [[Knowledge/RL/PPO|PPO]]"
+     }
+    ]
+   },
+   {
+    "path": "Same.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "same root"
+     }
+    ]
+   },
+   {
+    "path": "badyaml.md",
+    "snippets": [
+     {
+      "line": 4,
+      "text": "# Real Title"
+     }
+    ]
+   },
+   {
+    "path": "unicode-search.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "İstanbul ΟΔΟΣ ΣΟΦΙΑ needle"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/Value.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "# Value function"
+     }
+    ]
+   },
+   {
+    "path": "nested/Same.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "same nested"
+     }
+    ]
+   },
+   {
+    "path": "Knowledge/RL/PPO.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "title: Proximal Policy Optimization"
+     },
+     {
+      "line": 3,
+      "text": "tags: rl, 强化学习，ppo"
+     },
+     {
+      "line": 5,
+      "text": "status: draft"
+     }
+    ]
+   },
+   {
+    "path": "Chats/2025-01-01 1000 hello.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "type: chat"
+     },
+     {
+      "line": 3,
+      "text": "title: Hello chat"
+     },
+     {
+      "line": 4,
+      "text": "status: inbox"
+     }
+    ]
+   },
+   {
+    "path": "listtitle.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "title: [a, b]"
+     },
+     {
+      "line": 3,
+      "text": "summary: {k: v}"
+     },
+     {
+      "line": 4,
+      "text": "tags: tag-string"
+     }
+    ]
+   },
+   {
+    "path": "nofm.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "| table |"
+     },
+     {
+      "line": 6,
+      "text": "$$math"
+     },
+     {
+      "line": 9,
+      "text": "Just text without heading that is quite long xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+     }
+    ]
+   },
+   {
+    "path": "sub/B.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "back to [[A|alias]]"
+     }
+    ]
+   },
+   {
+    "path": "Old.markdown",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "Old style [[A]] and [[Same]]"
+     }
+    ]
+   },
+   {
+    "path": "Ünïcode été.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "Café crème [[A]] ΟΔΟΣ İstanbul"
+     }
+    ]
+   },
+   {
+    "path": "Chats/2025-02-01 0900 second.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "status: distilled"
+     },
+     {
+      "line": 4,
+      "text": "updated: 2025-02-01 09:00:00"
+     },
+     {
+      "line": 6,
+      "text": "<!-- chat:user -->"
+     }
+    ]
+   },
+   {
+    "path": "copilot/copilot-custom-prompts/P.md",
+    "snippets": [
+     {
+      "line": 2,
+      "text": "copilot-command-context-menu-enabled: true"
+     },
+     {
+      "line": 4,
+      "text": "Summarize {}"
+     }
+    ]
+   },
+   {
+    "path": "crlf.md",
+    "snippets": [
+     {
+      "line": 3,
+      "text": "second [[Value]] and [[Note 2]]"
+     }
+    ]
+   },
+   {
+    "path": "needle-title.md",
+    "snippets": [
+     {
+      "line": 1,
+      "text": "no body match"
+     }
+    ]
+   }
+  ],
+  "-100": []
+ },
+ "backlinks": {
+  "A.md": {
+   "ok": [
+    {
+     "path": "Knowledge/RL/PPO.md",
+     "lines": [
+      "Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x)"
+     ]
+    },
+    {
+     "path": "Old.markdown",
+     "lines": [
+      "Old style [[A]] and [[Same]]"
+     ]
+    },
+    {
+     "path": "bad-utf8.md",
+     "lines": [
+      "caf� [[A]] �� end �a"
+     ]
+    },
+    {
+     "path": "sub/B.md",
+     "lines": [
+      "back to [[A|alias]]"
+     ]
+    },
+    {
+     "path": "Ünïcode été.md",
+     "lines": [
+      "Café crème [[A]] ΟΔΟΣ İstanbul"
+     ]
+    }
+   ]
+  },
+  "sub/B.md": {
+   "ok": [
+    {
+     "path": "A.md",
+     "lines": [
+      "see [[B]] and ![[_assets/x.png]]"
+     ]
+    },
+    {
+     "path": "Knowledge/RL/PPO.md",
+     "lines": [
+      "[mail](mailto:a@b.c) [weird](http:/x) [[Missing Note]] ![[x.png]] [[sub/B.md#^block]]"
+     ]
+    },
+    {
+     "path": "crlf.md",
+     "lines": [
+      "see [[B]]"
+     ]
+    }
+   ]
+  },
+  "Knowledge/RL/PPO.md": {
+   "ok": [
+    {
+     "path": "Chats/2025-01-01 1000 hello.md",
+     "lines": [
+      "What is [[PPO]]?"
+     ]
+    },
+    {
+     "path": "Knowledge/RL/Value.md",
+     "lines": [
+      "See [[PPO]]."
+     ]
+    },
+    {
+     "path": "Knowledge/Value.md",
+     "lines": [
+      "Another value note linking [[Knowledge/RL/PPO|PPO]]"
+     ]
+    }
+   ]
+  },
+  "Knowledge/RL/Value.md": {
+   "ok": [
+    {
+     "path": "Knowledge/RL/PPO.md",
+     "lines": [
+      "![img](img%20one.png \"title\") [[Knowledge/RL/Value]] [[value]] [link](Value.md#part)"
+     ]
+    }
+   ]
+  },
+  "Same.md": {
+   "ok": [
+    {
+     "path": "Old.markdown",
+     "lines": [
+      "Old style [[A]] and [[Same]]"
+     ]
+    },
+    {
+     "path": "nested/deep/far.md",
+     "lines": [
+      "far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]"
+     ]
+    }
+   ]
+  },
+  "nested/Same.md": {
+   "ok": [
+    {
+     "path": "nested/deep/far.md",
+     "lines": [
+      "far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]"
+     ]
+    }
+   ]
+  },
+  "Missing.md": {
+   "ok": []
+  },
+  "_assets/x.png": {
+   "ok": [
+    {
+     "path": "A.md",
+     "lines": [
+      "see [[B]] and ![[_assets/x.png]]"
+     ]
+    },
+    {
+     "path": "Knowledge/RL/PPO.md",
+     "lines": [
+      "[mail](mailto:a@b.c) [weird](http:/x) [[Missing Note]] ![[x.png]] [[sub/B.md#^block]]"
+     ]
+    }
+   ]
+  },
+  "../x": {
+   "error": "invalid path",
+   "status": 400
+  }
+ },
+ "natural": [
+  "",
+  "２",
+  "9",
+  "09",
+  "10",
+  "１０",
+  "١٠",
+  "_x",
+  "a",
+  "a0",
+  "a00",
+  "a10b2",
+  "A10B3",
+  "a10b10",
+  "a 2",
+  "a  10",
+  "img1.png",
+  "img2.png",
+  "img10.png",
+  "note 1",
+  "note 01",
+  "Note 2",
+  "Note 02b",
+  "Note 10",
+  "x²",
+  "Zeta",
+  "zeta",
+  "été"
+ ],
+ "uploads": {
+  "photo.PNG": "_assets/photo.png",
+  "../../evil.md": "_assets/evil.md",
+  "a\\b\\c.txt": "_assets/c.txt",
+  ".hidden": "_assets/hidden",
+  "..": "_assets/file",
+  "": "_assets/file",
+  "we:ird*na?me.JPEG": "_assets/we_ird_na_me.jpeg",
+  "  spaced .png": "_assets/spaced.png",
+  "x.toolongextension123": "_assets/x.toolongexte",
+  "no_ext": "_assets/no_ext",
+  "中文.png": "_assets/中文.png",
+  "dots...": "_assets/dots.",
+  "a.b.c": "_assets/a.b.c",
+  "tab\tname.png": "_assets/tab_name.png",
+  "ok.p-n_g": "_assets/ok.png"
+ },
+ "mime": {
+  "a.png": "image/png",
+  "a.PNG": "image/png",
+  "a.jpg": "image/jpeg",
+  "a.svg": "image/svg+xml",
+  "a.svgz": "image/svg+xml",
+  "a.pdf": "application/pdf",
+  "a.md": "text/markdown",
+  "a.txt": "text/plain",
+  "a.json": "application/json",
+  "a.tar.gz": "application/x-tar",
+  "a.gz": "application/octet-stream",
+  "a.tgz": "application/x-tar",
+  "a.mp3": "audio/mpeg",
+  "a.mp4": "video/mp4",
+  "a.webp": "application/octet-stream",
+  "a.csv": "text/csv",
+  "a.py": "text/x-python",
+  "a.unknownext": "application/octet-stream",
+  "noext": "application/octet-stream",
+  ".bashrc": "application/octet-stream",
+  "a.Z": "application/octet-stream",
+  "a.html": "text/html",
+  "a.css": "text/css",
+  "a.js": "text/javascript",
+  "a.wasm": "application/wasm",
+  "a.yaml": "application/octet-stream",
+  "a.heic": "image/heic",
+  "a.m4a": "application/octet-stream",
+  "a.TXT.GZ": "application/octet-stream"
+ },
+ "read": {
+  "A.md": {
+   "ok": {
+    "path": "A.md",
+    "content": "---\ntags: [ml]\nsummary: about A\n---\n# A\nsee [[B]] and ![[_assets/x.png]]\n",
+    "etag": "418e171fee74942ac0aa"
+   }
+  },
+  "bad-utf8.md": {
+   "ok": {
+    "path": "bad-utf8.md",
+    "content": "caf� [[A]] �� end �a\n",
+    "etag": "570f69078d70a4a953ff"
+   }
+  },
+  "crlf.md": {
+   "ok": {
+    "path": "crlf.md",
+    "content": "line one\r\nsee [[B]]\r\nsecond [[Value]] and [[Note 2]]\r\n",
+    "etag": "3e414dd2e2b40cbf198a"
+   }
+  },
+  "a.txt": {
+   "ok": {
+    "path": "a.txt",
+    "content": "plain text with PPO\n",
+    "etag": "883f1705dc2211dac099"
+   }
+  },
+  "_assets/x.png": {
+   "error": "not a text file",
+   "status": 400
+  },
+  "missing.md": {
+   "error": "file not found",
+   "status": 404
+  },
+  "sub": {
+   "error": "file not found",
+   "status": 404
+  },
+  "Old.markdown": {
+   "ok": {
+    "path": "Old.markdown",
+    "content": "Old style [[A]] and [[Same]]\n",
+    "etag": "716f38229289fdc28fb9"
+   }
+  }
+ },
+ "move": {
+  "steps": [
+   {
+    "src": "sub/B.md",
+    "dst": "topics/Bee.md",
+    "update": true,
+    "result": {
+     "ok": {
+      "path": "topics/Bee.md",
+      "updated_links_in": [
+       "A.md",
+       "Knowledge/RL/PPO.md",
+       "crlf.md"
+      ]
+     }
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1tfYXNzZXRzL3gucG5nXV0K",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPXV0/Cgo8IS0tIGNoYXQ6YXNzaXN0YW50IC0tPgojIyMg8J+kliBBSQoKQSBwb2xpY3kgbWV0aG9kLgo=",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/PPO.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tLbm93bGVkZ2UvUkwvVmFsdWVdXSBbW3ZhbHVlXV0gW2xpbmtdKFZhbHVlLm1kI3BhcnQpClttYWlsXShtYWlsdG86YUBiLmMpIFt3ZWlyZF0oaHR0cDoveCkgW1tNaXNzaW5nIE5vdGVdXSAhW1t4LnBuZ11dIFtbQmVlI15ibG9ja11dClBQTyBjbGlwcyB0aGUgcmF0aW8uIHBwbyBwcG8gUFBPLgo=",
+     "Knowledge/RL/Value.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE9dXS4K",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tLbm93bGVkZ2UvUkwvUFBPfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 2.md": "dHdvIFtbbm90ZSAxXV0=",
+     "Old.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW1NhbWVdXQo=",
+     "Same.md": "c2FtZSByb290Cg==",
+     "_assets/x.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested/deep/far.md": "ZmFyIGF3YXkgW1tTYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbLi9TYW1lXV0gW1suLi9TYW1lXV0gW1svU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "Same.md",
+    "dst": "moved/Same.md",
+    "update": true,
+    "result": {
+     "ok": {
+      "path": "moved/Same.md",
+      "updated_links_in": [
+       "Old.markdown",
+       "nested/deep/far.md"
+      ]
+     }
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1tfYXNzZXRzL3gucG5nXV0K",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPXV0/Cgo8IS0tIGNoYXQ6YXNzaXN0YW50IC0tPgojIyMg8J+kliBBSQoKQSBwb2xpY3kgbWV0aG9kLgo=",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/PPO.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tLbm93bGVkZ2UvUkwvVmFsdWVdXSBbW3ZhbHVlXV0gW2xpbmtdKFZhbHVlLm1kI3BhcnQpClttYWlsXShtYWlsdG86YUBiLmMpIFt3ZWlyZF0oaHR0cDoveCkgW1tNaXNzaW5nIE5vdGVdXSAhW1t4LnBuZ11dIFtbQmVlI15ibG9ja11dClBQTyBjbGlwcyB0aGUgcmF0aW8uIHBwbyBwcG8gUFBPLgo=",
+     "Knowledge/RL/Value.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE9dXS4K",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tLbm93bGVkZ2UvUkwvUFBPfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 2.md": "dHdvIFtbbm90ZSAxXV0=",
+     "Old.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "_assets/x.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "Knowledge/RL/Value.md",
+    "dst": "Knowledge/RL/Worth.md",
+    "update": true,
+    "result": {
+     "ok": {
+      "path": "Knowledge/RL/Worth.md",
+      "updated_links_in": [
+       "Knowledge/RL/PPO.md"
+      ]
+     }
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1tfYXNzZXRzL3gucG5nXV0K",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPXV0/Cgo8IS0tIGNoYXQ6YXNzaXN0YW50IC0tPgojIyMg8J+kliBBSQoKQSBwb2xpY3kgbWV0aG9kLgo=",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/PPO.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tXb3J0aF1dIFtbdmFsdWVdXSBbbGlua10oVmFsdWUubWQjcGFydCkKW21haWxdKG1haWx0bzphQGIuYykgW3dlaXJkXShodHRwOi94KSBbW01pc3NpbmcgTm90ZV1dICFbW3gucG5nXV0gW1tCZWUjXmJsb2NrXV0KUFBPIGNsaXBzIHRoZSByYXRpby4gcHBvIHBwbyBQUE8uCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE9dXS4K",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tLbm93bGVkZ2UvUkwvUFBPfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 2.md": "dHdvIFtbbm90ZSAxXV0=",
+     "Old.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "_assets/x.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "Knowledge/RL/PPO.md",
+    "dst": "PPO2.md",
+    "update": true,
+    "result": {
+     "ok": {
+      "path": "PPO2.md",
+      "updated_links_in": [
+       "Chats/2025-01-01 1000 hello.md",
+       "Knowledge/RL/Worth.md",
+       "Knowledge/Value.md"
+      ]
+     }
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1tfYXNzZXRzL3gucG5nXV0K",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPMl1dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE8yXV0uCg==",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tQUE8yfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 2.md": "dHdvIFtbbm90ZSAxXV0=",
+     "Old.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "PPO2.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tXb3J0aF1dIFtbdmFsdWVdXSBbbGlua10oVmFsdWUubWQjcGFydCkKW21haWxdKG1haWx0bzphQGIuYykgW3dlaXJkXShodHRwOi94KSBbW01pc3NpbmcgTm90ZV1dICFbW3gucG5nXV0gW1tCZWUjXmJsb2NrXV0KUFBPIGNsaXBzIHRoZSByYXRpby4gcHBvIHBwbyBQUE8uCg==",
+     "_assets/x.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "Old.markdown",
+    "dst": "archive/Older.markdown",
+    "update": true,
+    "result": {
+     "ok": {
+      "path": "archive/Older.markdown",
+      "updated_links_in": []
+     }
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1tfYXNzZXRzL3gucG5nXV0K",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPMl1dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE8yXV0uCg==",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tQUE8yfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 2.md": "dHdvIFtbbm90ZSAxXV0=",
+     "PPO2.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tXb3J0aF1dIFtbdmFsdWVdXSBbbGlua10oVmFsdWUubWQjcGFydCkKW21haWxdKG1haWx0bzphQGIuYykgW3dlaXJkXShodHRwOi94KSBbW01pc3NpbmcgTm90ZV1dICFbW3gucG5nXV0gW1tCZWUjXmJsb2NrXV0KUFBPIGNsaXBzIHRoZSByYXRpby4gcHBvIHBwbyBQUE8uCg==",
+     "_assets/x.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "archive/Older.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "_assets/x.png",
+    "dst": "_assets/y.png",
+    "update": true,
+    "result": {
+     "ok": {
+      "path": "_assets/y.png",
+      "updated_links_in": [
+       "A.md",
+       "PPO2.md"
+      ]
+     }
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1t5LnBuZ11dCg==",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPMl1dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE8yXV0uCg==",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tQUE8yfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 2.md": "dHdvIFtbbm90ZSAxXV0=",
+     "PPO2.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tXb3J0aF1dIFtbdmFsdWVdXSBbbGlua10oVmFsdWUubWQjcGFydCkKW21haWxdKG1haWx0bzphQGIuYykgW3dlaXJkXShodHRwOi94KSBbW01pc3NpbmcgTm90ZV1dICFbW3kucG5nXV0gW1tCZWUjXmJsb2NrXV0KUFBPIGNsaXBzIHRoZSByYXRpby4gcHBvIHBwbyBQUE8uCg==",
+     "_assets/y.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "archive/Older.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "Note 2.md",
+    "dst": "Note 3.md",
+    "update": false,
+    "result": {
+     "ok": {
+      "path": "Note 3.md",
+      "updated_links_in": []
+     }
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1t5LnBuZ11dCg==",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPMl1dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE8yXV0uCg==",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tQUE8yfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 3.md": "dHdvIFtbbm90ZSAxXV0=",
+     "PPO2.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tXb3J0aF1dIFtbdmFsdWVdXSBbbGlua10oVmFsdWUubWQjcGFydCkKW21haWxdKG1haWx0bzphQGIuYykgW3dlaXJkXShodHRwOi94KSBbW01pc3NpbmcgTm90ZV1dICFbW3kucG5nXV0gW1tCZWUjXmJsb2NrXV0KUFBPIGNsaXBzIHRoZSByYXRpby4gcHBvIHBwbyBQUE8uCg==",
+     "_assets/y.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "archive/Older.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "nested",
+    "dst": "nested2",
+    "update": true,
+    "result": {
+     "ok": {
+      "path": "nested2",
+      "updated_links_in": []
+     }
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1t5LnBuZ11dCg==",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPMl1dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE8yXV0uCg==",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tQUE8yfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 3.md": "dHdvIFtbbm90ZSAxXV0=",
+     "PPO2.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tXb3J0aF1dIFtbdmFsdWVdXSBbbGlua10oVmFsdWUubWQjcGFydCkKW21haWxdKG1haWx0bzphQGIuYykgW3dlaXJkXShodHRwOi94KSBbW01pc3NpbmcgTm90ZV1dICFbW3kucG5nXV0gW1tCZWUjXmJsb2NrXV0KUFBPIGNsaXBzIHRoZSByYXRpby4gcHBvIHBwbyBQUE8uCg==",
+     "_assets/y.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "archive/Older.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested2/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested2/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "missing.md",
+    "dst": "x.md",
+    "update": true,
+    "result": {
+     "error": "file not found",
+     "status": 404
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1t5LnBuZ11dCg==",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPMl1dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE8yXV0uCg==",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tQUE8yfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 3.md": "dHdvIFtbbm90ZSAxXV0=",
+     "PPO2.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tXb3J0aF1dIFtbdmFsdWVdXSBbbGlua10oVmFsdWUubWQjcGFydCkKW21haWxdKG1haWx0bzphQGIuYykgW3dlaXJkXShodHRwOi94KSBbW01pc3NpbmcgTm90ZV1dICFbW3kucG5nXV0gW1tCZWUjXmJsb2NrXV0KUFBPIGNsaXBzIHRoZSByYXRpby4gcHBvIHBwbyBQUE8uCg==",
+     "_assets/y.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "archive/Older.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested2/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested2/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "A.md",
+    "dst": "crlf.md",
+    "update": true,
+    "result": {
+     "error": "destination already exists",
+     "status": 409
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1t5LnBuZ11dCg==",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPMl1dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE8yXV0uCg==",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tQUE8yfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 3.md": "dHdvIFtbbm90ZSAxXV0=",
+     "PPO2.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tXb3J0aF1dIFtbdmFsdWVdXSBbbGlua10oVmFsdWUubWQjcGFydCkKW21haWxdKG1haWx0bzphQGIuYykgW3dlaXJkXShodHRwOi94KSBbW01pc3NpbmcgTm90ZV1dICFbW3kucG5nXV0gW1tCZWUjXmJsb2NrXV0KUFBPIGNsaXBzIHRoZSByYXRpby4gcHBvIHBwbyBQUE8uCg==",
+     "_assets/y.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "archive/Older.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested2/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested2/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "A.md",
+    "dst": "../out.md",
+    "update": true,
+    "result": {
+     "error": "invalid path",
+     "status": 400
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1t5LnBuZ11dCg==",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPMl1dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE8yXV0uCg==",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tQUE8yfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 3.md": "dHdvIFtbbm90ZSAxXV0=",
+     "PPO2.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1suLi9BXV0gW21kXSguLi8uLi9BLm1kKSBbZXh0XShodHRwczovL3guY29tKSBbYW5jaG9yXSgjeCkKIVtpbWddKGltZyUyMG9uZS5wbmcgInRpdGxlIikgW1tXb3J0aF1dIFtbdmFsdWVdXSBbbGlua10oVmFsdWUubWQjcGFydCkKW21haWxdKG1haWx0bzphQGIuYykgW3dlaXJkXShodHRwOi94KSBbW01pc3NpbmcgTm90ZV1dICFbW3kucG5nXV0gW1tCZWUjXmJsb2NrXV0KUFBPIGNsaXBzIHRoZSByYXRpby4gcHBvIHBwbyBQUE8uCg==",
+     "_assets/y.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "archive/Older.markdown": "T2xkIHN0eWxlIFtbQV1dIGFuZCBbW21vdmVkL1NhbWVdXQo=",
+     "bad-utf8.md": "Y2FmwyBbW0FdXSD//iBlbmQg5LhhCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested2/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested2/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBfGFsaWFzXV0K",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBXV0gzp/OlM6fzqMgxLBzdGFuYnVsCg=="
+    }
+   },
+   {
+    "src": "A.md",
+    "dst": "A Renamed.md",
+    "update": true,
+    "result": {
+     "ok": {
+      "path": "A Renamed.md",
+      "updated_links_in": [
+       "PPO2.md",
+       "archive/Older.markdown",
+       "bad-utf8.md",
+       "topics/Bee.md",
+       "Ünïcode été.md"
+      ]
+     }
+    },
+    "files": {
+     ".secret.md": "aGlkZGVu",
+     "A Renamed.md": "LS0tCnRhZ3M6IFttbF0Kc3VtbWFyeTogYWJvdXQgQQotLS0KIyBBCnNlZSBbW0JlZV1dIGFuZCAhW1t5LnBuZ11dCg==",
+     "Chats/2025-01-01 1000 hello.md": "LS0tCnR5cGU6IGNoYXQKdGl0bGU6IEhlbGxvIGNoYXQKc3RhdHVzOiBpbmJveApjcmVhdGVkOiAnMjAyNS0wMS0wMVQxMDowMDowMCswODowMCcKdXBkYXRlZDogJzIwMjUtMDEtMDFUMTA6MDU6MDArMDg6MDAnCm1vZGVsOiBncHQKLS0tCgo8IS0tIGNoYXQ6dXNlciAtLT4KIyMjIPCfp5Eg5oiRCgpXaGF0IGlzIFtbUFBPMl1dPwoKPCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCkEgcG9saWN5IG1ldGhvZC4K",
+     "Chats/2025-02-01 0900 second.md": "LS0tCnRpdGxlOiBTZWNvbmQKc3RhdHVzOiBkaXN0aWxsZWQKdXBkYXRlZDogMjAyNS0wMi0wMSAwOTowMDowMAotLS0KPCEtLSBjaGF0OnVzZXIgLS0+CmhpCg==",
+     "Chats/no-meta.md": "PCEtLSBjaGF0OmFzc2lzdGFudCAtLT4KIyMjIPCfpJYgQUkKCnBsYWluCg==",
+     "Knowledge/RL/Worth.md": "IyBWYWx1ZSBmdW5jdGlvbgpTZWUgW1tQUE8yXV0uCg==",
+     "Knowledge/RL/img one.png": "aW1n",
+     "Knowledge/Value.md": "QW5vdGhlciB2YWx1ZSBub3RlIGxpbmtpbmcgW1tQUE8yfFBQT11dCg==",
+     "Note 02b.md": "emVybyB0d28gYg==",
+     "Note 10.md": "dGVu",
+     "Note 3.md": "dHdvIFtbbm90ZSAxXV0=",
+     "PPO2.md": "LS0tCnRpdGxlOiBQcm94aW1hbCBQb2xpY3kgT3B0aW1pemF0aW9uCnRhZ3M6IHJsLCDlvLrljJblrabkuaDvvIxwcG8KdHlwZTogY29uY2VwdApzdGF0dXM6IGRyYWZ0CnVwZGF0ZWRfYXQ6IDIwMjQtMDUtMDYKLS0tCgojIFBQTyAjIwoKI3RhZy9zdWIgI+S4reaWh+agh+etviBhbmQgdGV4dCNub3RhdGFnCkxpbmtzOiBbW1BQTyNTZWN0aW9ufGFsaWFzXV0gW1tBIFJlbmFtZWRdXSBbbWRdKC4uLy4uL0EubWQpIFtleHRdKGh0dHBzOi8veC5jb20pIFthbmNob3JdKCN4KQohW2ltZ10oaW1nJTIwb25lLnBuZyAidGl0bGUiKSBbW1dvcnRoXV0gW1t2YWx1ZV1dIFtsaW5rXShWYWx1ZS5tZCNwYXJ0KQpbbWFpbF0obWFpbHRvOmFAYi5jKSBbd2VpcmRdKGh0dHA6L3gpIFtbTWlzc2luZyBOb3RlXV0gIVtbeS5wbmddXSBbW0JlZSNeYmxvY2tdXQpQUE8gY2xpcHMgdGhlIHJhdGlvLiBwcG8gcHBvIFBQTy4K",
+     "_assets/y.png": "iVBORw==",
+     "_templates/T.md": "IyBUZW1wbGF0ZQo=",
+     "a.txt": "cGxhaW4gdGV4dCB3aXRoIFBQTwo=",
+     "archive/Older.markdown": "T2xkIHN0eWxlIFtbQSBSZW5hbWVkXV0gYW5kIFtbbW92ZWQvU2FtZV1dCg==",
+     "bad-utf8.md": "Y2Fm77+9IFtbQSBSZW5hbWVkXV0g77+977+9IGVuZCDvv71hCg==",
+     "badyaml.md": "LS0tCnRpdGxlOiBbdW5jbG9zZWQKLS0tCiMgUmVhbCBUaXRsZQpib2R5Cg==",
+     "copilot/copilot-custom-prompts/P.md": "LS0tCmNvcGlsb3QtY29tbWFuZC1jb250ZXh0LW1lbnUtZW5hYmxlZDogdHJ1ZQotLS0KU3VtbWFyaXplIHt9Cg==",
+     "crlf.md": "bGluZSBvbmUNCnNlZSBbW0JlZV1dDQpzZWNvbmQgW1tWYWx1ZV1dIGFuZCBbW05vdGUgMl1dDQo=",
+     "dates.md": "LS0tCnRpdGxlOiAyMDI0CnVwZGF0ZWQ6IDIwMjQtMDEtMDIKdGFnczogWzEsIDIuNSwgbnVsbCwgeWVzLCAnJywgJyB4ICddCnN0YXR1czogeWVzCmRlc2NyaXB0aW9uOiAnZGVzYycKLS0tCmJvZHkK",
+     "emptyfm.md": "LS0tCgotLS0KIyBFbXB0eSBGTQo=",
+     "listtitle.md": "LS0tCnRpdGxlOiBbYSwgYl0Kc3VtbWFyeToge2s6IHZ9CnRhZ3M6IHRhZy1zdHJpbmcKLS0tCiMgIEhlYWRpbmcgICMK",
+     "moved/Same.md": "c2FtZSByb290Cg==",
+     "needle-title.md": "bm8gYm9keSBtYXRjaAo=",
+     "nested2/Same.md": "c2FtZSBuZXN0ZWQK",
+     "nested2/deep/far.md": "ZmFyIGF3YXkgW1ttb3ZlZC9TYW1lXV0gW1tuZXN0ZWQvU2FtZV1dIFtbbW92ZWQvU2FtZV1dIFtbLi4vU2FtZV1dIFtbbW92ZWQvU2FtZV1dCg==",
+     "nofm.md": "Cgp8IHRhYmxlIHwKPiBxdW90ZQpgYGBjb2RlCiQkbWF0aAohaW1nCi0tLSBydWxlCkp1c3QgdGV4dCB3aXRob3V0IGhlYWRpbmcgdGhhdCBpcyBxdWl0ZSBsb25nIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eAo=",
+     "note 1.md": "b25l",
+     "search.md": "U3RhcnQgbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gbG9yZW0gaXBzdW0gTkVFRExFIGluIGEgaGF5c3RhY2sgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgZG9sb3Igc2l0IGFtZXQgCnNlY29uZCBORUVETEUgbGluZQp0aGlyZCBuZWVkbGUKZm91cnRoIG5lZWRsZSBsaW5lCuS4reaWh+aQnOe0oua1i+ivlSBORUVETEUg5Lit5paHCg==",
+     "sub/.hidden/C.md": "W1tBXV0=",
+     "topics/Bee.md": "IyBCCmJhY2sgdG8gW1tBIFJlbmFtZWR8YWxpYXNdXQo=",
+     "unicode-search.md": "xLBzdGFuYnVsIM6fzpTOn86jIM6jzp/Ops6ZzpEgbmVlZGxl4oCoc2Vjb25k4oCpdGhpcmTChWZvdXJ0aBxmaWZ0aAtzaXh0aAo=",
+     "Ünïcode été.md": "IyDDiXTDqSDDnG5pY29kZQpDYWbDqSBjcsOobWUgW1tBIFJlbmFtZWRdXSDOn86Uzp/OoyDEsHN0YW5idWwK"
+    }
+   }
+  ]
+ }
+}

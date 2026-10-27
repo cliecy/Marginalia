@@ -1,0 +1,12 @@
+{
+  "name": "Marginalia",
+  "identifier": "com.cliecy.marginalia",
+  "version": "0.2.0",
+  "copyright": "© 2026 Cliecy",
+  "devUrl": "http://localhost:5173",
+  "devCommand": "npm --prefix frontend run dev:app",
+  "buildCommand": "npm --prefix frontend run build:app",
+  "bindings": "frontend/src/lib/mygo.ts",
+  "out": "build",
+  "urlSchemes": ["marginalia"]
+}

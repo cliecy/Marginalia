@@ -1,0 +1,1181 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Marginalia API",
+    "version": "0.0.0",
+    "summary": "本地 Markdown 知识库的 REST 与 MCP 接口",
+    "description": "Marginalia 是一个与 Obsidian 兼容的 Markdown 知识库。这个接口让其他程序读写笔记、搜索、查看链接图谱与 git 历史、调用 AI 助手，以及通过 MCP 接入 AI Agent。\n\n**认证**：在请求头里带上 `Authorization: Bearer <令牌>`（令牌在应用的「API 与 MCP」页面，或数据目录的 `mcp_token` 文件里）。浏览器里用密码登录得到的会话 Cookie 同样有效。`/mcp` 也接受 `?token=<令牌>`，供不能设置请求头的客户端使用。\n\n**路径**：所有笔记路径都相对于笔记库根目录，用 `/` 分隔，例如 `Knowledge/RL/PPO.md`。以 `.` 开头的文件和文件夹（`.git`、`.obsidian`）不可见也不可访问，经符号链接指向它们的路径同样如此。\n\n**错误**：失败时返回 `{\"detail\": \"…\"}`，有时附带机器可读的 `code`。还没有选择笔记库时，依赖笔记库的接口返回 409 `{\"detail\": \"未选择笔记库\", \"code\": \"no_vault\"}`。\n\n**写入与版本**：网页端的编辑会在稍后自动提交到 git；移动、删除、AI 修改与 MCP 写入会立即提交。",
+    "license": { "name": "Private" }
+  },
+  "servers": [
+    { "url": "http://127.0.0.1:8190", "description": "桌面应用的本地 API（默认端口）" }
+  ],
+  "security": [
+    { "bearerAuth": [] },
+    { "sessionCookie": [] }
+  ],
+  "tags": [
+    { "name": "auth", "description": "登录与当前用户" },
+    { "name": "notes", "description": "笔记与文件夹" },
+    { "name": "files", "description": "附件：原始文件与上传" },
+    { "name": "knowledge", "description": "搜索、反向链接、知识索引与图谱" },
+    { "name": "git", "description": "版本历史与同步" },
+    { "name": "ai", "description": "AI 对话、整理知识库 Agent 与提示词" },
+    { "name": "chats", "description": "保存在 Chats/ 中的 AI 对话" },
+    { "name": "integration", "description": "MCP、接口文档与健康检查" }
+  ],
+  "paths": {
+    "/healthz": {
+      "get": {
+        "tags": ["integration"],
+        "operationId": "healthz",
+        "summary": "健康检查",
+        "description": "服务在运行时返回 `{\"ok\": true}`。不需要认证。\n\n带上 `nonce`（最多 128 个字符）时，回应还包含 `proof`：以令牌为密钥、对 `marginalia-healthz:<端口>:<nonce>` 计算的 HMAC-SHA256（十六进制），端口是请求到达的本机端口。客户端据此确认对方持有同一个令牌，而无需发送令牌（`marginalia mcp` 就是这样找到 App 的）。",
+        "security": [],
+        "parameters": [
+          { "name": "nonce", "in": "query", "required": false, "description": "随机挑战值；提供时回应包含 `proof`。", "schema": { "type": "string", "maxLength": 128 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "服务正常",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["ok"],
+                  "properties": {
+                    "ok": { "type": "boolean", "const": true },
+                    "proof": { "type": "string", "description": "提供 nonce 时：HMAC-SHA256(令牌, \"marginalia-healthz:<端口>:<nonce>\") 的十六进制。" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "operationId": "login",
+        "summary": "密码登录",
+        "description": "校验密码（数据目录的 `password` 文件）并设置会话 Cookie `marginalia_session`。每个客户端地址 5 分钟内最多失败 8 次。使用 Bearer 令牌的程序不需要登录。",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["password"],
+                "properties": { "password": { "type": "string", "maxLength": 512, "description": "登录密码" } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "已登录",
+            "headers": { "Set-Cookie": { "description": "会话 Cookie（HttpOnly, SameSite=Lax）", "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "type": "object", "required": ["user"], "properties": { "user": { "type": "string" } } } } }
+          },
+          "401": { "$ref": "#/components/responses/Error", "description": "密码错误" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "422": { "$ref": "#/components/responses/ValidationError" },
+          "429": { "$ref": "#/components/responses/Error", "description": "尝试次数过多，请 5 分钟后再试" }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["auth"],
+        "operationId": "logout",
+        "summary": "退出登录",
+        "description": "清除会话 Cookie。",
+        "security": [],
+        "responses": {
+          "200": { "description": "已退出", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Ok" } } } }
+        }
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "tags": ["auth"],
+        "operationId": "me",
+        "summary": "当前用户与服务信息",
+        "description": "返回当前用户、AI 与 git 的状态、运行模式、版本、打开的笔记库，以及这个服务支持的功能。",
+        "responses": {
+          "200": { "description": "当前用户", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Me" } } } },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/client-error": {
+      "post": {
+        "tags": ["integration"],
+        "operationId": "reportClientError",
+        "summary": "上报前端错误",
+        "description": "把浏览器里的异常写入服务日志。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": { "type": "string", "maxLength": 4000 },
+                  "stack": { "type": "string", "maxLength": 12000 },
+                  "url": { "type": "string", "maxLength": 2000 },
+                  "userAgent": { "type": "string", "maxLength": 1000 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "已记录", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Ok" } } } },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/tree": {
+      "get": {
+        "tags": ["notes"],
+        "operationId": "tree",
+        "summary": "文件树",
+        "description": "笔记库的完整文件树：每个文件夹里先列子文件夹，再列文件，按自然顺序排序。隐藏文件不出现。",
+        "responses": {
+          "200": {
+            "description": "文件树",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["tree"],
+                  "properties": { "tree": { "type": "array", "items": { "$ref": "#/components/schemas/TreeNode" } } }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" }
+        }
+      }
+    },
+    "/api/note": {
+      "get": {
+        "tags": ["notes"],
+        "operationId": "readNote",
+        "summary": "读取笔记",
+        "description": "读取一个文本文件（`.md` 笔记以及 `.txt`、`.json`、`.yaml` 等）。返回的 `etag` 用于保存时检测冲突。",
+        "parameters": [{ "$ref": "#/components/parameters/Path" }],
+        "responses": {
+          "200": { "description": "笔记内容", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Note" } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      },
+      "put": {
+        "tags": ["notes"],
+        "operationId": "saveNote",
+        "summary": "保存笔记",
+        "description": "覆盖写入一个文本文件（不存在时创建，并自动创建上级文件夹）。传入读取时得到的 `base_etag` 可以避免覆盖别人的修改：文件在此期间被改过时返回 409。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["path", "content"],
+                "properties": {
+                  "path": { "type": "string", "description": "笔记路径，例如 Knowledge/PPO.md" },
+                  "content": { "type": "string", "maxLength": 20000000, "description": "完整的新内容" },
+                  "base_etag": { "type": ["string", "null"], "description": "读取时的 etag；省略或 null 表示无条件覆盖，空字符串表示只允许新建" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "已保存", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/WriteResult" } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      },
+      "post": {
+        "tags": ["notes"],
+        "operationId": "createNote",
+        "summary": "新建笔记或文件夹",
+        "description": "新建一篇笔记（路径必须以 `.md` 结尾）或一个文件夹。同名文件已存在时返回 409。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["path"],
+                "properties": {
+                  "path": { "type": "string" },
+                  "content": { "type": "string", "default": "", "description": "笔记的初始内容" },
+                  "folder": { "type": "boolean", "default": false, "description": "为 true 时新建文件夹" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "已创建（文件夹只返回 path）", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/WriteResult" } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      },
+      "delete": {
+        "tags": ["notes"],
+        "operationId": "deleteNote",
+        "summary": "删除文件或空文件夹",
+        "description": "删除前会先把最新内容提交到 git，删除后可以从历史中找回。非空文件夹不能删除。",
+        "parameters": [{ "$ref": "#/components/parameters/Path" }],
+        "responses": {
+          "200": { "description": "已删除", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Ok" } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/move": {
+      "post": {
+        "tags": ["notes"],
+        "operationId": "move",
+        "summary": "移动或重命名",
+        "description": "移动或重命名一个文件或文件夹，并（默认）改写其他笔记里指向被移动笔记的 `[[双链]]`。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["path", "to"],
+                "properties": {
+                  "path": { "type": "string", "description": "原路径" },
+                  "to": { "type": "string", "description": "新路径" },
+                  "update_links": { "type": "boolean", "default": true, "description": "同时更新指向它的双链" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "已移动", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MoveResult" } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/file": {
+      "get": {
+        "tags": ["files"],
+        "operationId": "rawFile",
+        "summary": "下载原始文件",
+        "description": "返回文件的原始字节。图片、PDF、音视频与纯文本在浏览器里直接显示，其他类型作为附件下载。除 PDF 外的响应都带有 `Content-Security-Policy: sandbox`，上传的 HTML 或 SVG 无法执行脚本。",
+        "parameters": [
+          { "$ref": "#/components/parameters/Path" },
+          { "name": "download", "in": "query", "required": false, "description": "为 true 时总是作为附件下载", "schema": { "type": "boolean", "default": false } }
+        ],
+        "responses": {
+          "200": {
+            "description": "文件内容",
+            "headers": {
+              "Content-Disposition": { "description": "inline 或 attachment，带 UTF-8 文件名", "schema": { "type": "string" } },
+              "Content-Security-Policy": { "description": "非 PDF 文件为 sandbox 策略", "schema": { "type": "string" } }
+            },
+            "content": { "*/*": { "schema": { "type": "string", "contentMediaType": "application/octet-stream" } } }
+          },
+          "206": { "description": "Range 请求的部分内容" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/upload": {
+      "post": {
+        "tags": ["files"],
+        "operationId": "upload",
+        "summary": "上传附件",
+        "description": "保存一个上传的文件（默认放到附件文件夹，通常是 `_assets`）。文件名会被清理，重名时自动加后缀。超过大小上限（默认 50 MB）时返回 413。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": { "type": "string", "contentMediaType": "application/octet-stream", "description": "要上传的文件" },
+                  "folder": { "type": "string", "description": "目标文件夹；省略时使用附件文件夹" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "已保存", "content": { "application/json": { "schema": { "type": "object", "required": ["path"], "properties": { "path": { "type": "string", "description": "保存后的路径" } } } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "413": { "$ref": "#/components/responses/Error", "description": "文件太大" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/search": {
+      "get": {
+        "tags": ["knowledge"],
+        "operationId": "search",
+        "summary": "全文搜索",
+        "description": "在所有笔记的路径和内容中搜索（多个词同时出现，不区分大小写），按相关度返回最多 50 条结果，每条最多 3 个片段。",
+        "parameters": [{ "name": "q", "in": "query", "required": true, "description": "搜索词，空格分隔", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "搜索结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["results"],
+                  "properties": { "results": { "type": "array", "items": { "$ref": "#/components/schemas/SearchHit" } } }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/backlinks": {
+      "get": {
+        "tags": ["knowledge"],
+        "operationId": "backlinks",
+        "summary": "反向链接",
+        "description": "哪些笔记链接到了这篇笔记，以及链接所在的行（每篇最多 3 行）。",
+        "parameters": [{ "$ref": "#/components/parameters/Path" }],
+        "responses": {
+          "200": {
+            "description": "反向链接",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["backlinks"],
+                  "properties": { "backlinks": { "type": "array", "items": { "$ref": "#/components/schemas/Backlink" } } }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/index": {
+      "get": {
+        "tags": ["knowledge"],
+        "operationId": "index",
+        "summary": "知识索引",
+        "description": "所有笔记的元数据（标题、摘要、标签、类型、状态、更新日期、长度与出链），按路径排序。`copilot/` 与 `_templates/` 下的文件不计入。",
+        "responses": {
+          "200": {
+            "description": "知识索引",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["notes"],
+                  "properties": { "notes": { "type": "array", "items": { "$ref": "#/components/schemas/IndexedNote" } } }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" }
+        }
+      }
+    },
+    "/api/graph": {
+      "get": {
+        "tags": ["knowledge"],
+        "operationId": "graph",
+        "summary": "知识图谱",
+        "description": "笔记之间的链接图：节点是笔记，边是已解析的双链与 Markdown 链接。",
+        "parameters": [{ "name": "chats", "in": "query", "required": false, "description": "是否包含 Chats/ 中的对话", "schema": { "type": "boolean", "default": false } }],
+        "responses": {
+          "200": { "description": "图谱", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Graph" } } } },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/git/status": {
+      "get": {
+        "tags": ["git"],
+        "operationId": "gitStatus",
+        "summary": "仓库状态",
+        "description": "笔记库 git 仓库的分支、远程、领先/落后提交数、未提交的修改与上次同步结果。笔记库不是 git 仓库或关闭了自动提交时只有 `enabled: false`。",
+        "responses": {
+          "200": { "description": "仓库状态", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GitStatus" } } } },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" }
+        }
+      }
+    },
+    "/api/git/sync": {
+      "post": {
+        "tags": ["git"],
+        "operationId": "gitSync",
+        "summary": "立即同步",
+        "description": "提交待提交的修改，从 origin 拉取并变基（与本地修改冲突时自动取消，本地内容不受影响），然后推送。失败时返回 409 和 git 的错误信息。",
+        "responses": {
+          "200": { "description": "同步完成", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SyncResult" } } } },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/Error", "description": "同步失败、正在同步、没有配置远程，或未选择笔记库" }
+        }
+      }
+    },
+    "/api/history": {
+      "get": {
+        "tags": ["git"],
+        "operationId": "history",
+        "summary": "笔记历史",
+        "description": "一篇笔记最近的 50 次提交（跟随重命名）。",
+        "parameters": [{ "$ref": "#/components/parameters/Path" }],
+        "responses": {
+          "200": {
+            "description": "提交列表，最新的在前",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["history"],
+                  "properties": { "history": { "type": "array", "items": { "$ref": "#/components/schemas/Commit" } } }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/history/version": {
+      "get": {
+        "tags": ["git"],
+        "operationId": "historyVersion",
+        "summary": "历史版本内容",
+        "description": "一篇笔记在某次提交时的内容。",
+        "parameters": [
+          { "$ref": "#/components/parameters/Path" },
+          { "name": "rev", "in": "query", "required": true, "description": "提交的 SHA（或其前缀）", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "当时的内容", "content": { "application/json": { "schema": { "type": "object", "required": ["content"], "properties": { "content": { "type": "string" } } } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/ai/models": {
+      "get": {
+        "tags": ["ai"],
+        "operationId": "aiModels",
+        "summary": "可用的 AI 模型",
+        "description": "配置的 OpenAI 兼容服务提供的聊天模型（排除图像、嵌入、语音等模型）。服务不可用时仍返回 200，只包含默认模型，并在 `error` 中说明原因。",
+        "responses": {
+          "200": { "description": "模型列表", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Models" } } } },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/ai/prompts": {
+      "get": {
+        "tags": ["ai"],
+        "operationId": "aiPrompts",
+        "summary": "提示词模板",
+        "description": "`copilot/copilot-custom-prompts/` 下的提示词模板（Obsidian Copilot 格式）。",
+        "responses": {
+          "200": {
+            "description": "模板列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["prompts"],
+                  "properties": { "prompts": { "type": "array", "items": { "$ref": "#/components/schemas/Prompt" } } }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" }
+        }
+      }
+    },
+    "/api/ai/chat": {
+      "post": {
+        "tags": ["ai"],
+        "operationId": "aiChat",
+        "summary": "AI 对话（流式）",
+        "description": "以服务器推送事件（SSE）流式返回 AI 的回答。每个事件是一行 `data: <JSON>`：先是若干 `{\"delta\": \"…\"}`，最后是 `{\"done\": true}` 或 `{\"error\": \"…\"}`。`scope` 决定附带多少知识库上下文。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["messages"],
+                "properties": {
+                  "model": { "type": "string", "default": "", "description": "模型 id；空字符串使用默认模型" },
+                  "messages": { "type": "array", "items": { "$ref": "#/components/schemas/ChatMessage" }, "description": "对话历史，最后一条是用户的新问题" },
+                  "scope": { "type": "string", "enum": ["none", "note", "vault"], "default": "note", "description": "none 不带上下文；note 带上当前笔记；vault 带上整个知识库的索引与相关笔记" },
+                  "path": { "type": ["string", "null"], "description": "当前笔记（scope 为 note 或 vault 时）" },
+                  "selection": { "type": ["string", "null"], "description": "当前笔记中选中的文字" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "事件流",
+            "content": {
+              "text/event-stream": {
+                "schema": { "type": "string", "description": "`data: <ChatEvent JSON>` 行，事件之间以空行分隔" },
+                "x-event-schema": { "$ref": "#/components/schemas/ChatEvent" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/ai/agent": {
+      "post": {
+        "tags": ["ai"],
+        "operationId": "aiAgent",
+        "summary": "整理知识库（流式）",
+        "description": "AI 先制定修改计划，再逐篇撰写，以 SSE 推送进度与修改建议（`status`、`plan`、`proposal`…，最后 `done` 或 `error`）。**不会修改笔记库**：审阅后把选中的建议交给 `POST /api/ai/apply`。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["task"],
+                "properties": {
+                  "model": { "type": "string", "default": "", "description": "模型 id；空字符串使用默认模型" },
+                  "task": { "type": "string", "maxLength": 20000, "description": "要做什么，例如「把收件箱里的对话沉淀为笔记」" },
+                  "chats": { "type": "array", "items": { "type": "string" }, "default": [], "description": "作为素材的对话路径（Chats/…）" },
+                  "path": { "type": ["string", "null"], "description": "当前笔记" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "事件流",
+            "content": {
+              "text/event-stream": {
+                "schema": { "type": "string", "description": "`data: <AgentEvent JSON>` 行，事件之间以空行分隔" },
+                "x-event-schema": { "$ref": "#/components/schemas/AgentEvent" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/ai/apply": {
+      "post": {
+        "tags": ["ai"],
+        "operationId": "aiApply",
+        "summary": "应用修改建议",
+        "description": "按顺序执行 Agent 给出的修改（新建、更新、移动、删除），把作为素材的对话标记为已整理，并作为一次 `ai: …` 提交写入 git。任何一篇在生成后被改过时整体拒绝（400），不写入任何内容。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["operations"],
+                "properties": {
+                  "summary": { "type": "string", "default": "", "description": "提交说明" },
+                  "operations": { "type": "array", "items": { "$ref": "#/components/schemas/Proposal" } },
+                  "chats": { "type": "array", "items": { "type": "string" }, "default": [], "description": "要标记为已整理（distilled）的对话" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "已应用",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "required": ["touched"], "properties": { "touched": { "type": "array", "items": { "type": "string" }, "description": "被修改的路径" } } }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/chats": {
+      "get": {
+        "tags": ["chats"],
+        "operationId": "listChats",
+        "summary": "对话列表",
+        "description": "Chats/ 中保存的 AI 对话，最近更新的在前。`status` 为 `inbox`（待整理）或 `distilled`（已沉淀为笔记）。",
+        "responses": {
+          "200": {
+            "description": "对话列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["chats"],
+                  "properties": { "chats": { "type": "array", "items": { "$ref": "#/components/schemas/ChatSummary" } } }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/NoVault" }
+        }
+      },
+      "put": {
+        "tags": ["chats"],
+        "operationId": "saveChat",
+        "summary": "保存对话",
+        "description": "把一段对话保存为 Chats/ 下的 Markdown 文件。`path` 为空时新建 `Chats/YYYY-MM-DD HHMM 标题.md`（状态为 inbox）。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["messages"],
+                "properties": {
+                  "path": { "type": ["string", "null"], "description": "已有对话的路径；为空时新建" },
+                  "title": { "type": "string", "default": "" },
+                  "model": { "type": "string", "default": "", "description": "回答所用的模型" },
+                  "messages": { "type": "array", "items": { "$ref": "#/components/schemas/ChatMessage" } },
+                  "base_etag": { "type": ["string", "null"], "description": "读取时的 etag，用于检测冲突" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "已保存", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ChatSaved" } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/chats/load": {
+      "get": {
+        "tags": ["chats"],
+        "operationId": "loadChat",
+        "summary": "读取对话",
+        "description": "读取一段已保存的对话：frontmatter 与消息列表。",
+        "parameters": [{ "$ref": "#/components/parameters/Path" }],
+        "responses": {
+          "200": { "description": "对话", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ChatLoaded" } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/NoVault" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/api/mcp-info": {
+      "get": {
+        "tags": ["integration"],
+        "operationId": "mcpInfo",
+        "summary": "API 令牌",
+        "description": "返回 REST 与 MCP 共用的 API 令牌，供网页端的接入说明使用。",
+        "responses": {
+          "200": { "description": "令牌", "content": { "application/json": { "schema": { "type": "object", "required": ["token"], "properties": { "token": { "type": "string" } } } } } },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/openapi.json": {
+      "get": {
+        "tags": ["integration"],
+        "operationId": "openapi",
+        "summary": "接口文档",
+        "description": "这份 OpenAPI 3.1 文档。不需要认证，不包含任何密钥。",
+        "security": [],
+        "responses": {
+          "200": { "description": "OpenAPI 文档", "content": { "application/json": { "schema": { "type": "object" } } } }
+        }
+      }
+    },
+    "/mcp": {
+      "post": {
+        "tags": ["integration"],
+        "operationId": "mcp",
+        "summary": "MCP（Streamable HTTP）",
+        "description": "Model Context Protocol 服务端（无状态，只支持 POST，回复为 JSON）。请求体是一条 JSON-RPC 2.0 消息或一个批量数组；通知没有回复（202）。工具：`get_conventions`、`list_notes`、`search_notes`、`read_note`、`get_backlinks`、`write_note`、`append_to_note`、`move_note`、`delete_note`、`save_conversation`、`list_inbox`、`mark_chat_distilled`。写入会立即提交到 git。GET 与 DELETE 返回 405。",
+        "security": [{ "bearerAuth": [] }, { "tokenQuery": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  { "$ref": "#/components/schemas/JSONRPCMessage" },
+                  { "type": "array", "items": { "$ref": "#/components/schemas/JSONRPCMessage" } }
+                ]
+              },
+              "example": { "jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": { "name": "search_notes", "arguments": { "query": "PPO" } } }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 回复（批量请求返回数组）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/JSONRPCMessage" },
+                    { "type": "array", "items": { "$ref": "#/components/schemas/JSONRPCMessage" } }
+                  ]
+                }
+              }
+            }
+          },
+          "202": { "description": "只有通知，没有回复" },
+          "400": { "description": "不是有效的 JSON（JSON-RPC 解析错误 -32700）", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/JSONRPCMessage" } } } },
+          "401": {
+            "description": "令牌无效或缺失",
+            "headers": { "WWW-Authenticate": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "error": { "type": "string" } } } } }
+          },
+          "413": { "description": "消息超过 64 MB" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "API 令牌（数据目录的 `mcp_token`，可在应用的「API 与 MCP」页面查看与更换）"
+      },
+      "sessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "marginalia_session",
+        "description": "浏览器密码登录后的会话 Cookie。带 Origin 的跨站写请求会被拒绝（403）。"
+      },
+      "tokenQuery": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "token",
+        "description": "仅用于 /mcp：不能设置请求头的 MCP 客户端可以把令牌放在 URL 里"
+      }
+    },
+    "parameters": {
+      "Path": {
+        "name": "path",
+        "in": "query",
+        "required": true,
+        "description": "相对于笔记库根目录的路径，例如 Knowledge/PPO.md",
+        "schema": { "type": "string", "maxLength": 1024 }
+      }
+    },
+    "responses": {
+      "Error": {
+        "description": "错误",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "BadRequest": {
+        "description": "路径无效（例如包含 `..` 或以 `.` 开头）或操作不允许",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "Unauthorized": {
+        "description": "需要认证：Bearer 令牌或登录会话",
+        "headers": { "WWW-Authenticate": { "schema": { "type": "string" } } },
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "Forbidden": {
+        "description": "请求的 Origin 不被允许",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "NotFound": {
+        "description": "文件不存在",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "Conflict": {
+        "description": "冲突：文件在读取后被修改过、目标已存在，或还没有选择笔记库（code 为 no_vault）",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "NoVault": {
+        "description": "还没有选择笔记库（code 为 no_vault）",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": { "detail": "未选择笔记库", "code": "no_vault" }
+          }
+        }
+      },
+      "ValidationError": {
+        "description": "请求缺少必填字段或字段类型不对",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": ["detail"],
+        "properties": {
+          "detail": { "type": "string", "description": "可读的错误信息" },
+          "code": { "type": "string", "description": "机器可读的错误码，例如 no_vault" }
+        }
+      },
+      "Ok": {
+        "type": "object",
+        "required": ["ok"],
+        "properties": { "ok": { "type": "boolean", "const": true } }
+      },
+      "Me": {
+        "type": "object",
+        "required": ["user", "ai_configured", "default_model", "git", "assets_dir", "mode", "version", "desktop", "vault", "ai_base_url", "ai_provider", "features"],
+        "properties": {
+          "user": { "type": "string" },
+          "ai_configured": { "type": "boolean", "description": "AI 服务地址与密钥是否已配置" },
+          "default_model": { "type": "string" },
+          "git": { "type": "boolean", "description": "是否自动提交到 git" },
+          "assets_dir": { "type": "string", "description": "附件文件夹" },
+          "mode": { "type": "string", "enum": ["desktop", "server"] },
+          "version": { "type": "string" },
+          "desktop": { "type": "boolean", "description": "请求是否来自桌面应用自身的窗口" },
+          "auth": { "type": "string", "enum": ["app", "session", "token"], "description": "这次请求的认证方式" },
+          "vault": {
+            "type": "object",
+            "required": ["configured", "name"],
+            "properties": {
+              "configured": { "type": "boolean" },
+              "name": { "type": "string", "description": "笔记库文件夹名" },
+              "path": { "type": "string", "description": "笔记库的绝对路径（不对令牌请求返回）" }
+            }
+          },
+          "ai_base_url": { "type": "string" },
+          "ai_provider": { "type": "string", "enum": ["magpie", "custom"] },
+          "features": {
+            "type": "object",
+            "properties": {
+              "settings": { "type": "boolean" },
+              "integrations": { "type": "boolean" },
+              "openapi": { "type": "boolean" }
+            }
+          },
+          "env_overrides": { "type": "array", "items": { "type": "string" }, "description": "生效中的 NOTES_* 环境变量" }
+        }
+      },
+      "TreeNode": {
+        "type": "object",
+        "required": ["type", "name", "path"],
+        "properties": {
+          "type": { "type": "string", "enum": ["folder", "note", "file"] },
+          "name": { "type": "string" },
+          "path": { "type": "string" },
+          "children": { "type": "array", "items": { "$ref": "#/components/schemas/TreeNode" }, "description": "仅文件夹" },
+          "size": { "type": "integer", "description": "字节数（仅文件）" },
+          "mtime": { "type": "number", "description": "修改时间，Unix 秒（仅文件）" }
+        }
+      },
+      "Note": {
+        "type": "object",
+        "required": ["path", "content", "etag", "mtime"],
+        "properties": {
+          "path": { "type": "string" },
+          "content": { "type": "string" },
+          "etag": { "type": "string", "description": "内容的 SHA-256 前 20 位，保存时作为 base_etag" },
+          "mtime": { "type": "number", "description": "修改时间，Unix 秒" }
+        }
+      },
+      "WriteResult": {
+        "type": "object",
+        "required": ["path"],
+        "properties": {
+          "path": { "type": "string" },
+          "etag": { "type": "string" },
+          "mtime": { "type": "number" }
+        }
+      },
+      "MoveResult": {
+        "type": "object",
+        "required": ["path", "updated_links_in"],
+        "properties": {
+          "path": { "type": "string", "description": "新路径" },
+          "updated_links_in": { "type": "array", "items": { "type": "string" }, "description": "改写了双链的笔记" }
+        }
+      },
+      "SearchHit": {
+        "type": "object",
+        "required": ["path", "snippets"],
+        "properties": {
+          "path": { "type": "string" },
+          "snippets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["line", "text"],
+              "properties": { "line": { "type": "integer", "description": "行号（从 1 开始）" }, "text": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "Backlink": {
+        "type": "object",
+        "required": ["path", "lines"],
+        "properties": {
+          "path": { "type": "string", "description": "链接过来的笔记" },
+          "lines": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "IndexedNote": {
+        "type": "object",
+        "required": ["path", "title", "summary", "tags", "type", "status", "updated", "chars", "links"],
+        "properties": {
+          "path": { "type": "string" },
+          "title": { "type": "string" },
+          "summary": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "type": { "type": "string", "description": "frontmatter 的 type；Chats/ 下默认为 chat，其他为 note" },
+          "status": { "type": "string" },
+          "updated": { "type": "string" },
+          "chars": { "type": "integer" },
+          "links": { "type": "array", "items": { "type": "string" }, "description": "已解析的出链" }
+        }
+      },
+      "Graph": {
+        "type": "object",
+        "required": ["nodes", "edges"],
+        "properties": {
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "title", "tags", "type", "size"],
+              "properties": {
+                "id": { "type": "string", "description": "笔记路径" },
+                "title": { "type": "string" },
+                "tags": { "type": "array", "items": { "type": "string" } },
+                "type": { "type": "string" },
+                "size": { "type": "integer", "description": "字符数" }
+              }
+            }
+          },
+          "edges": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["source", "target"],
+              "properties": { "source": { "type": "string" }, "target": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "GitStatus": {
+        "type": "object",
+        "required": ["enabled"],
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "remote": { "type": "string" },
+          "branch": { "type": "string" },
+          "ahead": { "type": "integer" },
+          "behind": { "type": "integer" },
+          "pending": { "type": "integer", "description": "等待自动提交的文件数" },
+          "uncommitted": { "type": "integer" },
+          "last_sync": { "oneOf": [{ "$ref": "#/components/schemas/SyncResult" }, { "type": "null" }] },
+          "public_key": { "type": "string", "description": "部署密钥的公钥（服务器模式），否则为空" },
+          "autosync_minutes": { "type": "number" }
+        }
+      },
+      "SyncResult": {
+        "type": "object",
+        "required": ["at", "ok"],
+        "properties": {
+          "at": { "type": "string", "description": "同步时间" },
+          "ok": { "type": "boolean" },
+          "pulled": { "type": "integer" },
+          "pushed": { "type": "integer" },
+          "changed": { "type": "array", "items": { "type": "string" } },
+          "error": { "type": "string" }
+        }
+      },
+      "Commit": {
+        "type": "object",
+        "required": ["rev", "author", "date", "subject"],
+        "properties": {
+          "rev": { "type": "string" },
+          "author": { "type": "string" },
+          "date": { "type": "string", "description": "ISO 8601" },
+          "subject": { "type": "string" }
+        }
+      },
+      "Models": {
+        "type": "object",
+        "required": ["models", "default", "labels"],
+        "properties": {
+          "models": { "type": "array", "items": { "type": "string" } },
+          "default": { "type": "string" },
+          "labels": { "type": "object", "additionalProperties": { "type": "string" }, "description": "模型 id → 显示名（Magpie 提供）" },
+          "error": { "type": "string", "description": "读取模型列表失败的原因" }
+        }
+      },
+      "Prompt": {
+        "type": "object",
+        "required": ["name", "template", "path"],
+        "properties": {
+          "name": { "type": "string" },
+          "template": { "type": "string" },
+          "path": { "type": "string" }
+        }
+      },
+      "ChatMessage": {
+        "type": "object",
+        "required": ["role", "content"],
+        "properties": {
+          "role": { "type": "string", "enum": ["user", "assistant"] },
+          "content": { "type": "string" }
+        }
+      },
+      "ChatEvent": {
+        "description": "AI 对话的一个事件",
+        "oneOf": [
+          { "type": "object", "required": ["delta"], "properties": { "delta": { "type": "string" } } },
+          { "type": "object", "required": ["done"], "properties": { "done": { "type": "boolean", "const": true } } },
+          { "type": "object", "required": ["error"], "properties": { "error": { "type": "string" } } }
+        ]
+      },
+      "Proposal": {
+        "type": "object",
+        "required": ["op", "path"],
+        "properties": {
+          "op": { "type": "string", "enum": ["create", "update", "move", "delete"] },
+          "path": { "type": "string" },
+          "reason": { "type": "string" },
+          "before": { "type": "string", "description": "生成建议时的原内容（仅供展示）" },
+          "base_etag": { "type": ["string", "null"], "description": "生成建议时的 etag；应用前会核对" },
+          "to": { "type": "string", "description": "仅 move：新路径" },
+          "after": { "type": "string", "description": "仅 create / update：完整的新内容" }
+        }
+      },
+      "AgentEvent": {
+        "type": "object",
+        "required": ["event"],
+        "description": "整理知识库的一个事件：status {message}、plan {summary, count}、proposal {proposal}、done {summary, chats}、error {message}",
+        "properties": {
+          "event": { "type": "string", "enum": ["status", "plan", "proposal", "done", "error"] },
+          "message": { "type": "string" },
+          "summary": { "type": "string" },
+          "count": { "type": "integer" },
+          "proposal": { "$ref": "#/components/schemas/Proposal" },
+          "chats": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "ChatSummary": {
+        "type": "object",
+        "required": ["path", "title", "status", "updated"],
+        "properties": {
+          "path": { "type": "string" },
+          "title": { "type": "string" },
+          "status": { "type": "string", "enum": ["inbox", "distilled"] },
+          "updated": { "type": "string" }
+        }
+      },
+      "ChatLoaded": {
+        "type": "object",
+        "required": ["path", "etag", "meta", "messages"],
+        "properties": {
+          "path": { "type": "string" },
+          "etag": { "type": "string" },
+          "meta": { "type": "object", "description": "frontmatter（type、title、status、created、updated、model…）" },
+          "messages": { "type": "array", "items": { "$ref": "#/components/schemas/ChatMessage" } }
+        }
+      },
+      "ChatSaved": {
+        "type": "object",
+        "required": ["path", "etag", "mtime", "meta"],
+        "properties": {
+          "path": { "type": "string" },
+          "etag": { "type": "string" },
+          "mtime": { "type": "number" },
+          "meta": { "type": "object" }
+        }
+      },
+      "JSONRPCMessage": {
+        "type": "object",
+        "required": ["jsonrpc"],
+        "properties": {
+          "jsonrpc": { "type": "string", "const": "2.0" },
+          "id": { "type": ["string", "integer", "null"] },
+          "method": { "type": "string", "description": "initialize、ping、tools/list、tools/call…" },
+          "params": { "type": "object" },
+          "result": { "type": "object" },
+          "error": {
+            "type": "object",
+            "properties": { "code": { "type": "integer" }, "message": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

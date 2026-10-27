@@ -1,0 +1,1803 @@
+{
+ "info_cases": [
+  {
+   "rel": "x.md",
+   "text": "---\ntitle: ''\n---\n#Not heading\n##  Heading  ##  \nbody"
+  },
+  {
+   "rel": "x.md",
+   "text": "#\nNext line heading?\nbody"
+  },
+  {
+   "rel": "x.md",
+   "text": "# C# language\n"
+  },
+  {
+   "rel": "x.md",
+   "text": "# Title #hash\n"
+  },
+  {
+   "rel": "x.md",
+   "text": "####### seven\n"
+  },
+  {
+   "rel": "Chats/c.md",
+   "text": "chat body #tag"
+  },
+  {
+   "rel": "Chats/c.md",
+   "text": "---\ntype: note\n---\nx"
+  },
+  {
+   "rel": "t.md",
+   "text": "#start #two,#three #four#five\n#中文 #日本語テスト #a/b-c #été #x.y"
+  },
+  {
+   "rel": "t.md",
+   "text": "---\ntags:\n  - '#hash'\n  - '##double'\n  - 3\n---\n#hash"
+  },
+  {
+   "rel": "t.md",
+   "text": "---\ntags: '#a, b ,, c'\nsummary: '  spaced  '\n---\n"
+  },
+  {
+   "rel": "t.md",
+   "text": "---\nsummary: 0\ndescription: fallback\nstatus: 0\ntype: 0\n---\n"
+  },
+  {
+   "rel": "t.md",
+   "text": "---\nupdated: 2024-01-02T03:04:05+08:00\n---\n"
+  },
+  {
+   "rel": "t.md",
+   "text": "---\nupdated_at: [1, 2]\ntitle: {a: 1}\n---\n"
+  },
+  {
+   "rel": "t.md",
+   "text": "\n   \n   indented first line  \n"
+  },
+  {
+   "rel": "t.md",
+   "text": "!only\n|table\n>quote\n```\n$$\n---\nreal"
+  },
+  {
+   "rel": "t.md",
+   "text": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  },
+  {
+   "rel": "t.md",
+   "text": "éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé"
+  },
+  {
+   "rel": "t.md",
+   "text": "line second"
+  },
+  {
+   "rel": "t.md",
+   "text": ""
+  },
+  {
+   "rel": "deep/dir/t.md",
+   "text": "[[A]] [[../A]] [[sub/B]] [x](../../A.md)"
+  }
+ ],
+ "infos": [
+  {
+   "path": "x.md",
+   "title": "Heading",
+   "summary": "body",
+   "tags": [
+    "Not"
+   ],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 53,
+   "links": []
+  },
+  {
+   "path": "x.md",
+   "title": "Next line heading?",
+   "summary": "Next line heading?",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 25,
+   "links": []
+  },
+  {
+   "path": "x.md",
+   "title": "C# language",
+   "summary": "",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 14,
+   "links": []
+  },
+  {
+   "path": "x.md",
+   "title": "Title #hash",
+   "summary": "",
+   "tags": [
+    "hash"
+   ],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 14,
+   "links": []
+  },
+  {
+   "path": "x.md",
+   "title": "x",
+   "summary": "",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 14,
+   "links": []
+  },
+  {
+   "path": "Chats/c.md",
+   "title": "c",
+   "summary": "chat body #tag",
+   "tags": [
+    "tag"
+   ],
+   "type": "chat",
+   "status": "",
+   "updated": "",
+   "chars": 14,
+   "links": []
+  },
+  {
+   "path": "Chats/c.md",
+   "title": "c",
+   "summary": "x",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 20,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "",
+   "tags": [
+    "a/b-c",
+    "four",
+    "start",
+    "two",
+    "x",
+    "été",
+    "中文",
+    "日本語テスト"
+   ],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 58,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "",
+   "tags": [
+    "3",
+    "double",
+    "hash"
+   ],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 52,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "spaced",
+   "tags": [
+    "a",
+    "b",
+    "c"
+   ],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 49,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "fallback",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 59,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "2024-01-02 03:04:05+08:00",
+   "chars": 43,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "{'a': 1}",
+   "summary": "",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "[1, 2]",
+   "chars": 41,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "indented first line",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 30,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "real",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 35,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 300,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 130,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "line",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 11,
+   "links": []
+  },
+  {
+   "path": "t.md",
+   "title": "t",
+   "summary": "",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 0,
+   "links": []
+  },
+  {
+   "path": "deep/dir/t.md",
+   "title": "t",
+   "summary": "[[A]] [[../A]] [[sub/B]] [x](../../A.md)",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 40,
+   "links": [
+    "A.md",
+    "sub/B.md"
+   ]
+  }
+ ],
+ "index": [
+  {
+   "path": "A.md",
+   "title": "A",
+   "summary": "about A",
+   "tags": [
+    "ml"
+   ],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 73,
+   "links": [
+    "_assets/x.png",
+    "sub/B.md"
+   ]
+  },
+  {
+   "path": "Chats/2025-01-01 1000 hello.md",
+   "title": "Hello chat",
+   "summary": "<!-- chat:user -->",
+   "tags": [],
+   "type": "chat",
+   "status": "inbox",
+   "updated": "2025-01-01T10:05:00+08:00",
+   "chars": 234,
+   "links": [
+    "Knowledge/RL/PPO.md"
+   ]
+  },
+  {
+   "path": "Chats/2025-02-01 0900 second.md",
+   "title": "Second",
+   "summary": "<!-- chat:user -->",
+   "tags": [],
+   "type": "chat",
+   "status": "distilled",
+   "updated": "2025-02-01 09:00:00",
+   "chars": 91,
+   "links": []
+  },
+  {
+   "path": "Chats/no-meta.md",
+   "title": "🤖 AI",
+   "summary": "<!-- chat:assistant -->",
+   "tags": [],
+   "type": "chat",
+   "status": "",
+   "updated": "",
+   "chars": 40,
+   "links": []
+  },
+  {
+   "path": "Knowledge/RL/PPO.md",
+   "title": "Proximal Policy Optimization",
+   "summary": "Links: [[PPO#Section|alias]] [[../A]] [md](../../A.md) [ext](https://x.com) [anchor](#x)",
+   "tags": [
+    "ppo",
+    "rl",
+    "tag/sub",
+    "中文标签",
+    "强化学习"
+   ],
+   "type": "concept",
+   "status": "draft",
+   "updated": "2024-05-06",
+   "chars": 451,
+   "links": [
+    "A.md",
+    "Knowledge/RL/PPO.md",
+    "Knowledge/RL/Value.md",
+    "Knowledge/RL/img one.png",
+    "Knowledge/Value.md",
+    "_assets/x.png",
+    "sub/B.md"
+   ]
+  },
+  {
+   "path": "Knowledge/RL/Value.md",
+   "title": "Value function",
+   "summary": "See [[PPO]].",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 30,
+   "links": [
+    "Knowledge/RL/PPO.md"
+   ]
+  },
+  {
+   "path": "Knowledge/Value.md",
+   "title": "Value",
+   "summary": "Another value note linking [[Knowledge/RL/PPO|PPO]]",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 52,
+   "links": [
+    "Knowledge/RL/PPO.md"
+   ]
+  },
+  {
+   "path": "Note 02b.md",
+   "title": "Note 02b",
+   "summary": "zero two b",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 10,
+   "links": []
+  },
+  {
+   "path": "Note 10.md",
+   "title": "Note 10",
+   "summary": "ten",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 3,
+   "links": []
+  },
+  {
+   "path": "Note 2.md",
+   "title": "Note 2",
+   "summary": "two [[note 1]]",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 14,
+   "links": [
+    "note 1.md"
+   ]
+  },
+  {
+   "path": "Old.markdown",
+   "title": "Old",
+   "summary": "Old style [[A]] and [[Same]]",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 29,
+   "links": [
+    "A.md",
+    "Same.md"
+   ]
+  },
+  {
+   "path": "Same.md",
+   "title": "Same",
+   "summary": "same root",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 10,
+   "links": []
+  },
+  {
+   "path": "bad-utf8.md",
+   "title": "bad-utf8",
+   "summary": "caf� [[A]] �� end �a",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 21,
+   "links": [
+    "A.md"
+   ]
+  },
+  {
+   "path": "badyaml.md",
+   "title": "Real Title",
+   "summary": "body",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 43,
+   "links": []
+  },
+  {
+   "path": "crlf.md",
+   "title": "crlf",
+   "summary": "line one",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 51,
+   "links": [
+    "Knowledge/Value.md",
+    "Note 2.md",
+    "sub/B.md"
+   ]
+  },
+  {
+   "path": "dates.md",
+   "title": "2024",
+   "summary": "desc",
+   "tags": [
+    "1",
+    "2.5",
+    "None",
+    "True",
+    "x"
+   ],
+   "type": "note",
+   "status": "True",
+   "updated": "2024-01-02",
+   "chars": 114,
+   "links": []
+  },
+  {
+   "path": "emptyfm.md",
+   "title": "Empty FM",
+   "summary": "",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 20,
+   "links": []
+  },
+  {
+   "path": "listtitle.md",
+   "title": "['a', 'b']",
+   "summary": "{'k': 'v'}",
+   "tags": [
+    "tag-string"
+   ],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 69,
+   "links": []
+  },
+  {
+   "path": "needle-title.md",
+   "title": "needle-title",
+   "summary": "no body match",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 14,
+   "links": []
+  },
+  {
+   "path": "nested/Same.md",
+   "title": "Same",
+   "summary": "same nested",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 12,
+   "links": []
+  },
+  {
+   "path": "nested/deep/far.md",
+   "title": "far",
+   "summary": "far away [[Same]] [[nested/Same]] [[./Same]] [[../Same]] [[/Same]]",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 67,
+   "links": [
+    "Same.md",
+    "nested/Same.md"
+   ]
+  },
+  {
+   "path": "nofm.md",
+   "title": "nofm",
+   "summary": "Just text without heading that is quite long xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 245,
+   "links": []
+  },
+  {
+   "path": "note 1.md",
+   "title": "note 1",
+   "summary": "one",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 3,
+   "links": []
+  },
+  {
+   "path": "search.md",
+   "title": "search",
+   "summary": "Start lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 396,
+   "links": []
+  },
+  {
+   "path": "sub/B.md",
+   "title": "B",
+   "summary": "back to [[A|alias]]",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 24,
+   "links": [
+    "A.md"
+   ]
+  },
+  {
+   "path": "unicode-search.md",
+   "title": "unicode-search",
+   "summary": "İstanbul ΟΔΟΣ ΣΟΦΙΑ needle",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 59,
+   "links": []
+  },
+  {
+   "path": "Ünïcode été.md",
+   "title": "Été Ünicode",
+   "summary": "Café crème [[A]] ΟΔΟΣ İstanbul",
+   "tags": [],
+   "type": "note",
+   "status": "",
+   "updated": "",
+   "chars": 45,
+   "links": [
+    "A.md"
+   ]
+  }
+ ],
+ "graph": {
+  "nodes": [
+   {
+    "id": "A.md",
+    "title": "A",
+    "tags": [
+     "ml"
+    ],
+    "type": "note",
+    "size": 73
+   },
+   {
+    "id": "Knowledge/RL/PPO.md",
+    "title": "Proximal Policy Optimization",
+    "tags": [
+     "ppo",
+     "rl",
+     "tag/sub",
+     "中文标签",
+     "强化学习"
+    ],
+    "type": "concept",
+    "size": 451
+   },
+   {
+    "id": "Knowledge/RL/Value.md",
+    "title": "Value function",
+    "tags": [],
+    "type": "note",
+    "size": 30
+   },
+   {
+    "id": "Knowledge/Value.md",
+    "title": "Value",
+    "tags": [],
+    "type": "note",
+    "size": 52
+   },
+   {
+    "id": "Note 02b.md",
+    "title": "Note 02b",
+    "tags": [],
+    "type": "note",
+    "size": 10
+   },
+   {
+    "id": "Note 10.md",
+    "title": "Note 10",
+    "tags": [],
+    "type": "note",
+    "size": 3
+   },
+   {
+    "id": "Note 2.md",
+    "title": "Note 2",
+    "tags": [],
+    "type": "note",
+    "size": 14
+   },
+   {
+    "id": "Old.markdown",
+    "title": "Old",
+    "tags": [],
+    "type": "note",
+    "size": 29
+   },
+   {
+    "id": "Same.md",
+    "title": "Same",
+    "tags": [],
+    "type": "note",
+    "size": 10
+   },
+   {
+    "id": "bad-utf8.md",
+    "title": "bad-utf8",
+    "tags": [],
+    "type": "note",
+    "size": 21
+   },
+   {
+    "id": "badyaml.md",
+    "title": "Real Title",
+    "tags": [],
+    "type": "note",
+    "size": 43
+   },
+   {
+    "id": "crlf.md",
+    "title": "crlf",
+    "tags": [],
+    "type": "note",
+    "size": 51
+   },
+   {
+    "id": "dates.md",
+    "title": "2024",
+    "tags": [
+     "1",
+     "2.5",
+     "None",
+     "True",
+     "x"
+    ],
+    "type": "note",
+    "size": 114
+   },
+   {
+    "id": "emptyfm.md",
+    "title": "Empty FM",
+    "tags": [],
+    "type": "note",
+    "size": 20
+   },
+   {
+    "id": "listtitle.md",
+    "title": "['a', 'b']",
+    "tags": [
+     "tag-string"
+    ],
+    "type": "note",
+    "size": 69
+   },
+   {
+    "id": "needle-title.md",
+    "title": "needle-title",
+    "tags": [],
+    "type": "note",
+    "size": 14
+   },
+   {
+    "id": "nested/Same.md",
+    "title": "Same",
+    "tags": [],
+    "type": "note",
+    "size": 12
+   },
+   {
+    "id": "nested/deep/far.md",
+    "title": "far",
+    "tags": [],
+    "type": "note",
+    "size": 67
+   },
+   {
+    "id": "nofm.md",
+    "title": "nofm",
+    "tags": [],
+    "type": "note",
+    "size": 245
+   },
+   {
+    "id": "note 1.md",
+    "title": "note 1",
+    "tags": [],
+    "type": "note",
+    "size": 3
+   },
+   {
+    "id": "search.md",
+    "title": "search",
+    "tags": [],
+    "type": "note",
+    "size": 396
+   },
+   {
+    "id": "sub/B.md",
+    "title": "B",
+    "tags": [],
+    "type": "note",
+    "size": 24
+   },
+   {
+    "id": "unicode-search.md",
+    "title": "unicode-search",
+    "tags": [],
+    "type": "note",
+    "size": 59
+   },
+   {
+    "id": "Ünïcode été.md",
+    "title": "Été Ünicode",
+    "tags": [],
+    "type": "note",
+    "size": 45
+   }
+  ],
+  "edges": [
+   {
+    "source": "A.md",
+    "target": "sub/B.md"
+   },
+   {
+    "source": "Knowledge/RL/PPO.md",
+    "target": "A.md"
+   },
+   {
+    "source": "Knowledge/RL/PPO.md",
+    "target": "Knowledge/RL/Value.md"
+   },
+   {
+    "source": "Knowledge/RL/PPO.md",
+    "target": "Knowledge/Value.md"
+   },
+   {
+    "source": "Knowledge/RL/PPO.md",
+    "target": "sub/B.md"
+   },
+   {
+    "source": "Knowledge/RL/Value.md",
+    "target": "Knowledge/RL/PPO.md"
+   },
+   {
+    "source": "Knowledge/Value.md",
+    "target": "Knowledge/RL/PPO.md"
+   },
+   {
+    "source": "Note 2.md",
+    "target": "note 1.md"
+   },
+   {
+    "source": "Old.markdown",
+    "target": "A.md"
+   },
+   {
+    "source": "Old.markdown",
+    "target": "Same.md"
+   },
+   {
+    "source": "bad-utf8.md",
+    "target": "A.md"
+   },
+   {
+    "source": "crlf.md",
+    "target": "Knowledge/Value.md"
+   },
+   {
+    "source": "crlf.md",
+    "target": "Note 2.md"
+   },
+   {
+    "source": "crlf.md",
+    "target": "sub/B.md"
+   },
+   {
+    "source": "nested/deep/far.md",
+    "target": "Same.md"
+   },
+   {
+    "source": "nested/deep/far.md",
+    "target": "nested/Same.md"
+   },
+   {
+    "source": "sub/B.md",
+    "target": "A.md"
+   },
+   {
+    "source": "Ünïcode été.md",
+    "target": "A.md"
+   }
+  ]
+ },
+ "graph_chats": {
+  "nodes": [
+   {
+    "id": "A.md",
+    "title": "A",
+    "tags": [
+     "ml"
+    ],
+    "type": "note",
+    "size": 73
+   },
+   {
+    "id": "Chats/2025-01-01 1000 hello.md",
+    "title": "Hello chat",
+    "tags": [],
+    "type": "chat",
+    "size": 234
+   },
+   {
+    "id": "Chats/2025-02-01 0900 second.md",
+    "title": "Second",
+    "tags": [],
+    "type": "chat",
+    "size": 91
+   },
+   {
+    "id": "Chats/no-meta.md",
+    "title": "🤖 AI",
+    "tags": [],
+    "type": "chat",
+    "size": 40
+   },
+   {
+    "id": "Knowledge/RL/PPO.md",
+    "title": "Proximal Policy Optimization",
+    "tags": [
+     "ppo",
+     "rl",
+     "tag/sub",
+     "中文标签",
+     "强化学习"
+    ],
+    "type": "concept",
+    "size": 451
+   },
+   {
+    "id": "Knowledge/RL/Value.md",
+    "title": "Value function",
+    "tags": [],
+    "type": "note",
+    "size": 30
+   },
+   {
+    "id": "Knowledge/Value.md",
+    "title": "Value",
+    "tags": [],
+    "type": "note",
+    "size": 52
+   },
+   {
+    "id": "Note 02b.md",
+    "title": "Note 02b",
+    "tags": [],
+    "type": "note",
+    "size": 10
+   },
+   {
+    "id": "Note 10.md",
+    "title": "Note 10",
+    "tags": [],
+    "type": "note",
+    "size": 3
+   },
+   {
+    "id": "Note 2.md",
+    "title": "Note 2",
+    "tags": [],
+    "type": "note",
+    "size": 14
+   },
+   {
+    "id": "Old.markdown",
+    "title": "Old",
+    "tags": [],
+    "type": "note",
+    "size": 29
+   },
+   {
+    "id": "Same.md",
+    "title": "Same",
+    "tags": [],
+    "type": "note",
+    "size": 10
+   },
+   {
+    "id": "bad-utf8.md",
+    "title": "bad-utf8",
+    "tags": [],
+    "type": "note",
+    "size": 21
+   },
+   {
+    "id": "badyaml.md",
+    "title": "Real Title",
+    "tags": [],
+    "type": "note",
+    "size": 43
+   },
+   {
+    "id": "crlf.md",
+    "title": "crlf",
+    "tags": [],
+    "type": "note",
+    "size": 51
+   },
+   {
+    "id": "dates.md",
+    "title": "2024",
+    "tags": [
+     "1",
+     "2.5",
+     "None",
+     "True",
+     "x"
+    ],
+    "type": "note",
+    "size": 114
+   },
+   {
+    "id": "emptyfm.md",
+    "title": "Empty FM",
+    "tags": [],
+    "type": "note",
+    "size": 20
+   },
+   {
+    "id": "listtitle.md",
+    "title": "['a', 'b']",
+    "tags": [
+     "tag-string"
+    ],
+    "type": "note",
+    "size": 69
+   },
+   {
+    "id": "needle-title.md",
+    "title": "needle-title",
+    "tags": [],
+    "type": "note",
+    "size": 14
+   },
+   {
+    "id": "nested/Same.md",
+    "title": "Same",
+    "tags": [],
+    "type": "note",
+    "size": 12
+   },
+   {
+    "id": "nested/deep/far.md",
+    "title": "far",
+    "tags": [],
+    "type": "note",
+    "size": 67
+   },
+   {
+    "id": "nofm.md",
+    "title": "nofm",
+    "tags": [],
+    "type": "note",
+    "size": 245
+   },
+   {
+    "id": "note 1.md",
+    "title": "note 1",
+    "tags": [],
+    "type": "note",
+    "size": 3
+   },
+   {
+    "id": "search.md",
+    "title": "search",
+    "tags": [],
+    "type": "note",
+    "size": 396
+   },
+   {
+    "id": "sub/B.md",
+    "title": "B",
+    "tags": [],
+    "type": "note",
+    "size": 24
+   },
+   {
+    "id": "unicode-search.md",
+    "title": "unicode-search",
+    "tags": [],
+    "type": "note",
+    "size": 59
+   },
+   {
+    "id": "Ünïcode été.md",
+    "title": "Été Ünicode",
+    "tags": [],
+    "type": "note",
+    "size": 45
+   }
+  ],
+  "edges": [
+   {
+    "source": "A.md",
+    "target": "sub/B.md"
+   },
+   {
+    "source": "Chats/2025-01-01 1000 hello.md",
+    "target": "Knowledge/RL/PPO.md"
+   },
+   {
+    "source": "Knowledge/RL/PPO.md",
+    "target": "A.md"
+   },
+   {
+    "source": "Knowledge/RL/PPO.md",
+    "target": "Knowledge/RL/Value.md"
+   },
+   {
+    "source": "Knowledge/RL/PPO.md",
+    "target": "Knowledge/Value.md"
+   },
+   {
+    "source": "Knowledge/RL/PPO.md",
+    "target": "sub/B.md"
+   },
+   {
+    "source": "Knowledge/RL/Value.md",
+    "target": "Knowledge/RL/PPO.md"
+   },
+   {
+    "source": "Knowledge/Value.md",
+    "target": "Knowledge/RL/PPO.md"
+   },
+   {
+    "source": "Note 2.md",
+    "target": "note 1.md"
+   },
+   {
+    "source": "Old.markdown",
+    "target": "A.md"
+   },
+   {
+    "source": "Old.markdown",
+    "target": "Same.md"
+   },
+   {
+    "source": "bad-utf8.md",
+    "target": "A.md"
+   },
+   {
+    "source": "crlf.md",
+    "target": "Knowledge/Value.md"
+   },
+   {
+    "source": "crlf.md",
+    "target": "Note 2.md"
+   },
+   {
+    "source": "crlf.md",
+    "target": "sub/B.md"
+   },
+   {
+    "source": "nested/deep/far.md",
+    "target": "Same.md"
+   },
+   {
+    "source": "nested/deep/far.md",
+    "target": "nested/Same.md"
+   },
+   {
+    "source": "sub/B.md",
+    "target": "A.md"
+   },
+   {
+    "source": "Ünïcode été.md",
+    "target": "A.md"
+   }
+  ]
+ },
+ "split": [
+  {
+   "text": "---\ntitle: T\n---\nbody",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "T"
+      }
+     ]
+    ]
+   },
+   "body": "body"
+  },
+  {
+   "text": "---\ntitle: T\n---",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "T"
+      }
+     ]
+    ]
+   },
+   "body": ""
+  },
+  {
+   "text": "---  \ntitle: T\n---\t\nbody",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "T"
+      }
+     ]
+    ]
+   },
+   "body": "body"
+  },
+  {
+   "text": "---\n---\nbody",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "---\n---\nbody"
+  },
+  {
+   "text": "---\n\n---\nbody",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "body"
+  },
+  {
+   "text": "--- \n# just comment\n---\nx",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "x"
+  },
+  {
+   "text": "---\n- a\n- b\n---\nlist",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "list"
+  },
+  {
+   "text": "---\nplain\n---\nscalar",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "scalar"
+  },
+  {
+   "text": "---\ntitle: [x\n---\nbad",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "bad"
+  },
+  {
+   "text": "no frontmatter",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "no frontmatter"
+  },
+  {
+   "text": "\n---\ntitle: T\n---\n",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "\n---\ntitle: T\n---\n"
+  },
+  {
+   "text": "---\ntitle: T\n---\n---\nsecond: x\n---\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "T"
+      }
+     ]
+    ]
+   },
+   "body": "---\nsecond: x\n---\n"
+  },
+  {
+   "text": "---\r\ntitle: T\r\n---\r\nbody",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "---\r\ntitle: T\r\n---\r\nbody"
+  },
+  {
+   "text": "---\na: 1\n---x\nb: 2\n---\nbody",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "body"
+  },
+  {
+   "text": "---\nkey: value\nnested:\n  a: [1, 2]\n  b: {c: d}\n---\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "key"
+      },
+      {
+       "t": "str",
+       "v": "value"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "nested"
+      },
+      {
+       "t": "map",
+       "v": [
+        [
+         {
+          "t": "str",
+          "v": "a"
+         },
+         {
+          "t": "list",
+          "v": [
+           {
+            "t": "int",
+            "v": "1"
+           },
+           {
+            "t": "int",
+            "v": "2"
+           }
+          ]
+         }
+        ],
+        [
+         {
+          "t": "str",
+          "v": "b"
+         },
+         {
+          "t": "map",
+          "v": [
+           [
+            {
+             "t": "str",
+             "v": "c"
+            },
+            {
+             "t": "str",
+             "v": "d"
+            }
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   },
+   "body": ""
+  },
+  {
+   "text": "---\na: &x {k: 1}\nb: *x\nc:\n  <<: *x\n  j: 2\n---\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "a"
+      },
+      {
+       "t": "map",
+       "v": [
+        [
+         {
+          "t": "str",
+          "v": "k"
+         },
+         {
+          "t": "int",
+          "v": "1"
+         }
+        ]
+       ]
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "b"
+      },
+      {
+       "t": "map",
+       "v": [
+        [
+         {
+          "t": "str",
+          "v": "k"
+         },
+         {
+          "t": "int",
+          "v": "1"
+         }
+        ]
+       ]
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "c"
+      },
+      {
+       "t": "map",
+       "v": [
+        [
+         {
+          "t": "str",
+          "v": "k"
+         },
+         {
+          "t": "int",
+          "v": "1"
+         }
+        ],
+        [
+         {
+          "t": "str",
+          "v": "j"
+         },
+         {
+          "t": "int",
+          "v": "2"
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   },
+   "body": ""
+  },
+  {
+   "text": "---\na: 1\na: 2\nb: 3\n---\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "a"
+      },
+      {
+       "t": "int",
+       "v": "2"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "b"
+      },
+      {
+       "t": "int",
+       "v": "3"
+      }
+     ]
+    ]
+   },
+   "body": ""
+  },
+  {
+   "text": "---\n1: int key\ntrue: bool key\nnull: none key\n2024-01-01: date key\n---\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "int",
+       "v": "1"
+      },
+      {
+       "t": "str",
+       "v": "bool key"
+      }
+     ],
+     [
+      {
+       "t": "none"
+      },
+      {
+       "t": "str",
+       "v": "none key"
+      }
+     ],
+     [
+      {
+       "t": "date",
+       "v": [
+        2024,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "str",
+       "v": "date key"
+      }
+     ]
+    ]
+   },
+   "body": ""
+  },
+  {
+   "text": "---\nk: !!str 123\nf: !!float 1\ni: !!int '0x1F'\n---\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "k"
+      },
+      {
+       "t": "str",
+       "v": "123"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "f"
+      },
+      {
+       "t": "float",
+       "v": "0x1.0000000000000p+0"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "i"
+      },
+      {
+       "t": "int",
+       "v": "31"
+      }
+     ]
+    ]
+   },
+   "body": ""
+  },
+  {
+   "text": "---\nk: !custom x\n---\n",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": ""
+  },
+  {
+   "text": "---\n[a]: b\n---\n",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": ""
+  },
+  {
+   "text": "---\nk: =\n---\n",
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": ""
+  },
+  {
+   "text": "---\n=: v\n---\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "="
+      },
+      {
+       "t": "str",
+       "v": "v"
+      }
+     ]
+    ]
+   },
+   "body": ""
+  },
+  {
+   "text": "---\na: 1\n---\nb: 2\n---\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "a"
+      },
+      {
+       "t": "int",
+       "v": "1"
+      }
+     ]
+    ]
+   },
+   "body": "b: 2\n---\n"
+  },
+  {
+   "text": "---\nbad: 2024-02-30\n---\n",
+   "error": "ValueError"
+  },
+  {
+   "text": "---\ntime: 25:00:00\n---\n",
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "time"
+      },
+      {
+       "t": "int",
+       "v": "90000"
+      }
+     ]
+    ]
+   },
+   "body": ""
+  }
+ ],
+ "join": [
+  {
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "a"
+      },
+      {
+       "t": "int",
+       "v": "1"
+      }
+     ]
+    ]
+   },
+   "body": "  \n\nbody",
+   "out": "---\na: 1\n---\n\nbody"
+  },
+  {
+   "meta": {
+    "t": "map",
+    "v": []
+   },
+   "body": "  body",
+   "out": "  body"
+  },
+  {
+   "meta": {
+    "t": "map",
+    "v": [
+     [
+      {
+       "t": "str",
+       "v": "title"
+      },
+      {
+       "t": "str",
+       "v": "T"
+      }
+     ],
+     [
+      {
+       "t": "str",
+       "v": "tags"
+      },
+      {
+       "t": "list",
+       "v": [
+        {
+         "t": "str",
+         "v": "x"
+        },
+        {
+         "t": "str",
+         "v": "y"
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   "body": "# H\n",
+   "out": "---\ntitle: T\ntags:\n- x\n- y\n---\n\n# H\n"
+  }
+ ]
+}

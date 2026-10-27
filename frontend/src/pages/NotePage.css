@@ -1,0 +1,147 @@
+/*
+ * Notes workspace (class prefix .np-, file tree .ftree / .tree-*):
+ *   tree column on the grey ground | the document as a white card | the inspector card.
+ * When the workspace itself is narrow (NotePage measures it and sets .narrow-insp /
+ * .narrow-tree; split view asks for more room) the inspector floats over the
+ * document, and then the tree does too.
+ */
+.np {
+  position: relative; height: 100%; min-height: 0;
+  display: grid; grid-template-columns: 248px minmax(0, 1fr) 0px; grid-template-rows: minmax(0, 1fr);
+  column-gap: 0; padding: 0 8px 8px 0;
+  transition: grid-template-columns .28s var(--ease), column-gap .28s var(--ease);
+}
+.np.insp-on { grid-template-columns: 248px minmax(0, 1fr) 340px; column-gap: 8px; }
+/* explicit tracks: the overlays below leave the flow, and the document must keep its column */
+.np-tree { grid-column: 1; grid-row: 1; }
+.np-doc { grid-column: 2; grid-row: 1; }
+.np-insp { grid-column: 3; grid-row: 1; }
+
+/* ------------------------------------------------------------- tree column */
+.np-tree { min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.ftree { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.ftree-head { flex: none; display: flex; align-items: center; gap: 1px; padding: 2px 6px 8px 12px; }
+.ftree-head .search { margin-right: 4px; }
+.ftree-body { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0 6px 18px 8px; overscroll-behavior: contain; }
+.ftree-busy { position: sticky; bottom: 0; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 6px; font-size: var(--fs-sub); color: var(--muted); background: linear-gradient(transparent, var(--bg) 40%); }
+
+.tree { display: flex; flex-direction: column; gap: 1px; outline: none; }
+.tree-group { display: flex; flex-direction: column; gap: 1px; }
+.tree-row {
+  position: relative; display: flex; align-items: center; gap: 5px; flex: none;
+  height: 28px; padding: 0 3px 0 calc(6px + var(--depth, 0) * 14px); border-radius: var(--r-sm);
+  font-size: 13px; color: var(--fg-2); outline: none;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.tree-row:hover { background: var(--pill); color: var(--fg); }
+.tree-row:active:not(.active) { background: color-mix(in srgb, var(--fg) 9%, transparent); }
+.tree-row.active { background: var(--card); color: var(--fg); font-weight: 500; box-shadow: var(--seg-edge); }
+.tree-row[data-menu-open] { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.tree-row[data-menu-open] .tree-more { opacity: 1; }
+.tree-row:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.tree-row.file { color: var(--muted); }
+.tree-chev { flex: none; width: 12px; height: 12px; display: grid; place-items: center; color: var(--faint); transition: transform .18s var(--ease), color var(--t-fast); }
+.tree-chev.open { transform: rotate(90deg); }
+.tree-row:hover .tree-chev { color: var(--muted); }
+.tree-ic { flex: none; color: var(--muted); }
+.tree-row.active .tree-ic { color: var(--fg-2); }
+.tree-name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tree-name mark, .hit mark { background: color-mix(in srgb, var(--c4) 32%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
+.tree-more { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 6px; color: var(--muted); opacity: 0; transition: opacity var(--t-fast), background var(--t-fast), color var(--t-fast); }
+.tree-row:hover .tree-more, .tree-row:focus-within .tree-more, .tree-row:focus-visible .tree-more { opacity: 1; }
+.tree-more:hover { background: var(--pill-hover); color: var(--fg); }
+.tree-row.flash { animation: tree-flash 1.4s ease-out; }
+@keyframes tree-flash { 0%, 40% { background: var(--accent-soft); color: var(--accent); } }
+.tree-loading { display: grid; place-items: center; padding: 28px; color: var(--muted); }
+@media (hover: none) { .tree-more { opacity: 1; } }
+
+/* full-text search results */
+.hits { display: flex; flex-direction: column; gap: 1px; }
+.hits-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 6px 6px 8px; font-size: var(--fs-sub); color: var(--muted); }
+.hits-head > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hit { display: flex; flex-direction: column; gap: 1px; width: 100%; padding: 7px 8px; border-radius: var(--r-md); text-align: left; transition: background var(--t-fast); }
+.hit:hover { background: var(--pill); }
+.hit.active { background: var(--card); box-shadow: var(--seg-edge); }
+.hit-title { font-size: 13px; font-weight: 500; color: var(--fg); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hit-path { font-size: 11px; color: var(--fg-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hit-snippet { margin-top: 2px; font-size: var(--fs-sub); line-height: 1.45; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+
+/* ------------------------------------------------------------- document */
+.np-doc {
+  position: relative; min-width: 0; min-height: 0;
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+}
+.np-conflict {
+  flex: none; display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  padding: 7px 10px 7px 14px; font-size: var(--fs-label); color: var(--fg);
+  background: var(--amber-soft); border-bottom: 1px solid color-mix(in srgb, var(--amber) 22%, transparent);
+  animation: content-in .24s var(--ease);
+}
+.np-conflict > svg { color: var(--amber); }
+.np-body { position: relative; flex: 1 1 auto; min-height: 0; display: flex; transition: opacity .2s; }
+.np-body > * { flex: 1 1 0; min-width: 0; min-height: 0; }
+.np-body.mode-split > * + * { border-left: 1px solid var(--line-2); }
+.np-body.is-loading { opacity: .55; transition-delay: .15s; }
+.np-editor { height: 100%; overflow: hidden; }
+.np-preview { height: 100%; overflow-y: auto; overscroll-behavior: contain; }
+.np-empty { flex: 1 1 auto; display: grid; place-items: center; overflow: auto; }
+.np-file { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 20px; overflow: auto; }
+.np-file img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: var(--r-md); box-shadow: 0 0 0 1px var(--line-2); }
+.np-pdf { align-self: stretch; width: 100%; min-height: 100%; border: 0; border-radius: var(--r-md); background: var(--card-2); }
+
+/* save state, in the top bar */
+.np-save { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 9px 0 8px; border-radius: 999px; font-size: var(--fs-sub); color: var(--muted); white-space: nowrap; transition: background var(--t), color var(--t); }
+.np-save-dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--green-dot); transition: background var(--t); }
+.np-save.s-dirty .np-save-dot { background: var(--amber); }
+.np-save.s-conflict, .np-save.s-error { color: var(--red); background: var(--red-soft); font-weight: 500; }
+.np-save.s-conflict .np-save-dot, .np-save.s-error .np-save-dot { background: var(--red); }
+button.np-save:hover { background: color-mix(in srgb, var(--red) 18%, var(--red-soft)); }
+
+/* ------------------------------------------------------------- inspector */
+.np-insp {
+  min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  visibility: hidden; transition: visibility 0s .28s;
+}
+.np.insp-on .np-insp { visibility: visible; transition-delay: 0s; }
+.np:not(.insp-on) .np-insp { border-color: transparent; }
+.np-insp > * { min-width: 338px; }
+.np-insp-head { flex: none; display: flex; align-items: center; gap: 6px; padding: 8px 8px 8px 10px; border-bottom: 1px solid var(--line-2); }
+.np-insp-head .seg { flex: 1 1 auto; }
+.np-insp-body { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.np-ai, .np-info { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.np-ai[hidden] { display: none; }
+.np-ai > * { flex: 1 1 auto; min-height: 0; }
+.np-info { overflow-y: auto; overscroll-behavior: contain; }
+
+.np-scrim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--scrim) 55%, transparent); animation: fade-in .2s ease-out; }
+
+/* ------------------------------------------------------------- narrow workspace */
+/* the inspector floats over the document */
+.np.narrow-insp, .np.narrow-insp.insp-on { grid-template-columns: 248px minmax(0, 1fr) 0px; column-gap: 0; }
+.np.narrow-insp .np-insp {
+  /* out of the grid: with a grid area an absolute box would size to its (0px) column */
+  grid-column: auto; grid-row: auto;
+  position: absolute; z-index: 6; top: 0; right: 8px; bottom: 8px; width: min(360px, calc(100% - 24px));
+  box-shadow: var(--shadow); border-color: transparent;
+  transform: translateX(calc(100% + 16px));
+  transition: transform .3s var(--ease), visibility 0s .3s;
+}
+.np.narrow-insp.insp-on .np-insp { transform: none; transition: transform .3s var(--ease); }
+.np.narrow-insp .np-insp > * { min-width: 0; }
+/* narrower still: the tree floats too (after the rules above, so it wins) */
+.np.narrow-tree, .np.narrow-tree.insp-on { grid-template-columns: 0px minmax(0, 1fr) 0px; padding-left: 8px; }
+.np.narrow-tree .np-tree {
+  grid-column: auto; grid-row: auto;
+  position: absolute; z-index: 7; top: 0; left: 0; bottom: 0; width: min(300px, 86%);
+  padding-top: 6px; background: var(--bg); border-right: .5px solid var(--line); box-shadow: var(--shadow);
+  transform: translateX(-105%); visibility: hidden;
+  transition: transform .3s var(--ease), visibility 0s .3s;
+}
+.np.narrow-tree.tree-on .np-tree { transform: none; visibility: visible; transition: transform .3s var(--ease); }
+@media (max-width: 640px) {
+  .np-save > span { display: none; }
+  .np-save { padding: 0 8px; }
+  .np-modes > button { padding: 0 7px; }
+}

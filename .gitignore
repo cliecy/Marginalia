@@ -1,0 +1,17 @@
+# MyGo build output (go tool mygo build) and dev app bundle (go tool mygo dev)
+/build/
+/.mygo/
+
+# Desktop frontend build, embedded by internal/webui (npm run build:app).
+# The placeholder keeps `//go:embed all:dist` compiling before the first build.
+/internal/webui/dist/*
+!/internal/webui/dist/.keep
+
+# Frontend dependencies
+/frontend/node_modules/
+
+# macOS
+.DS_Store
+
+# Marketing images (generated)
+/docs/rednote/
