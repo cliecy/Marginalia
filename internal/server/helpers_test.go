@@ -76,6 +76,7 @@ func newFixture(t *testing.T, opts ...func(*fixtureOptions)) *fixture {
 	s.DataDir = f.data
 	s.NotesDir = f.notes
 	s.StaticDir = ""
+	s.LoginUser = "cliecy"
 	s.Git.Autocommit = false
 	s.AI.APIKeyFile = filepath.Join(f.data, "key")
 	s.API.Enabled = false

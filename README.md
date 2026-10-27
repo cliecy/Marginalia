@@ -143,7 +143,7 @@ args = ["mcp"]
 
 ## 可选：`marginalia serve`（自托管）
 
-同一个可执行文件可以不开窗口，作为服务器运行：用浏览器访问同一套界面，密码登录（`password` 文件，首次启动自动生成；用户名默认 `cliecy`，可用 `NOTES_LOGIN_USER` 修改），API 与 MCP 行为与桌面版一致。收到 SIGINT/SIGTERM 时会等待请求结束并提交待提交的 git 修改。
+同一个可执行文件可以不开窗口，作为服务器运行：用浏览器访问同一套界面，密码登录（`password` 文件，首次启动自动生成；首页问候的名字用 `NOTES_LOGIN_USER` 设置，不设置时只显示问候语），API 与 MCP 行为与桌面版一致。收到 SIGINT/SIGTERM 时会等待请求结束并提交待提交的 git 修改。
 
 ```sh
 NOTES_DIR=/path/to/notes NOTES_DATA_DIR=/path/to/data marginalia serve --addr 0.0.0.0:8190

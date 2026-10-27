@@ -25,11 +25,14 @@ func TestDefaults(t *testing.T) {
 		t.Errorf("server defaults = %+v", server)
 	}
 	desktop := Defaults(ModeDesktop)
+	if server.LoginUser != "" || desktop.LoginUser != SystemUserName() {
+		t.Errorf("login users = %q, %q", server.LoginUser, desktop.LoginUser)
+	}
 	if desktop.NotesDir != "" || desktop.AI.BaseURL != "" || desktop.DataDir != DefaultDataDir() {
 		t.Errorf("desktop defaults = %+v", desktop)
 	}
 	for _, s := range []Settings{server, desktop} {
-		if s.LoginUser != "cliecy" || s.SessionHours != 720 || s.AI.VaultCharBudget != 200000 ||
+		if s.SessionHours != 720 || s.AI.VaultCharBudget != 200000 ||
 			!s.Git.Autocommit || s.Git.CommitDelaySeconds != 60 || s.Git.AutosyncMinutes != 0 ||
 			s.Git.AuthorName != "Marginalia Web" || s.Git.AuthorEmail != "marginalia@localhost" ||
 			s.AssetsDir != "_assets" || s.MaxUploadBytes != 50<<20 || !s.API.Enabled || s.API.Host != "127.0.0.1" ||

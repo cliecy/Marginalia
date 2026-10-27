@@ -18,6 +18,7 @@ import (
 	"io/fs"
 	"maps"
 	"os"
+	"os/user"
 	"path/filepath"
 	"slices"
 	"strconv"
@@ -57,7 +58,8 @@ type Settings struct {
 	DataDir string `json:"-"`
 	// StaticDir overrides the embedded web UI with files on disk ("" = embedded).
 	StaticDir string `json:"static_dir"`
-	// LoginUser is the user name reported after password login.
+	// LoginUser is the name the UI greets and reports after login: the
+	// computer's user in the desktop app, NOTES_LOGIN_USER (or nothing) in serve.
 	LoginUser string `json:"login_user"`
 	// AllowedOrigins are extra origins allowed to make cookie-authenticated
 	// unsafe requests (the Python "guard" middleware).
@@ -124,7 +126,6 @@ type AppearanceSettings struct {
 // Defaults returns the built-in settings for mode.
 func Defaults(mode Mode) Settings {
 	s := Settings{
-		LoginUser:      "cliecy",
 		AllowedOrigins: []string{},
 		SessionHours:   720,
 		AssetsDir:      "_assets",
@@ -146,8 +147,23 @@ func Defaults(mode Mode) Settings {
 		s.NotesDir = "/notes"
 	default:
 		s.DataDir = DefaultDataDir()
+		s.LoginUser = SystemUserName()
 	}
 	return s
+}
+
+// SystemUserName is the name of the user signed in to this computer: the
+// full name when the system has one (macOS "Full Name"), else the account
+// name, else "".
+func SystemUserName() string {
+	u, err := user.Current()
+	if err != nil {
+		return ""
+	}
+	if name := strings.TrimSpace(u.Name); name != "" {
+		return name
+	}
+	return strings.TrimSpace(u.Username)
 }
 
 // DefaultDataDir is the per-user data directory of the desktop app:
@@ -200,6 +216,11 @@ func LoadEnv(mode Mode, lookup func(string) (string, bool)) (Settings, error) {
 	}
 	if err := s.readFile(); err != nil {
 		return s, err
+	}
+	if mode == ModeDesktop {
+		// The desktop app greets whoever is signed in to the computer; a name
+		// saved by an older build does not override that (NOTES_LOGIN_USER does).
+		s.LoginUser = SystemUserName()
 	}
 	if err := s.applyEnv(lookup); err != nil {
 		return s, err
