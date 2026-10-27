@@ -1,0 +1,101 @@
+name: Release
+
+# Push a tag that matches the version in mygo.json to build and publish:
+#   git tag v0.2.0 && git push origin v0.2.0
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to (re)build, e.g. v0.2.0"
+        required: true
+
+permissions:
+  contents: write # create the release and upload its files
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
+
+jobs:
+  release:
+    name: Create the release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
+      - name: Check the tag matches mygo.json
+        run: |
+          version="v$(jq -r .version mygo.json)"
+          if [ "$version" != "$TAG" ]; then
+            echo "::error::tag $TAG does not match mygo.json version $version"
+            exit 1
+          fi
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag \
+              --title "Marginalia 拾页 $TAG" --generate-notes
+          fi
+
+  macos:
+    name: macOS app
+    needs: release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --prefix frontend
+      - name: Build the app and disk images
+        run: go tool mygo build -platform "darwin/arm64,darwin/amd64"
+      - name: Upload the disk images
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ls -l build/*/
+          gh release upload "$TAG" build/*/*.dmg --repo "$GITHUB_REPOSITORY" --clobber
+
+  serve:
+    name: marginalia serve (Linux)
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --prefix frontend
+      - run: npm --prefix frontend run build:app
+      - name: Build the headless server
+        run: |
+          mkdir -p dist
+          for arch in amd64 arm64; do
+            dir="marginalia-${TAG}-linux-${arch}"
+            mkdir -p "dist/$dir"
+            CGO_ENABLED=0 GOOS=linux GOARCH="$arch" go build -trimpath -ldflags "-s -w" -o "dist/$dir/marginalia" .
+            cp LICENSE README.md "dist/$dir/"
+            tar -C dist -czf "dist/$dir.tar.gz" "$dir"
+          done
+      - name: Upload the archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$TAG" dist/*.tar.gz --repo "$GITHUB_REPOSITORY" --clobber
