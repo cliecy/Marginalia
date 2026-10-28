@@ -1,12 +1,18 @@
 {
   "name": "Marginalia",
   "identifier": "com.cliecy.marginalia",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "copyright": "© 2026 Cliecy",
   "devUrl": "http://localhost:5173",
   "devCommand": "npm --prefix frontend run dev:app",
   "buildCommand": "npm --prefix frontend run build:app",
   "bindings": "frontend/src/lib/mygo.ts",
   "out": "build",
-  "urlSchemes": ["marginalia"]
+  "urlSchemes": ["marginalia"],
+  "linux": {
+    "maintainer": "Cliecy <68729861+cliecy@users.noreply.github.com>",
+    "comment": "带 AI 的个人知识库",
+    "categories": ["Office", "Utility"],
+    "command": "marginalia"
+  }
 }

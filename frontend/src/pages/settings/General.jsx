@@ -37,7 +37,7 @@ export default function General() {
         />
         <SetRow
           title="显示侧边栏"
-          sub="也可以点顶栏左边的按钮，或按 ⌘\ 切换"
+          sub={<>也可以点顶栏左边的按钮，或按 <Kbd keys="Mod+\" /> 切换</>}
           keywords="侧边栏 sidebar 导航"
           right={<Toggle checked={!ctx.sidebarCollapsed} onChange={(on) => ctx.setSidebarCollapsed(!on)} label="显示侧边栏" />}
         />

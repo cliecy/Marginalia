@@ -67,8 +67,76 @@ jobs:
           ls -l build/*/
           gh release upload "$TAG" build/*/*.dmg --repo "$GITHUB_REPOSITORY" --clobber
 
+  windows:
+    name: Windows app
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --prefix frontend
+      # mygo build cross-compiles the exe itself; NSIS makes the per-user
+      # installer ("Marginalia Setup <version> <arch>.exe"), which registers
+      # the marginalia:// URL scheme.
+      - run: sudo apt-get update && sudo apt-get install -y nsis
+      - name: Build the app and installers
+        run: go tool mygo build -platform "windows/amd64,windows/arm64"
+      - name: Package the portable archives
+        run: |
+          mkdir -p dist
+          for dir in build/windows-*/; do
+            arch=$(basename "$dir" | sed 's/^windows-//')
+            stage="marginalia-$TAG-windows-$arch"
+            mkdir -p "dist/$stage"
+            cp "$dir/Marginalia.exe" "dist/$stage/"
+            cp LICENSE README.md "dist/$stage/"
+            [ -f "$dir/icon.png" ] && cp "$dir/icon.png" "dist/$stage/"
+            (cd dist && zip -qr "$stage.zip" "$stage")
+          done
+      - name: Upload the installers and archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ls -l build/*/ dist/
+          gh release upload "$TAG" build/*/*Setup*.exe dist/*.zip --repo "$GITHUB_REPOSITORY" --clobber
+
+  linux:
+    name: Linux app
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --prefix frontend
+      - name: Build the app, debs and archives
+        run: go tool mygo build -platform "linux/amd64,linux/arm64"
+      - name: Upload the debs and archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ls -l build/*/
+          gh release upload "$TAG" build/*/*.deb build/*/*.tar.gz --repo "$GITHUB_REPOSITORY" --clobber
+
   serve:
-    name: marginalia serve (Linux)
+    name: marginalia serve (Linux, Windows)
     needs: release
     runs-on: ubuntu-latest
     steps:
@@ -85,17 +153,24 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci --prefix frontend
       - run: npm --prefix frontend run build:app
-      - name: Build the headless server
+      - name: Build the headless servers
         run: |
           mkdir -p dist
-          for arch in amd64 arm64; do
-            dir="marginalia-${TAG}-linux-${arch}"
-            mkdir -p "dist/$dir"
-            CGO_ENABLED=0 GOOS=linux GOARCH="$arch" go build -trimpath -ldflags "-s -w" -o "dist/$dir/marginalia" .
-            cp LICENSE README.md "dist/$dir/"
-            tar -C dist -czf "dist/$dir.tar.gz" "$dir"
+          for goos in linux windows; do
+            for arch in amd64 arm64; do
+              ext=$([ "$goos" = windows ] && echo .exe || echo "")
+              dir="marginalia-serve-$TAG-$goos-$arch"
+              mkdir -p "dist/$dir"
+              CGO_ENABLED=0 GOOS="$goos" GOARCH="$arch" go build -trimpath -ldflags "-s -w" -o "dist/$dir/marginalia$ext" .
+              cp LICENSE README.md "dist/$dir/"
+              if [ "$goos" = windows ]; then
+                (cd dist && zip -qr "$dir.zip" "$dir")
+              else
+                tar -C dist -czf "dist/$dir.tar.gz" "$dir"
+              fi
+            done
           done
       - name: Upload the archives
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "$TAG" dist/*.tar.gz --repo "$GITHUB_REPOSITORY" --clobber
+        run: gh release upload "$TAG" dist/*.tar.gz dist/*.zip --repo "$GITHUB_REPOSITORY" --clobber

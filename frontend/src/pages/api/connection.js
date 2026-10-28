@@ -2,11 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useApp } from "../../app/AppContext.jsx";
 import { useEvent } from "../../app/hooks.js";
 import { api } from "../../lib/api.js";
-import { isMac } from "../../lib/native.js";
 import { confirm, toast } from "../../ui/index.js";
-
-/** Where the desktop app's binary usually lives (the stdio MCP command), when the server does not say. */
-const APP_BINARY_MAC = "/Applications/Marginalia.app/Contents/MacOS/Marginalia";
 
 const trimSlash = (url) => (url || "").replace(/\/+$/, "");
 
@@ -62,7 +58,9 @@ export function useConnection() {
   }
   const mcpUrl = kind === "desktop" && info.mcp_url ? info.mcp_url : `${base}/mcp`;
   const openapiUrl = kind === "desktop" && info.openapi_url ? info.openapi_url : `${base}/api/openapi.json`;
-  const command = info.command || info.mcp_command || (kind === "desktop" && isMac ? APP_BINARY_MAC : "marginalia");
+  // The desktop app reports its own binary (api.command); "marginalia" is the
+  // stopgap before integrations load, found on $PATH.
+  const command = info.command || info.mcp_command || "marginalia";
 
   return {
     kind,

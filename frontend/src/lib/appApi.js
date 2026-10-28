@@ -186,10 +186,10 @@ export function baseName(path) {
   return (path || "").replace(/[\\/]+$/, "").split(/[\\/]/).pop() || path || "";
 }
 
-/** A path for display: the home folder shortened to "~" (macOS / Linux). */
+/** A path for display: the home folder shortened to "~" (POSIX) or the user folder shortened to "~" (Windows). */
 export function tildePath(path) {
   if (!path) return "";
-  return path.replace(/^\/(?:Users|home)\/[^/]+(?=\/|$)/, "~");
+  return path.replace(/^\/(?:Users|home)\/[^/]+(?=\/|$)/, "~").replace(/^[A-Za-z]:\\Users\\[^\\]+(?=\\|$)/, "~");
 }
 
 /** True for an absolute native path (POSIX, "~/…", or a Windows drive / UNC path). */

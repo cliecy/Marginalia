@@ -1,6 +1,6 @@
 # Marginalia 拾页
 
-Marginalia 是一款 macOS 桌面应用：把一个与 Obsidian 兼容的 Markdown 文件夹变成带 AI 的个人知识库。你可以在其中阅读和编辑笔记、查看反向链接与知识图谱、和 AI 对话并让它整理知识库，每次修改都会记入 git 历史；同时它向本机的 AI 工具（Claude Code、Codex、Magpie 等）开放 REST、OpenAPI 与 MCP 接口。
+Marginalia 是一款 macOS / Windows / Linux 桌面应用：把一个与 Obsidian 兼容的 Markdown 文件夹变成带 AI 的个人知识库。你可以在其中阅读和编辑笔记、查看反向链接与知识图谱、和 AI 对话并让它整理知识库，每次修改都会记入 git 历史；同时它向本机的 AI 工具（Claude Code、Codex、Magpie 等）开放 REST、OpenAPI 与 MCP 接口。
 
 > 界面风格受 [Magpie](https://github.com/yetone/magpie) 启发。
 
@@ -16,20 +16,44 @@ Marginalia 是一款 macOS 桌面应用：把一个与 Obsidian 兼容的 Markdo
 
 ## 安装与构建
 
-需要 macOS、Go 与 Node.js。桌面版由 [MyGo](https://github.com/egoist/mygo)（v0.6.4）驱动系统 WebView，界面是 `frontend/` 的 React 应用，不依赖 cgo。
+开发需要 Go 与 Node.js。桌面版由 [MyGo](https://github.com/egoist/mygo)（v0.6.4）驱动各系统的 WebView（macOS 用 WKWebView，Windows 用 WebView2，Linux 用 WebKitGTK 4.1），界面是 `frontend/` 的 React 应用，不依赖 cgo，三个平台都可交叉编译。
 
 ```sh
 npm --prefix frontend ci
-go tool mygo build              # build/darwin-arm64/Marginalia.app 和 .dmg
-go tool mygo build -skip-dmg    # 只生成 .app
+go tool mygo build                                            # 当前平台的桌面包
+go tool mygo build -platform "darwin/arm64,darwin/amd64"      # macOS：.app 与 .dmg
+go tool mygo build -platform "windows/amd64,windows/arm64"    # Windows：exe 与 NSIS 安装器（构建机需装 makensis）
+go tool mygo build -platform "linux/amd64,linux/arm64"        # Linux：二进制、.desktop、deb 与 tar.gz
 ```
 
-`mygo build` 会先执行 `npm --prefix frontend run build:app`，把前端构建到 `internal/webui/dist`，再由 `go:embed` 打进二进制。当前构建采用临时（ad-hoc）签名，未经过 Apple 公证；首次打开需要在 Finder 中右键 →「打开」，或在「系统设置 → 隐私与安全性」中允许。
+`mygo build` 会先执行 `npm --prefix frontend run build:app`，把前端构建到 `internal/webui/dist`，再由 `go:embed` 打进二进制。
 
-把 Marginalia.app 放进 `/Applications` 后，应用里的可执行文件也提供命令行模式：
+桌面版运行依赖各系统的 WebView：Windows 10 需要先安装 [WebView2 Evergreen Runtime](https://developer.microsoft.com/microsoft-edge/webview2/)（Win11 自带）；Linux 需要 WebKitGTK 4.1（Debian/Ubuntu：`sudo apt install libwebkit2gtk-4.1-0`，Arch：`sudo pacman -S webkit2gtk-4.1`）。
+
+发布产物（Release CI 对每个 tag 自动构建）：
+
+| 平台 | 产物 | 说明 |
+| --- | --- | --- |
+| macOS | `.dmg` | ad-hoc 签名、未公证：首次打开需要在 Finder 中右键 →「打开」，或在「系统设置 → 隐私与安全性」中允许 |
+| Windows | `Marginalia Setup …exe`、便携 zip | 安装包未签名，SmartScreen 提示时选「更多信息 → 仍要运行」；per-user 安装到 `%LOCALAPPDATA%\Programs\Marginalia` |
+| Linux | `.deb`、`.tar.gz` | deb 装到 `/opt/marginalia`，在 `/usr/bin` 放 `marginalia` 命令；tar.gz 免 root，内含 `install.sh`，装到 `~/.local/marginalia.app`，命令在 `~/.local/bin/marginalia` |
+| 无头 | `marginalia-serve-…tar.gz / .zip` | 不开窗口的 `marginalia serve`，见下文 |
+
+三个平台的安装包都会注册 `marginalia://` 深链接（`marginalia://open?path=…` 打开笔记、`marginalia://search?q=…` 搜索）。
+
+### 安装
+
+- **Ubuntu / Debian**：`sudo apt install ./marginalia_0.2.0_amd64.deb`（依赖 libgtk-3 与 libwebkit2gtk-4.1-0，由包声明自动安装）。
+- **Omarchy / Arch / 其他 Linux**：下载 `marginalia-<版本>-linux-<架构>.tar.gz`，与解压出的 `install.sh` 同目录执行 `sh install.sh`（或把 tar.gz 路径作为参数传给它），装进 `~/.local`，免 root；卸载用 `sh install.sh --uninstall`。已在 Omarchy 上验证。
+- **Windows**：运行 `Marginalia Setup <版本> <架构>.exe`（未签名，SmartScreen 提示时选「更多信息 → 仍要运行」），或解压便携 zip 直接运行 `Marginalia.exe`。
+- **macOS**：打开 .dmg，把 Marginalia.app 拖进「应用程序」。
+
+安装后，应用里的可执行文件也提供命令行模式：
 
 ```sh
 APP="/Applications/Marginalia.app/Contents/MacOS/Marginalia"
+# Windows: APP="$env:LOCALAPPDATA\Programs\Marginalia\Marginalia.exe"
+# Linux:   APP="$(command -v marginalia)"
 "$APP" version
 "$APP" serve --addr 127.0.0.1:8190
 "$APP" mcp
@@ -37,7 +61,7 @@ APP="/Applications/Marginalia.app/Contents/MacOS/Marginalia"
 
 ## 数据目录与首次启动
 
-数据目录是 `~/Library/Application Support/Marginalia/`（可用 `NOTES_DATA_DIR` 覆盖；从旧版 `MarkdownNote` 目录升级时会自动迁移一次）。密钥文件权限均为 0600：
+数据目录在 macOS 是 `~/Library/Application Support/Marginalia/`，Linux 是 `~/.config/Marginalia/`，Windows 是 `%AppData%\Marginalia\`（均可用 `NOTES_DATA_DIR` 覆盖；从旧版 `MarkdownNote` 目录升级时会自动迁移一次）。密钥文件权限均为 0600（Windows 上按用户配置文件默认 ACL 保护）：
 
 | 文件 | 说明 |
 | --- | --- |
@@ -49,7 +73,7 @@ APP="/Applications/Marginalia.app/Contents/MacOS/Marginalia"
 | `ssh/id_ed25519` | git 远端同步用的部署密钥 |
 | `api-endpoint.json` | App 运行时本机 API 的实际地址和进程号，退出时删除 |
 
-日志在 `~/Library/Logs/Marginalia/`（菜单「帮助 → 显示日志文件夹」）。
+日志在 macOS 的 `~/Library/Logs/Marginalia/`，Windows / Linux 在数据目录下的 `logs/`（菜单「帮助 → 显示日志文件夹」）。
 
 首次启动：
 
@@ -67,7 +91,7 @@ AI 功能使用任何 OpenAI 兼容的服务（「设置 → AI 模型」中填�
 
 - **检测**：读取网关的 `GET /` 和 `GET /v1/models`，显示是否运行、版本和可用模型数；网关运行时侧边栏的 Magpie 条目显示绿点。
 - **使用 Magpie 作为 AI 来源**：一键把 AI 服务地址设为 `http://127.0.0.1:3425/v1`、Key 设为 `magpie`，默认模型优先选 `group/default`；之后对话和整理知识库都经由 Magpie。随时可在「设置 → AI 模型」改回。
-- **把 Marginalia 添加到 Magpie 的 MCP 库**：调用 Magpie CLI（`/Applications/magpie.app/Contents/MacOS/magpie`，不需要在 PATH 里）执行 `magpie library mcp add marginalia <Marginalia 可执行文件> mcp`（stdio），或 HTTP 方式 `magpie library mcp add marginalia http://127.0.0.1:8190/mcp?token=…`；「移除」执行 `magpie library mcp rm marginalia`。这会修改 Magpie 交给各个 Agent 的配置，执行前界面会显示完整命令并请你确认。
+- **把 Marginalia 添加到 Magpie 的 MCP 库**：调用 Magpie CLI（优先在 PATH 里找 `magpie`，macOS 上再试 `/Applications/magpie.app/Contents/MacOS/magpie`）执行 `magpie library mcp add marginalia <Marginalia 可执行文件> mcp`（stdio），或 HTTP 方式 `magpie library mcp add marginalia http://127.0.0.1:8190/mcp?token=…`；「移除」执行 `magpie library mcp rm marginalia`。这会修改 Magpie 交给各个 Agent 的配置，执行前界面会显示完整命令并请你确认。
 - 没有安装 Magpie 时，页面给出安装链接，其余功能不受影响。
 
 ## 外部 API（REST 与 OpenAPI）
@@ -106,7 +130,7 @@ curl -s -X PUT "$MARGINALIA_URL/api/note" -H "Authorization: Bearer $MARGINALIA_
 - **HTTP**：`POST http://127.0.0.1:8190/mcp`，令牌放在 `Authorization: Bearer <令牌>` 头里；不能设置请求头的客户端可以改用 `http://127.0.0.1:8190/mcp?token=<令牌>`（令牌会出现在 URL 里，只在本机使用）。`GET /mcp` 返回 405（不提供服务端推送流）。
 - **stdio**：`Marginalia mcp`（应用包里的可执行文件加 `mcp` 子命令）。它读取数据目录的设置：桌面 App 正在运行时，把每条消息带着数据目录里的令牌转发给 App，App 仍是笔记库唯一的写入者；App 没开时直接在进程内读写设置里的笔记库，之后 App 启动了会自动改为转发（先提交进程内的修改）。App 开着但关闭了本机 API 时，请求会返回错误，不会绕过 App 写笔记库。重新生成令牌、中途退出或重启 App 都不需要重启 `mcp`。stdout 只输出协议，日志写到 stderr。stdio 方式不需要手动配置令牌。
 
-下面的路径以安装到 `/Applications` 为例；令牌在 App 的「API 与 MCP」页面复制（页面也会按当前地址和令牌生成这些片段）。
+下面的路径以 macOS（安装到 `/Applications`）为例；Windows 把可执行文件换成 `%LOCALAPPDATA%\Programs\Marginalia\Marginalia.exe`，Linux 直接写 `marginalia`（已在 PATH 里）。令牌在 App 的「API 与 MCP」页面复制（页面也会按当前地址和令牌生成这些片段）。
 
 **Claude Code**
 
@@ -129,8 +153,8 @@ args = ["mcp"]
 **Magpie**：在 App 的「Magpie」页面点「添加到 Magpie」，或自己执行
 
 ```sh
-/Applications/magpie.app/Contents/MacOS/magpie library mcp add marginalia \
-  /Applications/Marginalia.app/Contents/MacOS/Marginalia mcp
+magpie library mcp add marginalia \
+  /Applications/Marginalia.app/Contents/MacOS/Marginalia mcp   # Windows / Linux 的可执行文件路径见上文
 ```
 
 **其他客户端**（Cursor、Claude Desktop、Cherry Studio 等 `mcpServers` 格式）
@@ -185,7 +209,7 @@ go tool mygo dev        # 启动 Vite（npm run dev:app，端口 5173），编�
  marginalia serve ── --addr 上的 TCP 监听 ──►  NetHandler ─┘   /api/openapi.json、静态页面
 ```
 
-一个 `http.Handler`，两个入口：窗口内的 `mygo://` 协议页面与 API 同源，不占端口也不需要登录；同一套路由再挂在本机回环监听上供脚本、MCP 客户端使用。设置里修改 API 地址/端口或关闭 API 后，监听器会自动重启或停止。桌面外壳（`internal/desktop`）提供单实例、中文菜单、`marginalia://open?path=…` / `marginalia://search?q=…` 深链接，以及页面可调用的 `Native` 服务（选择文件夹、在 Finder 中显示、打开外部链接、应用信息）；退出前会让页面先保存未保存的修改。一个可执行文件、四个子命令：不带参数启动桌面 App，`serve`、`mcp`、`version`。
+一个 `http.Handler`，两个入口：窗口内的 `mygo://` 协议页面与 API 同源，不占端口也不需要登录；同一套路由再挂在本机回环监听上供脚本、MCP 客户端使用。设置里修改 API 地址/端口或关闭 API 后，监听器会自动重启或停止。桌面外壳（`internal/desktop`）提供单实例、中文菜单、`marginalia://open?path=…` / `marginalia://search?q=…` 深链接，以及页面可调用的 `Native` 服务（选择文件夹、在系统的文件管理器中显示、打开外部链接、应用信息）；退出前会让页面先保存未保存的修改。一个可执行文件、四个子命令：不带参数启动桌面 App，`serve`、`mcp`、`version`。
 
 | 目录 | 内容 |
 | --- | --- |
