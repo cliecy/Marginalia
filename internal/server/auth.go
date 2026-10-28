@@ -90,7 +90,8 @@ func signSession(secret []byte, s session) string {
 }
 
 // parseSession verifies a cookie value and returns its session when the
-// signature matches and it has not expired.
+// signature matches and it has not expired. User may be empty: serve mode
+// leaves LoginUser unset unless NOTES_LOGIN_USER names the greeter.
 func parseSession(secret []byte, value string, now time.Time) (session, bool) {
 	enc, sig, ok := strings.Cut(value, ".")
 	if !ok || enc == "" {
@@ -110,7 +111,7 @@ func parseSession(secret []byte, value string, now time.Time) (session, bool) {
 		return session{}, false
 	}
 	var s session
-	if json.Unmarshal(payload, &s) != nil || s.User == "" || now.Unix() >= s.Exp {
+	if json.Unmarshal(payload, &s) != nil || now.Unix() >= s.Exp {
 		return session{}, false
 	}
 	return s, true

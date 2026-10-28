@@ -7,6 +7,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"marginalia/internal/config"
 )
 
 // --------------------------------------------- server tests
@@ -84,6 +86,17 @@ func TestSessionCookieTamperingAndExpiry(t *testing.T) {
 
 	f.srv.now = func() time.Time { return time.Now().Add(721 * time.Hour) }
 	expect(t, c.do("GET", "/api/tree", nil), 401)
+}
+
+func TestLoginWithoutLoginUser(t *testing.T) {
+	// Serve mode may leave LoginUser unset (the greeting then has no name):
+	// the password must still log in and the session must authenticate.
+	f := newFixture(t, func(o *fixtureOptions) {
+		o.settings = func(s *config.Settings) { s.LoginUser = "" }
+	})
+	c := f.client(f.srv.NetHandler(), "192.0.2.10:999")
+	expect(t, c.do("POST", "/api/auth/login", map[string]string{"password": f.password}), 200)
+	expect(t, c.do("GET", "/api/tree", nil), 200)
 }
 
 func TestTreeHidesDotfiles(t *testing.T) {
