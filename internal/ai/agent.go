@@ -164,8 +164,8 @@ func RunAgent(ctx context.Context, llm Completer, v *vault.Vault, budget int, re
 	if req.Path != "" {
 		focus = []string{req.Path}
 	}
-	shared := "今天是 " + today() + "。\n\n## 知识库约定\n" + clip(rules, conventionsAgentLimit) +
-		"\n\n## 笔记库\n" + VaultContext(v, contextBudget, focus, req.Task, false)
+	shared := "今天是 " + today() + "。\n" + dataNote + "\n\n## 知识库约定\n" + clip(rules, conventionsAgentLimit) +
+		"\n\n## 笔记库\n" + VaultContext(v, contextBudget, focus, req.Task, true)
 	if sources != "" {
 		shared += "\n\n## 待整理的原始对话\n" + sources
 	}
@@ -197,6 +197,13 @@ func RunAgent(ctx context.Context, llm Completer, v *vault.Vault, budget int, re
 		overview.WriteString("- " + pyyaml.Str(op.Value("op")) + " " + pyyaml.Str(op.Value("path")))
 	}
 
+	// The writer sees the conventions, the plan and the chats being distilled —
+	// not the vault map: it writes one note the planner already chose.
+	writer := "今天是 " + today() + "。\n" + dataNote + "\n\n## 知识库约定\n" + clip(rules, conventionsAgentLimit) + overview.String()
+	if sources != "" {
+		writer += "\n\n## 待整理的原始对话\n" + sources
+	}
+
 	for index, op := range operations[:min(len(operations), MaxAgentOperations)] {
 		proposal, err := propose(v, op)
 		if err != nil {
@@ -212,12 +219,12 @@ func RunAgent(ctx context.Context, llm Completer, v *vault.Vault, budget int, re
 			}
 			existing := "## 这是一篇新笔记"
 			if proposal.BaseETag != nil {
-				existing = "## 这篇笔记的当前内容\n" + proposal.Before
+				existing = "## 这篇笔记的当前内容\n" + noteBlock(proposal.Path, proposal.Before, focusNoteLimit)
 			}
 			instructions := pyyaml.Str(pyyaml.Or(op.Value("instructions"), get(op, "reason", "")))
 			answer, err := llm.Complete(ctx, req.Model, []Message{
 				{Role: RoleSystem, Content: WritePrompt},
-				{Role: RoleUser, Content: shared + overview.String() +
+				{Role: RoleUser, Content: writer +
 					"\n\n## 你要写的笔记：" + proposal.Path + "\n要求：" + instructions + "\n\n" + existing},
 			})
 			if err != nil {
@@ -313,8 +320,8 @@ func planOperations(plan *pyyaml.Map) []*pyyaml.Map {
 	return ops
 }
 
-// sourceMaterial is the text of the chats to distil, clipped to limit.
-// Chats that cannot be read are left out.
+// sourceMaterial is the text of the chats to distil, each inside a <chat>
+// tag, clipped to limit. Chats that cannot be read are left out.
 func sourceMaterial(v *vault.Vault, chatPaths []string, limit int) string {
 	blocks := []string{}
 	for _, rel := range chatPaths {
@@ -323,7 +330,7 @@ func sourceMaterial(v *vault.Vault, chatPaths []string, limit int) string {
 			logSkipped(rel, err)
 			continue
 		}
-		blocks = append(blocks, "===== 对话："+rel+" =====\n"+note.Content)
+		blocks = append(blocks, chatBlock(rel, note.Content))
 	}
 	return clip(strings.Join(blocks, "\n\n"), limit)
 }

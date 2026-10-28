@@ -160,25 +160,31 @@ func TestAgentEndToEnd(t *testing.T) {
 	}
 	planUser := reqs[0].Body.Messages[1].Content
 	for _, part := range []string{
-		"今天是 2026-10-27。", "## 知识库约定\n# 约定", "## 笔记库\n# 笔记库索引（共 7 篇）",
-		"===== 笔记：Knowledge/b.md =====", "## 待整理的原始对话\n===== 对话：" + chat + " =====", "## 任务\n整理",
+		"今天是 2026-10-27。", "## 知识库约定\n# 约定", "## 笔记库\n", "# 笔记库索引（共 7 篇，路径、标题与摘要）",
+		`<note path="Knowledge/b.md">`, "## 待整理的原始对话\n" + `<chat path="` + chat + `">`, "## 任务\n整理",
 	} {
 		if !strings.Contains(planUser, part) {
 			t.Errorf("plan request lacks %q", part)
 		}
 	}
 	// The focus note is the first full note in the context.
-	if strings.Index(planUser, "===== 笔记：Knowledge/b.md") > strings.Index(planUser, "===== 笔记：") {
+	if strings.Index(planUser, `<note path="Knowledge/b.md"`) > strings.Index(planUser, "<note path=") {
 		t.Error("focus note is not ranked first")
 	}
 	writeUser := reqs[1].Body.Messages[1].Content
 	for _, part := range []string{
 		"## 本次整体任务\n整理\n\n## 本次修改计划\n整理 B\n- update Knowledge/b.md\n- create Knowledge/new.md\n- move Inbox/a.md\n- delete Inbox/old.md",
-		"## 你要写的笔记：Knowledge/b.md\n要求：加入对话内容\n\n## 这篇笔记的当前内容\n# B\n\nold text\n",
+		"## 你要写的笔记：Knowledge/b.md\n要求：加入对话内容\n\n## 这篇笔记的当前内容\n" + `<note path="Knowledge/b.md">` + "\n# B\n\nold text\n</note>",
+		"## 待整理的原始对话\n" + `<chat path="` + chat + `">`,
 	} {
 		if !strings.Contains(writeUser, part) {
 			t.Errorf("write request lacks %q", part)
 		}
+	}
+	// The writer does not carry the vault map: it writes the one note the
+	// planner already chose.
+	if strings.Contains(writeUser, "## 笔记库索引") {
+		t.Error("write request carries the vault map")
 	}
 	if !strings.HasSuffix(reqs[2].Body.Messages[1].Content, "要求：新主题\n\n## 这是一篇新笔记") {
 		t.Errorf("create request ends %q", reqs[2].Body.Messages[1].Content[len(reqs[2].Body.Messages[1].Content)-60:])

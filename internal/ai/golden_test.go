@@ -33,23 +33,7 @@ type golden struct {
 	} `json:"prompts"`
 	IndexListing string `json:"index_listing"`
 	Conventions  string `json:"conventions"`
-	VaultContext []struct {
-		Budget       int      `json:"budget"`
-		Focus        []string `json:"focus"`
-		Query        string   `json:"query"`
-		IncludeChats bool     `json:"include_chats"`
-		Output       string   `json:"output"`
-	} `json:"vault_context"`
-	Chat []struct {
-		Budget    int        `json:"budget"`
-		Scope     string     `json:"scope"`
-		Path      *string    `json:"path"`
-		Selection *string    `json:"selection"`
-		History   []Message  `json:"history"`
-		Output    []Message  `json:"output"`
-		Error     *goldenErr `json:"error"`
-	} `json:"chat"`
-	ExtractJSON []struct {
+	ExtractJSON  []struct {
 		Input  string          `json:"input"`
 		Output json.RawMessage `json:"output"`
 		Error  *string         `json:"error"`
@@ -166,53 +150,19 @@ func TestGoldenPrompts(t *testing.T) {
 
 func TestGoldenIndexAndConventions(t *testing.T) {
 	g, v := setupGolden(t)
-	if got := IndexListing(knowledge.VaultIndex(v)); got != g.IndexListing {
-		t.Errorf("IndexListing:\n got %q\nwant %q", got, g.IndexListing)
+	// The rich note map keeps the Python index format.
+	if got := NoteMap(knowledge.VaultIndex(v), true); got != g.IndexListing {
+		t.Errorf("NoteMap:\n got %q\nwant %q", got, g.IndexListing)
 	}
 	if got := Conventions(v); got != g.Conventions {
 		t.Errorf("Conventions = %q, want %q", got, g.Conventions)
 	}
 }
 
-func TestGoldenVaultContext(t *testing.T) {
-	g, v := setupGolden(t)
-	for i, c := range g.VaultContext {
-		got := VaultContext(v, c.Budget, c.Focus, c.Query, c.IncludeChats)
-		if got != c.Output {
-			t.Errorf("case %d (budget %d, focus %q, query %q, chats %v):\n got %s\nwant %s",
-				i, c.Budget, c.Focus, c.Query, c.IncludeChats, firstDiff(got, c.Output), firstDiff(c.Output, got))
-		}
-	}
-}
-
-func TestGoldenBuildChatMessages(t *testing.T) {
-	g, v := setupGolden(t)
-	for i, c := range g.Chat {
-		got, err := BuildChatMessages(v, c.Budget, c.History, c.Scope, deref(c.Path), deref(c.Selection))
-		if c.Error != nil {
-			if err == nil || err.Error() != c.Error.Message || vault.StatusOf(err) != c.Error.Status {
-				t.Errorf("case %d (%s %q): error %v (status %d), want %q (%d)",
-					i, c.Scope, deref(c.Path), err, vault.StatusOf(err), c.Error.Message, c.Error.Status)
-			}
-			continue
-		}
-		if err != nil {
-			t.Errorf("case %d (%s %q): %v", i, c.Scope, deref(c.Path), err)
-			continue
-		}
-		if len(got) != len(c.Output) {
-			t.Errorf("case %d: %d messages, want %d", i, len(got), len(c.Output))
-			continue
-		}
-		for j := range got {
-			if got[j] != c.Output[j] {
-				t.Errorf("case %d (%s %q) message %d:\n got %s\nwant %s", i, c.Scope, deref(c.Path), j,
-					firstDiff(got[j].Role+": "+got[j].Content, c.Output[j].Role+": "+c.Output[j].Content),
-					firstDiff(c.Output[j].Role+": "+c.Output[j].Content, got[j].Role+": "+got[j].Content))
-			}
-		}
-	}
-}
+// The vault-context and chat-assembly goldens were removed when the context
+// structure was redesigned (tiered map, <note> blocks, per-note clipping):
+// those outputs intentionally diverge from the Python backend. The behaviour
+// is covered by TestVaultContextBudget and TestBuildChatMessagesScopes.
 
 func TestGoldenExtractJSON(t *testing.T) {
 	g, _ := setupGolden(t)
@@ -313,10 +263,19 @@ func TestGoldenAgent(t *testing.T) {
 					continue
 				}
 				for j := range want.Messages {
-					if got.Messages[j] != want.Messages[j] {
-						t.Errorf("call %d message %d:\n got %s\nwant %s", i, j,
-							firstDiff(got.Messages[j].Content, want.Messages[j].Content),
-							firstDiff(want.Messages[j].Content, got.Messages[j].Content))
+					// The system prompts still match Python byte for byte; the user
+					// message carries the context, whose structure intentionally
+					// diverges (tiered map, <note>/<chat> blocks, per-note clipping).
+					if j == 0 {
+						if got.Messages[j] != want.Messages[j] {
+							t.Errorf("call %d message %d:\n got %s\nwant %s", i, j,
+								firstDiff(got.Messages[j].Content, want.Messages[j].Content),
+								firstDiff(want.Messages[j].Content, got.Messages[j].Content))
+						}
+						continue
+					}
+					if got.Messages[j].Content == "" {
+						t.Errorf("call %d message %d is empty", i, j)
 					}
 				}
 			}
