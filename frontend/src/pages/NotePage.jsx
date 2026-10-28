@@ -51,6 +51,14 @@ const STATUS = {
 const FLOAT_INSPECTOR = { split: 1380, other: 964 };
 const FLOAT_TREE = { split: 1020, other: 684 };
 
+// Column widths, adjustable with the grips between them (double-click resets).
+// The inspector's content adapts from 300px up (min-width: min(338px, 100%)).
+const TREE_W = 248;
+const INSP_W = 340;
+const TREE_RANGE = [180, 440];
+const INSP_RANGE = [300, 560];
+const clampWidth = (w, [min, max]) => Math.round(Math.min(max, Math.max(min, Number(w) || 0)));
+
 /**
  * The editor and the app keep text with \n line ends; a note that uses \r\n on
  * disk keeps them (converted only when it is read and written).
@@ -108,6 +116,10 @@ export default function NotePage({ active }) {
   const [storedTab, setTab] = useStoredState("mn.right", "ai");
   const tab = TABS.some((t) => t.value === storedTab) ? storedTab : "ai";
   const [inspectorOpen, setInspectorOpen] = useStoredState("mn.inspector", true);
+  const [storedTreeW, setTreeW] = useStoredState("mn.treeWidth", TREE_W);
+  const [storedInspW, setInspW] = useStoredState("mn.inspectorWidth", INSP_W);
+  const treeCol = clampWidth(storedTreeW ?? TREE_W, TREE_RANGE);
+  const inspCol = clampWidth(storedInspW ?? INSP_W, INSP_RANGE);
   const [overlay, setOverlay] = useState({ tree: false, inspector: false });
   const [aiMounted, setAiMounted] = useState(false);
   const [presenting, setPresenting] = useState(false);
@@ -145,6 +157,34 @@ export default function NotePage({ active }) {
   useEffect(() => {
     if (!narrowTree) setOverlay((o) => (o.tree ? { ...o, tree: false } : o));
   }, [narrowTree]);
+
+  // Dragging a grip: pointer capture keeps the events coming even over the
+  // preview's iframes. The tree resizes rightwards, the inspector leftwards.
+  const [dragging, setDragging] = useState(null);
+  const gripDrag = useRef(null);
+  const gripProps = (kind) => ({
+    onPointerDown: (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      gripDrag.current = { kind, x: e.clientX, w: kind === "tree" ? treeCol : inspCol };
+      e.currentTarget.setPointerCapture(e.pointerId);
+      setDragging(kind);
+    },
+    onPointerMove: (e) => {
+      const d = gripDrag.current;
+      if (!d || d.kind !== kind) return;
+      if (kind === "tree") setTreeW(clampWidth(d.w + (e.clientX - d.x), TREE_RANGE));
+      else setInspW(clampWidth(d.w - (e.clientX - d.x), INSP_RANGE));
+    },
+    onPointerUp: endGrip,
+    onPointerCancel: endGrip,
+    onLostPointerCapture: endGrip,
+    onDoubleClick: () => (kind === "tree" ? setTreeW(TREE_W) : setInspW(INSP_W)),
+  });
+  function endGrip() {
+    gripDrag.current = null;
+    setDragging(null);
+  }
 
   const editor = useRef(null);
   const preview = useRef(null);
@@ -580,7 +620,11 @@ export default function NotePage({ active }) {
   })();
 
   return (
-    <div ref={root} className={`np ${inspectorShown ? "insp-on" : ""} ${treeShown ? "tree-on" : ""} ${narrowInspector ? "narrow-insp" : ""} ${narrowTree ? "narrow-tree" : ""}`.replace(/\s+/g, " ").trim()}>
+    <div
+      ref={root}
+      style={{ "--np-tree-w": `${treeCol}px`, "--np-insp-w": `${inspCol}px` }}
+      className={`np ${inspectorShown ? "insp-on" : ""} ${treeShown ? "tree-on" : ""} ${narrowInspector ? "narrow-insp" : ""} ${narrowTree ? "narrow-tree" : ""} ${dragging ? "dragging" : ""}`.replace(/\s+/g, " ").trim()}
+    >
       {active && (
         <TopbarActions>
           {narrowTree && <IconButton icon="folder" label="目录" active={overlay.tree} onClick={() => setOverlay((o) => ({ inspector: false, tree: !o.tree }))} />}
@@ -647,6 +691,13 @@ export default function NotePage({ active }) {
           )}
         </div>
       </aside>
+
+      {treeShown && !narrowTree && (
+        <div className="np-grip grip-tree" role="separator" aria-orientation="vertical" aria-label="调节目录宽度" title="拖动调节宽度，双击复位" {...gripProps("tree")} />
+      )}
+      {inspectorShown && !narrowInspector && (
+        <div className="np-grip grip-insp" role="separator" aria-orientation="vertical" aria-label="调节侧栏宽度" title="拖动调节宽度，双击复位" {...gripProps("insp")} />
+      )}
 
       {((narrowTree && overlay.tree) || (narrowInspector && overlay.inspector)) && <div className="np-scrim" onClick={() => setOverlay({ tree: false, inspector: false })} />}
 

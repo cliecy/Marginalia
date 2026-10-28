@@ -7,11 +7,11 @@
  */
 .np {
   position: relative; height: 100%; min-height: 0;
-  display: grid; grid-template-columns: 248px minmax(0, 1fr) 0px; grid-template-rows: minmax(0, 1fr);
+  display: grid; grid-template-columns: var(--np-tree-w, 248px) minmax(0, 1fr) 0px; grid-template-rows: minmax(0, 1fr);
   column-gap: 0; padding: 0 8px 8px 0;
   transition: grid-template-columns .28s var(--ease), column-gap .28s var(--ease);
 }
-.np.insp-on { grid-template-columns: 248px minmax(0, 1fr) 340px; column-gap: 8px; }
+.np.insp-on { grid-template-columns: var(--np-tree-w, 248px) minmax(0, 1fr) var(--np-insp-w, 340px); column-gap: 8px; }
 /* explicit tracks: the overlays below leave the flow, and the document must keep its column */
 .np-tree { grid-column: 1; grid-row: 1; }
 .np-doc { grid-column: 2; grid-row: 1; }
@@ -106,7 +106,7 @@ button.np-save:hover { background: color-mix(in srgb, var(--red) 18%, var(--red-
 }
 .np.insp-on .np-insp { visibility: visible; transition-delay: 0s; }
 .np:not(.insp-on) .np-insp { border-color: transparent; }
-.np-insp > * { min-width: 338px; }
+.np-insp > * { min-width: min(338px, 100%); }
 .np-insp-head { flex: none; display: flex; align-items: center; gap: 6px; padding: 8px 8px 8px 10px; border-bottom: 1px solid var(--line-2); }
 .np-insp-head .seg { flex: 1 1 auto; }
 .np-insp-body { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
@@ -116,6 +116,26 @@ button.np-save:hover { background: color-mix(in srgb, var(--red) 18%, var(--red-
 .np-info { overflow-y: auto; overscroll-behavior: contain; }
 
 .np-scrim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--scrim) 55%, transparent); animation: fade-in .2s ease-out; }
+
+/* ------------------------------------------------------------- column grips */
+/* The tree and inspector columns resize by their edge grips (NotePage.jsx
+ * stores the widths). A grip sits half over each side of its column edge. */
+.np-grip {
+  position: absolute; z-index: 8; top: 0; bottom: 8px; width: 9px;
+  cursor: col-resize; touch-action: none;
+}
+.np-grip::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 3px; width: 3px;
+  border-radius: 2px; background: var(--accent); opacity: 0; transition: opacity .15s;
+}
+.np-grip:hover::after, .np-grip:active::after { opacity: .55; }
+.grip-tree { left: calc(var(--np-tree-w, 248px) - 4px); }
+.grip-insp { right: calc(var(--np-insp-w, 340px) + 4px); }
+/* no grip at a column that is closed or floating */
+.np:not(.tree-on) .grip-tree, .np.narrow-tree .grip-tree,
+.np:not(.insp-on) .grip-insp, .np.narrow-insp .grip-insp { display: none; }
+.np.dragging { transition: none; }
+.np.dragging, .np.dragging * { cursor: col-resize !important; user-select: none !important; -webkit-user-select: none !important; }
 
 /* ------------------------------------------------------------- narrow workspace */
 /* the inspector floats over the document */
