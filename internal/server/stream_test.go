@@ -7,6 +7,9 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 	"testing"
@@ -23,8 +26,8 @@ type fakeOpenAI struct {
 	status   int
 	requests []map[string]any
 	gate     chan struct{}
+	chatFn   func(w http.ResponseWriter, r *http.Request, body map[string]any)
 }
-
 func newFakeOpenAI(t *testing.T, replies ...string) *fakeOpenAI {
 	t.Helper()
 	f := &fakeOpenAI{replies: replies, status: 200}
@@ -47,9 +50,9 @@ func (f *fakeOpenAI) serve(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&body)
 	f.mu.Lock()
 	f.requests = append(f.requests, body)
-	status, gate := f.status, f.gate
+	status, gate, chatFn := f.status, f.gate, f.chatFn
 	reply := ""
-	if len(f.replies) > 0 {
+	if chatFn == nil && len(f.replies) > 0 {
 		reply, f.replies = f.replies[0], f.replies[1:]
 	}
 	f.mu.Unlock()
@@ -58,7 +61,10 @@ func (f *fakeOpenAI) serve(w http.ResponseWriter, r *http.Request) {
 		_, _ = io.WriteString(w, `{"error":{"message":"upstream exploded"}}`)
 		return
 	}
-	w.Header().Set("Content-Type", "text/event-stream")
+	if chatFn != nil {
+		chatFn(w, r, body)
+		return
+	}
 	flusher := w.(http.Flusher)
 	for i, piece := range splitReply(reply) {
 		data, _ := json.Marshal(map[string]any{"choices": []any{map[string]any{"delta": map[string]string{"content": piece}}}})
@@ -289,5 +295,149 @@ func TestPrompts(t *testing.T) {
 	got := decode[jsonMap](t, f.loggedIn().do("GET", "/api/ai/prompts", nil))
 	if fmt.Sprint(got["prompts"]) != "[map[name:总结 path:copilot/copilot-custom-prompts/总结.md template:总结 {}]]" {
 		t.Fatalf("prompts = %v", got)
+	}
+}
+
+func TestChatToolCallingStreamsProposalsAndApplies(t *testing.T) {
+	needGit(t)
+	ai := newFakeOpenAI(t)
+	var turn int
+	ai.chatFn = func(w http.ResponseWriter, _ *http.Request, body map[string]any) {
+		turn++
+		w.Header().Set("Content-Type", "text/event-stream")
+		flusher := w.(http.Flusher)
+		sendChunk := func(v any) {
+			data, _ := json.Marshal(v)
+			fmt.Fprintf(w, "data: %s\n\n", data)
+			flusher.Flush()
+		}
+		if turn == 1 {
+			if body["tools"] == nil {
+				t.Errorf("expected tools on chat request, got %v", body)
+			}
+			sendChunk(map[string]any{"choices": []any{map[string]any{
+				"delta": map[string]any{
+					"tool_calls": []any{
+						map[string]any{
+							"index": 0,
+							"id":    "call_1",
+							"type":  "function",
+							"function": map[string]any{
+								"name":      "edit_note",
+								"arguments": `{"path":"A.md","old_text":"# A","new_text":"# A (revised)","reason":"精简修订"}`,
+							},
+						},
+					},
+				},
+			}}})
+			sendChunk(map[string]any{"choices": []any{map[string]any{"delta": map[string]any{}, "finish_reason": "tool_calls"}}})
+			_, _ = io.WriteString(w, "data: [DONE]\n\n")
+			flusher.Flush()
+			return
+		}
+		sendChunk(map[string]any{"choices": []any{map[string]any{"delta": map[string]any{"content":"已生成修改建议。"}}}})
+		_, _ = io.WriteString(w, "data: [DONE]\n\n")
+		flusher.Flush()
+	}
+
+	f := newFixture(t, func(o *fixtureOptions) {
+		o.settings = func(s *settingsT) {
+			s.AI.BaseURL, s.AI.DefaultModel = ai.URL+"/v1", "m1"
+			s.Git.Autocommit = true
+		}
+	})
+	if err := os.RemoveAll(filepath.Join(f.notes, ".git")); err != nil {
+		t.Fatal(err)
+	}
+	gitCmd(t, f.notes, "init", "-q")
+	if err := f.core.Apply(f.core.Settings()); err != nil {
+		t.Fatal(err)
+	}
+	c := f.loggedIn()
+	// Save an inbox chat first so we can verify POST /api/ai/apply with chats: [] leaves it inbox.
+	savedChat := decode[jsonMap](t, c.do("PUT", "/api/chats", jsonMap{
+		"title":    "测试对话",
+		"messages": []jsonMap{{"role": "user", "content": "hi"}},
+	}))
+	chatPath := savedChat["path"].(string)
+
+	srv := httptest.NewServer(f.srv.NetHandler())
+	defer srv.Close()
+
+	reqBody := `{"messages":[{"role":"user","content":"改一下 A.md"}],"scope":"note","path":"A.md"}`
+	req, _ := http.NewRequest("POST", srv.URL+"/api/ai/chat", strings.NewReader(reqBody))
+	req.Header.Set("Authorization", "Bearer "+f.token)
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != 200 {
+		t.Fatalf("status = %d", resp.StatusCode)
+	}
+
+	rawBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lines := sseLines(string(rawBytes))
+	var gotStatus, gotDelta, gotDone bool
+	var proposal map[string]any
+	for _, line := range lines {
+		var ev map[string]any
+		if err := json.Unmarshal([]byte(line), &ev); err != nil {
+			t.Fatalf("bad event %q: %v", line, err)
+		}
+		if _, ok := ev["status"]; ok {
+			gotStatus = true
+		}
+		if ev["delta"] == "已生成修改建议。" {
+			gotDelta = true
+		}
+		if p, ok := ev["proposal"].(map[string]any); ok {
+			proposal = p
+		}
+		if ev["done"] == true {
+			gotDone = true
+		}
+	}
+	if !gotStatus || !gotDelta || proposal == nil || !gotDone {
+		t.Fatalf("missing events in %q", lines)
+	}
+	if proposal["op"] != "update" || proposal["path"] != "A.md" || proposal["base_etag"] == nil {
+		t.Fatalf("proposal = %+v", proposal)
+	}
+
+	// Note on disk must still be untouched until apply.
+	beforeNote := decode[jsonMap](t, c.do("GET", "/api/note?path=A.md", nil))
+	if strings.Contains(beforeNote["content"].(string), "revised") {
+		t.Fatalf("note modified before apply: %v", beforeNote)
+	}
+
+	// Apply the returned proposal with chats: [].
+	delete(proposal, "before")
+	applyRes := c.do("POST", "/api/ai/apply", jsonMap{
+		"summary":    proposal["reason"],
+		"operations": []any{proposal},
+		"chats":      []string{},
+	})
+	expect(t, applyRes, 200)
+
+	afterNote := decode[jsonMap](t, c.do("GET", "/api/note?path=A.md", nil))
+	if !strings.Contains(afterNote["content"].(string), "A (revised)") {
+		t.Fatalf("note not updated after apply: %v", afterNote)
+	}
+
+	// Verify git history contains ai: commit and chat remains inbox.
+	hist := decode[jsonMap](t, c.do("GET", "/api/history?path=A.md", nil))
+	commits, _ := hist["history"].([]any)
+	if len(commits) == 0 || !strings.HasPrefix(commits[0].(map[string]any)["subject"].(string), "ai: ") {
+		t.Fatalf("history = %v", hist)
+	}
+	loadedChat := decode[jsonMap](t, c.do("GET", "/api/chats/load?path="+url.QueryEscape(chatPath), nil))
+	meta := loadedChat["meta"].(map[string]any)
+	if meta["status"] != "inbox" {
+		t.Fatalf("chat status = %v, want inbox", meta["status"])
 	}
 }

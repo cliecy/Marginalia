@@ -38,6 +38,7 @@ const (
 	RoleSystem    = "system"
 	RoleUser      = chats.RoleUser
 	RoleAssistant = chats.RoleAssistant
+	RoleTool      = "tool"
 )
 
 // Error is an AI failure with a user-facing (Chinese) message, the Python
@@ -300,11 +301,66 @@ func stringOf(v any) string {
 
 // ------------------------------------------------------------- completions
 
+// ToolDef describes one OpenAI function tool passed in a completion request.
+type ToolDef struct {
+	Type     string       `json:"type"`
+	Function ToolFunction `json:"function"`
+}
+
+// ToolFunction describes the function signature of a ToolDef.
+type ToolFunction struct {
+	Name        string `json:"name"`
+	Description string `json:"description,omitempty"`
+	Parameters  any    `json:"parameters,omitempty"`
+}
+
+// ToolCall is one function call returned by an assistant turn.
+type ToolCall struct {
+	ID       string           `json:"id"`
+	Type     string           `json:"type"`
+	Function ToolCallFunction `json:"function"`
+}
+
+// ToolCallFunction holds the called tool name and raw JSON arguments string.
+type ToolCallFunction struct {
+	Name      string `json:"name"`
+	Arguments string `json:"arguments"`
+}
+
+// ToolMessage is one message in a multi-turn tool-calling conversation.
+type ToolMessage struct {
+	Role       string     `json:"role"`
+	Content    *string    `json:"content,omitempty"`
+	ToolCalls  []ToolCall `json:"tool_calls,omitempty"`
+	ToolCallID string     `json:"tool_call_id,omitempty"`
+	Name       string     `json:"name,omitempty"`
+}
+
+// textToolMessage builds a ToolMessage carrying plain text content.
+func textToolMessage(role, content string) ToolMessage {
+	return ToolMessage{Role: role, Content: &content}
+}
+
+// TurnResult is the accumulated output of one StreamTurn call.
+type TurnResult struct {
+	Content      string
+	ToolCalls    []ToolCall
+	FinishReason string
+}
+
 // chatRequest is the body of POST /chat/completions.
 type chatRequest struct {
 	Model    string    `json:"model"`
 	Messages []Message `json:"messages"`
 	Stream   bool      `json:"stream"`
+}
+
+// toolChatRequest is the body of POST /chat/completions with tool calling.
+type toolChatRequest struct {
+	Model    string        `json:"model"`
+	Messages []ToolMessage `json:"messages"`
+	Tools    []ToolDef     `json:"tools,omitempty"`
+	Stream   bool          `json:"stream"`
 }
 
 // Stream sends a streaming chat completion and calls onDelta with every
@@ -318,7 +374,34 @@ func (c *Client) Stream(ctx context.Context, model string, messages []Message, o
 	if messages == nil {
 		messages = []Message{}
 	}
-	resp, err := c.send(ctx, http.MethodPost, "/chat/completions", chatRequest{Model: model, Messages: messages, Stream: true}, c.stream)
+	req := chatRequest{Model: model, Messages: messages, Stream: true}
+	return c.streamChat(ctx, req, func(body io.Reader, readErr func(error) error) error {
+		return readStream(body, onDelta, readErr)
+	})
+}
+
+// StreamTurn sends a streaming chat completion with optional tool definitions,
+// forwarding text deltas to onDelta and returning the accumulated assistant
+// text, tool calls and finish reason.
+func (c *Client) StreamTurn(ctx context.Context, model string, messages []ToolMessage, tools []ToolDef, onDelta func(string) error) (TurnResult, error) {
+	if model == "" {
+		model = c.defaultModel
+	}
+	if messages == nil {
+		messages = []ToolMessage{}
+	}
+	req := toolChatRequest{Model: model, Messages: messages, Tools: tools, Stream: true}
+	var res TurnResult
+	err := c.streamChat(ctx, req, func(body io.Reader, readErr func(error) error) error {
+		var rerr error
+		res, rerr = readTurnStream(body, onDelta, readErr)
+		return rerr
+	})
+	return res, err
+}
+
+func (c *Client) streamChat(ctx context.Context, body any, read func(io.Reader, func(error) error) error) error {
+	resp, err := c.send(ctx, http.MethodPost, "/chat/completions", body, c.stream)
 	if err != nil {
 		return err
 	}
@@ -330,14 +413,13 @@ func (c *Client) Stream(ctx context.Context, model string, messages []Message, o
 			StatusCode: resp.StatusCode,
 		}
 	}
-	return readStream(resp.Body, onDelta, func(err error) error {
+	return read(resp.Body, func(err error) error {
 		if stop := interrupted(resp); stop != nil {
 			return stop
 		}
 		return &Error{Message: "读取 AI 响应失败：" + err.Error(), Err: err}
 	})
 }
-
 // Complete is Stream collecting the whole answer.
 func (c *Client) Complete(ctx context.Context, model string, messages []Message) (string, error) {
 	var out strings.Builder

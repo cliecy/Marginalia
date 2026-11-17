@@ -1,7 +1,7 @@
 import { Fragment, memo, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import AppContext from "../app/AppContext.jsx";
 import { useModels } from "../app/hooks.js";
-import { timeAgo } from "../app/format.js";
+import { noteTitle, parentFolder, timeAgo } from "../app/format.js";
 import { api, ApiError, stream } from "../lib/api.js";
 import { renderMarkdown } from "../lib/markdown.js";
 import Button, { IconButton } from "../ui/Button.jsx";
@@ -15,8 +15,10 @@ import Spinner from "../ui/Spinner.jsx";
 import { toast } from "../ui/Toast.jsx";
 import { isComposingKey } from "../ui/keys.js";
 import { routeLinkClick } from "./Preview.jsx";
+import DiffView, { diffStats } from "./DiffView.jsx";
 import Rich from "./Rich.jsx";
 
+const OP_LABEL = { create: "新建", update: "修改", move: "移动", delete: "删除" };
 // ------------------------------------------------------------------ actions
 const ONLY = "只输出结果本身，不要任何解释或前后缀。保留 Markdown 格式、公式和 [[双链]]。";
 
@@ -184,13 +186,138 @@ function UserMessage({ message }) {
   );
 }
 
-/** One answer: rendered Markdown, then what can be done with it. */
-const AssistantMessage = memo(function AssistantMessage({ message, last, busy, resolver, notePath, onApply, onSaveNote, onRegenerate, onLink }) {
+/** One proposed vault edit rendered inline inside an assistant reply. */
+function ProposalCard({ proposal, expanded, onToggleExpand, onApply, onOpenNote }) {
+  const p = proposal;
+  const hasDiff = p.op === "create" || p.op === "update" || p.op === "delete";
+  const after = p.op === "delete" ? "" : p.after || "";
+  const stats = useMemo(() => (hasDiff ? diffStats(p.before || "", after) : null), [hasDiff, p.before, after]);
+  const applied = p.status === "applied";
+  const applying = p.status === "applying";
+  const folder = parentFolder(p.path);
+  const canOpen =
+    onOpenNote &&
+    ((p.op !== "create" && !(p.op === "delete" && applied)) || (p.op === "create" && applied));
+  const openTarget = p.op === "move" && applied && p.to ? p.to : p.path;
+
+  return (
+    <div className={`ai-prop ${applied ? "applied" : ""} ${expanded ? "open" : ""}`.replace(/\s+/g, " ").trim()}>
+      <div className="ai-prop-head">
+        <span className={`ai-op op-${p.op}`}>{OP_LABEL[p.op] || p.op}</span>
+        <div className="ai-prop-words">
+          <div className="ai-prop-line" title={p.to ? `${p.path} → ${p.to}` : p.path}>
+            <span className="ai-prop-path">
+              <b>{noteTitle(p.path) || p.path}</b>
+              {folder && <span className="ai-prop-dir">{folder}</span>}
+            </span>
+            {p.to && (
+              <>
+                <Icon name="arrow-right" size={11} className="ai-prop-arrow" />
+                <span className="ai-prop-path">
+                  <b>{noteTitle(p.to) || p.to}</b>
+                </span>
+              </>
+            )}
+          </div>
+          {p.reason && <div className="ai-prop-reason">{p.reason}</div>}
+        </div>
+        {stats && (
+          <span className="ai-prop-stat tabnum">
+            {stats.added > 0 && <em className="add">+{stats.added}</em>}
+            {stats.removed > 0 && <em className="del">−{stats.removed}</em>}
+          </span>
+        )}
+        <div className="ai-prop-btns">
+          {canOpen && (
+            <IconButton icon="arrow-up-right" size="sm" label="打开笔记" onClick={() => onOpenNote(openTarget)} />
+          )}
+          {hasDiff && (
+            <IconButton
+              icon="chevron-right"
+              size="sm"
+              label={expanded ? "收起差异" : "查看差异"}
+              className={`ai-prop-chev ${expanded ? "open" : ""}`.trim()}
+              onClick={onToggleExpand}
+            />
+          )}
+          {applied ? (
+            <span className="ai-prop-done">
+              <Icon name="check" size={11} />
+              已应用
+            </span>
+          ) : (
+            <Button size="sm" variant="soft" disabled={applying} onClick={onApply}>
+              {applying ? "应用中…" : "应用"}
+            </Button>
+          )}
+        </div>
+      </div>
+      {p.error && (
+        <div className="ai-prop-err" role="alert">
+          <Icon name="alert-circle" size={12} />
+          <span>{p.error}</span>
+        </div>
+      )}
+      {expanded && hasDiff && (
+        <div className="ai-prop-diff">
+          <DiffView before={p.before || ""} after={after} maxHeight="260px" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Lists staged note proposals for one assistant reply, with batch apply when >1 pending. */
+function ProposalList({ proposals, onApplyProposals, onOpenNote }) {
+  const [toggled, setToggled] = useState({});
+  const pendingIndices = proposals.reduce((acc, p, i) => (p.status === "pending" ? [...acc, i] : acc), []);
+  const anyApplying = proposals.some((p) => p.status === "applying");
+  const isExpanded = (idx) => (idx in toggled ? toggled[idx] : proposals.length === 1);
+
+  return (
+    <div className="ai-props">
+      {pendingIndices.length > 1 && (
+        <div className="ai-props-head">
+          <span>{pendingIndices.length} 项修改建议</span>
+          <Button size="sm" variant="primary" disabled={anyApplying} onClick={() => onApplyProposals(pendingIndices)}>
+            {anyApplying ? "正在应用…" : "全部应用"}
+          </Button>
+        </div>
+      )}
+      {proposals.map((p, idx) => (
+        <ProposalCard
+          key={`${p.op}:${p.path}:${idx}`}
+          proposal={p}
+          expanded={isExpanded(idx)}
+          onToggleExpand={() => setToggled((prev) => ({ ...prev, [idx]: !isExpanded(idx) }))}
+          onApply={() => onApplyProposals([idx])}
+          onOpenNote={onOpenNote}
+        />
+      ))}
+    </div>
+  );
+}
+
+/** One answer: rendered Markdown, inline proposals, then what can be done with it. */
+const AssistantMessage = memo(function AssistantMessage({
+  message,
+  last,
+  busy,
+  resolver,
+  notePath,
+  onApply,
+  onApplyProposals,
+  onOpenNote,
+  onSaveNote,
+  onRegenerate,
+  onLink,
+}) {
   const html = useMemo(
     () => (message.content ? renderAnswer(message.content, message.pending, resolver, notePath) : ""),
     [message.content, message.pending, resolver, notePath],
   );
-  if (message.pending && !message.content) {
+  const hasProposals = (message.proposals?.length || 0) > 0;
+  if (message.pending && !message.content && !hasProposals) {
     return (
       <div className="ai-msg ai-bot">
         <Thinking label={message.thinking || THINKING.none} />
@@ -213,18 +340,22 @@ const AssistantMessage = memo(function AssistantMessage({ message, last, busy, r
             : null;
   return (
     <div className={`ai-msg ai-bot ${message.pending ? "pending" : ""}`.trim()}>
-      <Rich className="markdown ai-md" html={html} live={!message.pending} onClick={onLink} />
+      {message.content && <Rich className="markdown ai-md" html={html} live={!message.pending} onClick={onLink} />}
+      {message.pending && message.thinking && <Thinking label={message.thinking} />}
+      {hasProposals && <ProposalList proposals={message.proposals} onApplyProposals={onApplyProposals} onOpenNote={onOpenNote} />}
       {!message.pending && (
         <div className="ai-acts">
-          {onApply && primary && (
+          {message.content && onApply && primary && (
             <button type="button" className="ai-apply" onClick={primary.run}>
               <Icon name={primary.icon} size={12} />
               {primary.label}
             </button>
           )}
-          {onApply && <IconButton icon="plus" size="sm" label="插入到光标处" onClick={() => onApply({ type: "insert", text: message.content })} />}
-          <CopyButton text={message.content} label="复制回答" />
-          {onApply && <IconButton icon="file-plus" size="sm" label="存为新笔记" onClick={onSaveNote} />}
+          {message.content && onApply && (
+            <IconButton icon="plus" size="sm" label="插入到光标处" onClick={() => onApply({ type: "insert", text: message.content })} />
+          )}
+          {message.content && <CopyButton text={message.content} label="复制回答" />}
+          {message.content && onApply && <IconButton icon="file-plus" size="sm" label="存为新笔记" onClick={onSaveNote} />}
           {last && !busy && <IconButton icon="refresh" size="sm" label="重新生成" onClick={onRegenerate} />}
           {(message.stopped || message.failed) && <span className="ai-meta">{message.failed ? "回答不完整" : "已停止"}</span>}
         </div>
@@ -469,7 +600,10 @@ export default function AIPanel({
         path: current.path,
         title: titleFrom(finished),
         model,
-        messages: finished.map(({ role, content }) => ({ role, content })),
+        messages: finished.map(({ role, content, proposals }) => ({
+          role,
+          content: content || (proposals?.length ? "已生成修改建议。" : ""),
+        })),
       };
       let saved;
       try {
@@ -499,11 +633,12 @@ export default function AIPanel({
    * Sends a question and streams the answer.
    *
    * @param {object} userMessage {role:"user", content, action?, display?, source?}
-   * @param {{scope?: string, selection?: string, history?: Array}} [options]
+   * @param {{scope?: string, selection?: string, history?: Array, disableTools?: boolean}} [options]
    */
   const send = async (userMessage, options = {}) => {
     if (busyRef.current) return;
     const requestScope = options.scope ?? scope;
+    const toolsEnabled = !options.disableTools && requestScope !== "none";
     const selection = options.selection ?? attached;
     const history = options.history ?? messagesRef.current;
     if (config && config.ai_configured === false) {
@@ -511,19 +646,22 @@ export default function AIPanel({
       return;
     }
     const id = session.current;
-    const question = { ...userMessage, request: { scope: requestScope, selection } };
+    const question = { ...userMessage, request: { scope: requestScope, selection, disableTools: options.disableTools } };
     const base = [...history, question];
-    const thinking = THINKING[requestScope] || THINKING.none;
+    let statusLabel = THINKING[requestScope] || THINKING.none;
     setError(null);
     stick.current = true;
-    commit([...base, { role: "assistant", content: "", pending: true, thinking, source: userMessage.source }]);
+    commit([...base, { role: "assistant", content: "", pending: true, thinking: statusLabel, source: userMessage.source }]);
     setBusyState(true);
     setAttached("");
     const controller = new AbortController();
     abort.current = controller;
     let answer = "";
+    const proposals = [];
     let failure = null;
     try {
+      if (toolsEnabled) await app?.flushEdits?.();
+      if (id !== session.current) return;
       await stream(
         "/api/ai/chat",
         {
@@ -531,13 +669,26 @@ export default function AIPanel({
           scope: requestScope,
           path,
           selection: selection || null,
+          tools: toolsEnabled,
           messages: base.map(({ role, content }) => ({ role, content })),
         },
         (event) => {
           if (event.error) throw new Error(event.error);
-          if (event.delta) {
-            answer += event.delta;
-            if (id === session.current) commit([...base, { role: "assistant", content: answer, pending: true, thinking, source: userMessage.source }]);
+          if (event.status) statusLabel = event.status;
+          if (event.delta) answer += event.delta;
+          if (event.proposal) proposals.push({ ...event.proposal, status: "pending", error: null });
+          if ((event.status || event.delta || event.proposal) && id === session.current) {
+            commit([
+              ...base,
+              {
+                role: "assistant",
+                content: answer,
+                pending: true,
+                thinking: statusLabel,
+                proposals: proposals.length ? [...proposals] : undefined,
+                source: userMessage.source,
+              },
+            ]);
           }
         },
         controller.signal,
@@ -549,16 +700,77 @@ export default function AIPanel({
     if (id !== session.current) return; // the conversation was switched meanwhile
     setBusyState(false);
     const stopped = controller.signal.aborted;
-    if (!answer) {
+    if (!answer && !proposals.length) {
       // Nothing came back: keep the question and offer to ask again.
       commit(base);
       setError(stopped ? { message: "已停止。", retry: true, quiet: true } : { message: failure?.message || "没有收到回复。", retry: true });
       return;
     }
-    const final = [...base, { role: "assistant", content: answer, source: userMessage.source, stopped: stopped || undefined, failed: failure ? true : undefined }];
+    const final = [
+      ...base,
+      {
+        role: "assistant",
+        content: answer,
+        proposals: proposals.length ? proposals : undefined,
+        source: userMessage.source,
+        stopped: stopped || undefined,
+        failed: failure ? true : undefined,
+      },
+    ];
     commit(final);
     if (failure) setError({ message: failure.message, retry: true });
     persist(final).catch((err) => setError({ message: `对话保存失败：${err.message}` }));
+  };
+
+  /** Applies selected inline proposals via POST /api/ai/apply and refreshes the vault. */
+  const applyProposals = async (messageIndex, proposalIndices) => {
+    const id = session.current;
+    const list = messagesRef.current;
+    const msg = list[messageIndex];
+    if (!msg?.proposals?.length) return;
+    const targets = proposalIndices.filter((idx) => msg.proposals[idx]?.status === "pending");
+    if (!targets.length) return;
+
+    const flushed = await app?.flushEdits?.();
+    if (flushed === false) {
+      toast.err("当前笔记有未解决的冲突或保存失败，请先处理后再应用");
+      return;
+    }
+    if (id !== session.current) return;
+
+    const targetSet = new Set(targets);
+    const updateMessage = (transform) => {
+      const cur = messagesRef.current;
+      if (!cur[messageIndex]?.proposals) return;
+      const next = cur.map((m, mi) =>
+        mi === messageIndex ? { ...m, proposals: m.proposals.map((p, pi) => (targetSet.has(pi) ? transform(p, pi) : p)) } : m,
+      );
+      commit(next);
+    };
+
+    updateMessage((p) => ({ ...p, status: "applying", error: null }));
+    const chosen = targets.map((idx) => msg.proposals[idx]);
+    const operations = chosen.map(({ status, error, before, ...op }) => op); // eslint-disable-line no-unused-vars
+    const summary = chosen.map((p) => p.reason).find(Boolean) || chosen.map((p) => p.path).join(", ");
+
+    try {
+      const result = await api.applyChangeset({ summary, operations, chats: [] });
+      if (id !== session.current) return;
+      const touched = result?.touched || [];
+      updateMessage((p) => ({ ...p, status: "applied", error: null }));
+      toast.ok(`已写入 ${touched.length} 个文件，并提交到 git`);
+
+      const movedOpen = operations.find((op) => op.op === "move" && op.path === path && op.to);
+      const deletedOpen = operations.find((op) => op.op === "delete" && op.path === path);
+      if (movedOpen) (app?.openNote || onOpenNote)?.(movedOpen.to, { replace: true });
+      else if (deletedOpen) app?.openNote?.(null, { replace: true });
+
+      app?.notifyVaultChanged?.(touched);
+    } catch (err) {
+      if (id !== session.current) return;
+      const msgText = err?.message || String(err);
+      updateMessage((p) => ({ ...p, status: "pending", error: msgText }));
+    }
   };
 
   /** Asks the last question again (after an error, or to regenerate the last answer). */
@@ -568,7 +780,12 @@ export default function AIPanel({
     while (cut > 0 && list[cut - 1].role === "assistant") cut -= 1;
     const question = list[cut - 1];
     if (!question || question.role !== "user") return;
-    send(question, { history: list.slice(0, cut - 1), scope: question.request?.scope, selection: question.request?.selection ?? "" });
+    send(question, {
+      history: list.slice(0, cut - 1),
+      scope: question.request?.scope,
+      selection: question.request?.selection ?? "",
+      disableTools: question.request?.disableTools,
+    });
   };
 
   const stop = () => abort.current?.abort();
@@ -594,7 +811,7 @@ export default function AIPanel({
         content: `${action.prompt}\n\n<<<\n${text}\n>>>`,
         source: { apply: action.apply, original: whole ? null : selection },
       },
-      { scope: whole ? "none" : "note", selection: "" },
+      { scope: whole ? "none" : "note", selection: "", disableTools: true },
     );
   };
 
@@ -613,7 +830,7 @@ export default function AIPanel({
         content,
         source: { apply: selection ? "replace" : null, original: selection || null },
       },
-      { scope: "none", selection: "" },
+      { scope: "none", selection: "", disableTools: true },
     );
   };
 
@@ -703,7 +920,7 @@ export default function AIPanel({
   const transcript = () =>
     messagesRef.current
       .filter((m) => !m.pending)
-      .map((m) => `### ${m.role === "user" ? "🧑 我" : "🤖 AI"}\n\n${m.role === "user" && m.action ? m.display : m.content}`)
+      .map((m) => `### ${m.role === "user" ? "🧑 我" : "🤖 AI"}\n\n${m.role === "user" && m.action ? m.display : m.content || (m.proposals?.length ? "已生成修改建议。" : "")}`)
       .join("\n\n");
 
   const selectionNow = () => {
@@ -831,6 +1048,8 @@ export default function AIPanel({
                   last={i === lastIndex}
                   busy={busy}
                   onApply={onApply}
+                  onApplyProposals={(indices) => applyProposals(i, indices)}
+                  onOpenNote={onOpenNote}
                   onSaveNote={() => onApply?.({ type: "newNote", text: m.content, title: titleFrom(messages.slice(0, i)) })}
                   onRegenerate={retry}
                   resolver={resolver}

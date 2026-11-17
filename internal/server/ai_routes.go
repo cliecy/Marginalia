@@ -108,8 +108,8 @@ func (es *eventStream) flush() error {
 
 var errStreamClosed = errors.New("event stream closed")
 
-// POST /api/ai/chat {model, messages, scope="note", path?, selection?}:
-// streams {"delta"} events, then {"done": true} or {"error"}.
+// POST /api/ai/chat {model, messages, scope="note", path?, selection?, tools?}:
+// streams {"delta"} / {"status"} / {"proposal"} events, then {"done": true} or {"error"}.
 func (s *Server) chat(w http.ResponseWriter, r *http.Request, st *state) error {
 	var body struct {
 		Model     string        `json:"model"`
@@ -117,6 +117,7 @@ func (s *Server) chat(w http.ResponseWriter, r *http.Request, st *state) error {
 		Scope     *string       `json:"scope"`
 		Path      *string       `json:"path"`
 		Selection *string       `json:"selection"`
+		Tools     *bool         `json:"tools"`
 	}
 	if err := decodeJSON(w, r, &body); err != nil {
 		return err
@@ -128,21 +129,28 @@ func (s *Server) chat(w http.ResponseWriter, r *http.Request, st *state) error {
 	if body.Scope != nil {
 		scope = *body.Scope
 	}
-	messages, err := ai.BuildChatMessages(st.vault, st.settings.AI.VaultCharBudget, *body.Messages, scope, deref(body.Path), deref(body.Selection))
+	chatRun, err := ai.PrepareChat(st.vault, st.settings.AI.VaultCharBudget, ai.ChatRequest{
+		Model:     body.Model,
+		History:   *body.Messages,
+		Scope:     scope,
+		Path:      deref(body.Path),
+		Selection: deref(body.Selection),
+		Tools:     body.Tools,
+	})
 	if err != nil {
 		return err // before any event, as in Python (e.g. 404 for a missing note)
 	}
 	ctx := r.Context()
 	events := startEvents(w)
-	err = st.ai.Stream(ctx, body.Model, messages, func(delta string) error {
-		return events.send(map[string]string{"delta": delta})
+	err = chatRun.Run(ctx, st.ai, func(ev ai.ChatEvent) error {
+		return events.send(ev)
 	})
 	switch {
 	case err == nil:
-		_ = events.send(map[string]bool{"done": true})
+		_ = events.send(ai.ChatEvent{Done: true})
 	case ctx.Err() == nil && !events.broken:
 		s.log.Warn("chat failed", "err", err)
-		_ = events.send(map[string]string{"error": err.Error()})
+		_ = events.send(ai.ChatEvent{Error: err.Error()})
 	}
 	return nil
 }

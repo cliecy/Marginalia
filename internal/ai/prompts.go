@@ -47,3 +47,10 @@ const PlanPrompt = `你是知识库管理员。根据「任务」修改笔记库
 const WritePrompt = `你在为个人知识库撰写一篇 Markdown 笔记的**完整最终内容**。
 严格遵守知识库约定（frontmatter、双链、标签、可视化）。在能显著帮助理解的地方加入 mermaid / visual 图解。保留原笔记中仍然有效的所有信息，不要无故删减用户写过的内容。
 只输出笔记文件的完整内容本身，不要用代码块包裹，不要任何解释。`
+
+// ChatToolsPrompt is appended to the chat system prompt when tool calling is enabled.
+const ChatToolsPrompt = `你可以使用工具检索知识库并生成笔记修改建议：
+- 当你需要查看当前上下文之外的笔记、反向链接或知识库约定（` + knowledge.ConventionsFile + `）时，主动调用只读工具（get_conventions、list_notes、search_notes、read_note、get_backlinks）。
+- 对已有笔记做局部修改时，优先使用 edit_note（精确文本替换，先 read_note 确认原文）；仅在新建笔记或需要大幅重写整篇笔记时才使用 write_note。
+- 写入类工具（edit_note、write_note、move_note、delete_note）不会直接写入磁盘，而是生成待用户确认的修改建议（尚未写入磁盘）。调用后请在回复中清晰说明建议修改了哪些笔记及改动要点，方便用户审阅并点击应用。
+- 禁止修改 ` + knowledge.ChatsDir + `/ 下的对话记录和 ` + knowledge.ConventionsFile + `。`

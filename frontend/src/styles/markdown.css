@@ -310,6 +310,56 @@
 .ai-apply:active { transform: scale(.96); }
 .ai-meta { margin-left: 6px; font-size: 11px; color: var(--fg-3); }
 
+/* inline proposal cards in AI chat */
+.ai-props { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.ai-props-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 5px 8px 5px 10px; border-radius: 9px;
+  background: var(--card-2); border: 1px solid var(--line-2);
+  font-size: var(--fs-sub); font-weight: 550; color: var(--fg-2);
+}
+.ai-prop {
+  border: 1px solid var(--line); border-radius: 10px; background: var(--card);
+  overflow: hidden; transition: border-color var(--t-fast), background var(--t-fast);
+}
+.ai-prop.open { background: color-mix(in srgb, var(--card-2) 45%, var(--card)); }
+.ai-prop.applied { border-color: color-mix(in srgb, var(--green) 28%, var(--line)); }
+.ai-prop-head { display: flex; align-items: flex-start; gap: 8px; padding: 8px 8px 8px 10px; }
+.ai-op {
+  flex: none; display: inline-grid; place-items: center; min-width: 32px; height: 18px; margin-top: 1px;
+  padding: 0 5px; border-radius: 5px; font-size: 10.5px; font-weight: 600; letter-spacing: .02em;
+}
+.ai-op.op-create { background: var(--green-soft); color: var(--green); }
+.ai-op.op-update { background: var(--accent-soft); color: var(--accent); }
+.ai-op.op-move { background: var(--amber-soft); color: var(--amber); }
+.ai-op.op-delete { background: var(--red-soft); color: var(--red); }
+.ai-prop-words { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ai-prop-line { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px; min-width: 0; font-size: 12px; }
+.ai-prop-path { display: inline-flex; align-items: baseline; gap: 5px; min-width: 0; max-width: 100%; }
+.ai-prop-path b { font-weight: 600; color: var(--fg); overflow-wrap: anywhere; }
+.ai-prop-dir { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ai-prop-arrow { flex: none; align-self: center; color: var(--faint); }
+.ai-prop-reason { font-size: 11.5px; line-height: 1.45; color: var(--muted); overflow-wrap: anywhere; }
+.ai-prop-stat { flex: none; display: inline-flex; gap: 4px; margin-top: 2px; font-size: 10.5px; font-family: var(--code); }
+.ai-prop-stat em { font-style: normal; }
+.ai-prop-stat .add { color: var(--green); }
+.ai-prop-stat .del { color: var(--red); }
+.ai-prop-btns { flex: none; display: inline-flex; align-items: center; gap: 2px; }
+.ai-prop-chev > svg { transition: transform .2s var(--ease); }
+.ai-prop-chev.open > svg { transform: rotate(90deg); }
+.ai-prop-done {
+  display: inline-flex; align-items: center; gap: 3px; height: 22px; padding: 0 7px; border-radius: 999px;
+  background: var(--green-soft); color: var(--green); font-size: 11px; font-weight: 550; white-space: nowrap;
+}
+.ai-prop-err {
+  display: flex; align-items: flex-start; gap: 6px; padding: 5px 10px 7px;
+  border-top: 1px solid color-mix(in srgb, var(--red) 18%, transparent);
+  background: var(--red-soft); color: var(--red); font-size: 11.5px; line-height: 1.4; overflow-wrap: anywhere;
+}
+.ai-prop-err > svg { flex: none; margin-top: 2px; }
+.ai-prop-diff { padding: 0 8px 8px; }
+.ai-prop-diff .diff { font-size: 11px; border-radius: 8px; }
+
 .ai-intro { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 4px 4px; animation: content-in .3s var(--ease); }
 .ai-intro-mark { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 8px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); }
 .ai-intro b { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }

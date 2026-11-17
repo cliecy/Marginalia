@@ -597,3 +597,52 @@ func TestSSEData(t *testing.T) {
 		t.Errorf("SSEData(event) = %q, %v", got, err)
 	}
 }
+
+func TestStreamTurnParsesToolCallsAndText(t *testing.T) {
+	f := newFakeOpenAI(t)
+	var rawBody map[string]any
+	f.Server.Config.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_ = json.NewDecoder(r.Body).Decode(&rawBody)
+		w.Header().Set("Content-Type", "text/event-stream")
+		writeSSE(w, `data: {"choices":[{"delta":{"content":"先查一下。"}}]}`+"\n\n")
+		writeSSE(w, `data: {"choices":[{"delta":{"tool_calls":[{"index":0,"id":"call_1","type":"function","function":{"name":"search_notes","arguments":"{\"query\":"}}]}}]}`+"\n\n")
+		// Second chunk omits index (defaults to 0) and type, and starts index 1 without type.
+		writeSSE(w, `data: {"choices":[{"delta":{"tool_calls":[{"function":{"arguments":"\"PPO\"}"}},{"index":1,"id":"call_2","function":{"name":"read_note","arguments":"{\"path\":\"A.md\"}"}}]}}]}`+"\n\n")
+		writeSSE(w, `data: {"choices":[{"delta":{},"finish_reason":"tool_calls"}]}`+"\n\n")
+		writeSSE(w, "data: [DONE]\n\n")
+	})
+
+	tools := []ToolDef{{
+		Type: "function",
+		Function: ToolFunction{
+			Name:        "search_notes",
+			Description: "search",
+			Parameters:  map[string]any{"type": "object"},
+		},
+	}}
+	msgs := []ToolMessage{textToolMessage(RoleUser, "find PPO")}
+	var deltas []string
+	res, err := f.client("k").StreamTurn(context.Background(), "m1", msgs, tools, func(d string) error {
+		deltas = append(deltas, d)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("StreamTurn error: %v", err)
+	}
+	if strings.Join(deltas, "") != "先查一下。" || res.Content != "先查一下。" {
+		t.Errorf("deltas = %q, content = %q", deltas, res.Content)
+	}
+	if res.FinishReason != "tool_calls" {
+		t.Errorf("FinishReason = %q", res.FinishReason)
+	}
+	wantCalls := []ToolCall{
+		{ID: "call_1", Type: "function", Function: ToolCallFunction{Name: "search_notes", Arguments: `{"query":"PPO"}`}},
+		{ID: "call_2", Type: "function", Function: ToolCallFunction{Name: "read_note", Arguments: `{"path":"A.md"}`}},
+	}
+	if !reflect.DeepEqual(res.ToolCalls, wantCalls) {
+		t.Errorf("ToolCalls = %+v, want %+v", res.ToolCalls, wantCalls)
+	}
+	if rawBody["model"] != "m1" || rawBody["stream"] != true || rawBody["tools"] == nil {
+		t.Errorf("request body = %+v", rawBody)
+	}
+}

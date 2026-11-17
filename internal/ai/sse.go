@@ -22,6 +22,24 @@ type streamChunk struct {
 	} `json:"choices"`
 	Error json.RawMessage `json:"error"`
 }
+type turnStreamChunk struct {
+	Choices []struct {
+		Delta struct {
+			Content   any `json:"content"`
+			ToolCalls []struct {
+				Index    int    `json:"index"`
+				ID       string `json:"id"`
+				Type     string `json:"type"`
+				Function struct {
+					Name      string `json:"name"`
+					Arguments string `json:"arguments"`
+				} `json:"function"`
+			} `json:"tool_calls"`
+		} `json:"delta"`
+		FinishReason *string `json:"finish_reason"`
+	} `json:"choices"`
+	Error json.RawMessage `json:"error"`
+}
 
 // readStream parses an OpenAI server-sent event stream the way the Python
 // client did: every line starting with "data:" carries a JSON chunk (lines
@@ -34,21 +52,10 @@ type streamChunk struct {
 // Errors from onDelta are returned unchanged; read errors go through
 // readErr, which turns them into user-facing errors.
 func readStream(body io.Reader, onDelta func(string) error, readErr func(error) error) error {
-	scanner := bufio.NewScanner(body)
-	scanner.Buffer(make([]byte, 0, 64<<10), maxStreamLine)
-	scanner.Split(scanLines)
-	for scanner.Scan() {
-		line := scanner.Text()
-		if !strings.HasPrefix(line, "data:") {
-			continue
-		}
-		data := pystr.Strip(line[len("data:"):])
-		if data == "[DONE]" {
-			return nil
-		}
+	return scanSSE(body, readErr, func(data string) error {
 		var chunk streamChunk
 		if json.Unmarshal([]byte(data), &chunk) != nil {
-			continue
+			return nil
 		}
 		if len(chunk.Choices) == 0 {
 			if msg := streamError(chunk.Error); msg != "" {
@@ -61,6 +68,96 @@ func readStream(body io.Reader, onDelta func(string) error, readErr func(error) 
 					return err
 				}
 			}
+		}
+		return nil
+	})
+}
+
+// readTurnStream parses an OpenAI SSE completion stream that may include both
+// text deltas and incremental tool_calls fragments indexed by choice.delta.tool_calls[].index.
+func readTurnStream(body io.Reader, onDelta func(string) error, readErr func(error) error) (TurnResult, error) {
+	var content strings.Builder
+	var calls []ToolCall
+	var seen []bool
+	var finishReason string
+
+	err := scanSSE(body, readErr, func(data string) error {
+		var chunk turnStreamChunk
+		if json.Unmarshal([]byte(data), &chunk) != nil {
+			return nil
+		}
+		if len(chunk.Choices) == 0 {
+			if msg := streamError(chunk.Error); msg != "" {
+				return &Error{Message: "AI 返回错误：" + msg}
+			}
+		}
+		for _, choice := range chunk.Choices {
+			if delta, ok := choice.Delta.Content.(string); ok && delta != "" {
+				content.WriteString(delta)
+				if onDelta != nil {
+					if err := onDelta(delta); err != nil {
+						return err
+					}
+				}
+			}
+			for _, tc := range choice.Delta.ToolCalls {
+				if tc.Index < 0 {
+					continue
+				}
+				for len(calls) <= tc.Index {
+					calls = append(calls, ToolCall{})
+					seen = append(seen, false)
+				}
+				seen[tc.Index] = true
+				acc := &calls[tc.Index]
+				if tc.ID != "" && acc.ID == "" {
+					acc.ID = tc.ID
+				}
+				if tc.Type != "" && acc.Type == "" {
+					acc.Type = tc.Type
+				}
+				acc.Function.Name += tc.Function.Name
+				acc.Function.Arguments += tc.Function.Arguments
+			}
+			if choice.FinishReason != nil && *choice.FinishReason != "" {
+				finishReason = *choice.FinishReason
+			}
+		}
+		return nil
+	})
+
+	var compact []ToolCall
+	for i, tc := range calls {
+		if !seen[i] {
+			continue
+		}
+		if tc.Type == "" {
+			tc.Type = "function"
+		}
+		compact = append(compact, tc)
+	}
+	return TurnResult{
+		Content:      content.String(),
+		ToolCalls:    compact,
+		FinishReason: finishReason,
+	}, err
+}
+
+func scanSSE(body io.Reader, readErr func(error) error, onChunk func(data string) error) error {
+	scanner := bufio.NewScanner(body)
+	scanner.Buffer(make([]byte, 0, 64<<10), maxStreamLine)
+	scanner.Split(scanLines)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "data:") {
+			continue
+		}
+		data := pystr.Strip(line[len("data:"):])
+		if data == "[DONE]" {
+			return nil
+		}
+		if err := onChunk(data); err != nil {
+			return err
 		}
 	}
 	if err := scanner.Err(); err != nil {

@@ -550,7 +550,7 @@
         "tags": ["ai"],
         "operationId": "aiChat",
         "summary": "AI 对话（流式）",
-        "description": "以服务器推送事件（SSE）流式返回 AI 的回答。每个事件是一行 `data: <JSON>`：先是若干 `{\"delta\": \"…\"}`，最后是 `{\"done\": true}` 或 `{\"error\": \"…\"}`。`scope` 决定附带多少知识库上下文。",
+        "description": "以服务器推送事件（SSE）流式返回 AI 的回答。每个事件是一行 `data: <JSON>`：包含 `{\"delta\": \"…\"}`、工具执行进度 `{\"status\": \"…\"}` 与待确认的笔记修改建议 `{\"proposal\": …}`，最后是 `{\"done\": true}` 或 `{\"error\": \"…\"}`。`scope` 决定附带多少知识库上下文。",
         "requestBody": {
           "required": true,
           "content": {
@@ -563,7 +563,8 @@
                   "messages": { "type": "array", "items": { "$ref": "#/components/schemas/ChatMessage" }, "description": "对话历史，最后一条是用户的新问题" },
                   "scope": { "type": "string", "enum": ["none", "note", "vault"], "default": "note", "description": "none 不带上下文；note 带上当前笔记；vault 带上整个知识库的索引与相关笔记" },
                   "path": { "type": ["string", "null"], "description": "当前笔记（scope 为 note 或 vault 时）" },
-                  "selection": { "type": ["string", "null"], "description": "当前笔记中选中的文字" }
+                  "selection": { "type": ["string", "null"], "description": "当前笔记中选中的文字" },
+                  "tools": { "type": ["boolean", "null"], "description": "是否启用内置知识库读写工具；省略时在 scope 非 none 时启用" }
                 }
               }
             }
@@ -1101,6 +1102,8 @@
         "description": "AI 对话的一个事件",
         "oneOf": [
           { "type": "object", "required": ["delta"], "properties": { "delta": { "type": "string" } } },
+          { "type": "object", "required": ["status"], "properties": { "status": { "type": "string" } } },
+          { "type": "object", "required": ["proposal"], "properties": { "proposal": { "$ref": "#/components/schemas/Proposal" } } },
           { "type": "object", "required": ["done"], "properties": { "done": { "type": "boolean", "const": true } } },
           { "type": "object", "required": ["error"], "properties": { "error": { "type": "string" } } }
         ]
